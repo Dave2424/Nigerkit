@@ -70,6 +70,17 @@
     /*
     // block slideshow
     */
+    var $owl = $('.block-slideshow .owl-carousel');
+    $owl.trigger('destroy.owl.carousel');
+    $owl.html($owl.find('.owl-stage-outer').html()).removeClass('owl-loaded');
+    $owl.owlCarousel({
+        items: 1,
+        nav: false,
+        dots: true,
+        loop: true,
+        rtl: isRTL()
+    });
+
     $(function() {
         $('.block-slideshow .owl-carousel').owlCarousel({
             items: 1,
@@ -233,6 +244,12 @@
     /*
     // products carousel
     */
+
+    // $('owl-carousel').addClass('owl-loaded');
+    // $('owl-carousel').owl
+    // const owl = $('.owl-carousel');
+    // owl.trigger('initialize.owl.carousel');
+
     $(function() {
         $('.block-products-carousel').each(function() {
             const layout = $(this).data('layout');
@@ -241,7 +258,8 @@
                 margin: 14,
                 nav: false,
                 dots: false,
-                loop: true,
+                loop: false,
+                rewind: true,
                 stagePadding: 1,
                 rtl: isRTL()
             };
@@ -309,27 +327,27 @@
                 $(this).addClass('block-header__group--active');
 
                 // timeout ONLY_FOR_DEMO! you can replace it with an ajax request
-                let timer;
+                // let timer;
                 timer = setTimeout(function() {
-                    let items = block.find('.owl-carousel .owl-item:not(".cloned") .block-products-carousel__column');
+                    // let items = block.find('.owl-carousel .owl-item:not(".cloned") .block-products-carousel__column');
 
-                    /*** this is ONLY_FOR_DEMO! / start */
-                    /**/ const itemsArray = items.get();
-                    /**/ const newItemsArray = [];
-                    /**/
-                    /**/ while (itemsArray.length > 0) {
-                    /**/     const randomIndex = Math.floor(Math.random() * itemsArray.length);
-                    /**/     const randomItem = itemsArray.splice(randomIndex, 1)[0];
-                    /**/
-                    /**/     newItemsArray.push(randomItem);
-                    /**/ }
-                    /**/ items = $(newItemsArray);
-                    /*** this is ONLY_FOR_DEMO! / end */
+                    // /*** this is ONLY_FOR_DEMO! / start */
+                    // /**/ const itemsArray = items.get();
+                    // /**/ const newItemsArray = [];
+                    // /**/
+                    // /**/ while (itemsArray.length > 0) {
+                    // /**/     const randomIndex = Math.floor(Math.random() * itemsArray.length);
+                    // /**/     const randomItem = itemsArray.splice(randomIndex, 1)[0];
+                    // /**/
+                    // /**/     newItemsArray.push(randomItem);
+                    // /**/ }
+                    // /**/ items = $(newItemsArray);
+                    // /*** this is ONLY_FOR_DEMO! / end */
 
-                    block.find('.owl-carousel')
-                        .trigger('replace.owl.carousel', [items])
-                        .trigger('refresh.owl.carousel')
-                        .trigger('to.owl.carousel', [0, 0]);
+                    // block.find('.owl-carousel')
+                    //     .trigger('replace.owl.carousel', [items])
+                    //     .trigger('refresh.owl.carousel')
+                    //     .trigger('to.owl.carousel', [0, 0]);
 
                     $('.product-card__quickview', block).on('click', function() {
                         quickview.clickHandler.apply(this, arguments);
@@ -339,7 +357,7 @@
                 }, 1000);
                 cancelPreviousTabChange = function() {
                     // timeout ONLY_FOR_DEMO!
-                    clearTimeout(timer);
+                    // clearTimeout(timer);
                     cancelPreviousTabChange = function() {};
                 };
             });

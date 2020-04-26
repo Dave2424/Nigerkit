@@ -610,6 +610,7 @@
             */
             const CDepartments = function(element) {
                 const self = this;
+                var address = window.location.href;
 
                 element.data('departmentsInstance', self);
 
@@ -623,6 +624,16 @@
                 this.fixedBy = $(this.element.data('departments-fixed-by'));
                 this.fixedHeight = 0;
                 this.currentItem = null;
+
+
+                if (address.indexOf('product') > -1) {
+                    if(this.element.is('.departments--fixed')) {
+                        this.element.removeClass('departments--fixed');
+                        this.element.removeClass('departments--open');
+                        this.element.attr('data-departments-fixed-by', '');
+                    }
+                }
+
 
                 if (this.mode === 'fixed' && this.fixedBy.length) {
                     this.fixedHeight = this.fixedBy.offset().top - this.body.offset().top + this.fixedBy.outerHeight();
@@ -653,9 +664,15 @@
             };
             CDepartments.prototype.onButtonClick = function(event) {
                 event.preventDefault();
-
                 if (this.element.is('.departments--open')) {
                     this.close();
+                    if (address.indexOf('product') > -1) {
+                        if(this.element.is('.departments--fixed')) {
+                            this.element.removeClass('departments--fixed');
+                            this.element.removeClass('departments--open');
+                            this.element.attr('data-departments-fixed-by', '');
+                        }
+                    }
                 } else {
                     this.open();
                 }

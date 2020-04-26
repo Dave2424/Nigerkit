@@ -27,6 +27,11 @@ export class BaseService {
 
   public all_product(){
     return this.http.get(`${this.endpoint}/get-product`);
-    // return 'hello';
   }
+  public allCategory() {
+    return this.http.get(`${this.endpoint}/get-category`);
+  }
+  public banner() {
+  return this.http.get(`${this.endpoint}/get-banner`);
+}
 }

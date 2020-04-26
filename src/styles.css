@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+@import "assets/vendor/bootstrap/css/bootstrap.min.css";
+@import "assets/vendor/owl-carousel/assets/owl.carousel.min.css";
+@import "assets/vendor/photoswipe/photoswipe.css";
+@import "assets/vendor/photoswipe/default-skin/default-skin.css";
+@import "assets/vendor/select2/css/select2.min.css";
+/*@import "assets/css/style.css";*/
+@import "assets/css/style.ltr.css";
+/*@import "assets/css/animate.css";*/
+/*@import "assets/css/waves.css";*/
+@import "assets/vendor/fontawesome/css/all.min.css";
+@import "assets/fonts/stroyka/stroyka.css";
+
+/*plugin*/
+@import "~ladda/dist/ladda-themeless.min.css";
+@import "~ngx-toastr/toastr.css";
+@import "~ng-snotify/styles/material.css";
+
+
