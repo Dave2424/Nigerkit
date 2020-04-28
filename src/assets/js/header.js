@@ -581,8 +581,11 @@
             this.element.width(); // force reflow
             this.element.addClass('indicator--open');
             this.element.find('.search__input').focus();
-
-            const dropdownTop = this.dropdown.offset().top - $(window).scrollTop();
+            var dropdownTop;
+            if(this.dropdown){
+                dropdownTop = this.dropdown.offset().top - $(window).scrollTop();
+            }
+            // const dropdownTop = this.dropdown.offset().top - $(window).scrollTop();
             const viewportHeight = window.innerHeight;
             const paddingBottom = 20;
 

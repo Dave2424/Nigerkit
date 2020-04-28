@@ -121,31 +121,6 @@
                                                     {{cate.category}}
                                                 </a>
                                             </li>
-                                            <!--<li class="departments__item">-->
-                                                <!--<a class="departments__item-link" href="">-->
-                                                    <!--Measurement-->
-                                                <!--</a>-->
-                                            <!--</li>-->
-                                            <!--<li class="departments__item">-->
-                                                <!--<a class="departments__item-link" href="">-->
-                                                    <!--Clothes & PPE-->
-                                                <!--</a>-->
-                                            <!--</li>-->
-                                            <!--<li class="departments__item">-->
-                                                <!--<a class="departments__item-link" href="">-->
-                                                    <!--Plumbing-->
-                                                <!--</a>-->
-                                            <!--</li>-->
-                                            <!--<li class="departments__item">-->
-                                                <!--<a class="departments__item-link" href="">-->
-                                                    <!--Storage & Organization-->
-                                                <!--</a>-->
-                                            <!--</li>-->
-                                            <!--<li class="departments__item">-->
-                                                <!--<a class="departments__item-link" href="">-->
-                                                    <!--Welding & Soldering-->
-                                                <!--</a>-->
-                                            <!--</li>-->
                                         </ul>
                                     </div>
                                 </div>
@@ -199,19 +174,19 @@
                             <div class="indicator indicator--trigger--click">
                                 <a href="#" class="indicator__button">
                                             <span class="indicator__area">
-                                                <!--<i class="fa fa-cart-plus" style="width:20px; height:20px"></i>-->
                                                 <svg width="20px" height="20px">
                                                     <use xlink:href="./assets/images/sprite.svg#cart-20"></use>
                                                 </svg>
-                                                <span class="indicator__value" *ngIf="count(cart) > 0">{{count(cart)}}</span>
+                                                <span class="indicator__value" *ngIf="count(cart_item) > 0">{{count(cart_item)}}</span>
+                                                <!--<span class="indicator__value" *ngIf="count(cart) > 0">{{count(cart)}}</span>-->
                                             </span>
                                 </a>
-                                <div class="indicator__dropdown" *ngIf="count(cart) > 0">
+                                <div class="indicator__dropdown" *ngIf="count(cart_item) > 0">
                                     <!-- .dropcart -->
                                     <div class="dropcart dropcart--style--dropdown">
                                         <div class="dropcart__body">
                                             <div class="dropcart__products-list">
-                                                <div class="dropcart__product" *ngFor="let item of cart">
+                                                <div class="dropcart__product" *ngFor="let item of cart_item">
                                                     <div class="dropcart__product-image">
                                                         <a href="product.html">
                                                             <img [src]="Image_data(item.product.files[0],'avatar', 'null')" alt=""></a>

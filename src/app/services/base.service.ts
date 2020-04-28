@@ -32,6 +32,9 @@ export class BaseService {
     return this.http.get(`${this.endpoint}/get-category`);
   }
   public banner() {
-  return this.http.get(`${this.endpoint}/get-banner`);
-}
+    return this.http.get(`${this.endpoint}/get-banner`);
+  }
+  public banner_sr() {
+    return this.http.get(`${this.endpoint}/get-banner_sr`);
+  }
 }

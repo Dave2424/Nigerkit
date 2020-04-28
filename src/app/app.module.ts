@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import {BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig} from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,6 +20,9 @@ import { SnotifyModule, SnotifyService, ToastDefaults } from 'ng-snotify';
 import { ToastrModule } from 'ngx-toastr';
 import {BaseService} from "./services/base.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxSmartModalModule } from 'ngx-smart-modal';
+import {NgxGalleryModule} from "ngx-gallery";
+import {CustomHammerConfig} from "./helpers/CustomHammer";
 
 @NgModule({
   declarations: [
@@ -43,6 +46,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     SnotifyModule,
     BrowserAnimationsModule,
+    NgxGalleryModule,
+    NgxSmartModalModule.forRoot(),
     LaddaModule.forRoot({
       style: "expand-right",
       spinnerSize: 30,
@@ -57,6 +62,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: 'SnotifyToastConfig', useValue: ToastDefaults},
+    { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig },
     SnotifyService,
     BaseService,
   ],

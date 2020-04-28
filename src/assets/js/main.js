@@ -77,16 +77,16 @@
         items: 1,
         nav: false,
         dots: true,
-        loop: true,
+        // loop: true,
         rtl: isRTL()
     });
 
     $(function() {
         $('.block-slideshow .owl-carousel').owlCarousel({
-            items: 1,
+            items: 3,
             nav: false,
             dots: true,
-            loop: true,
+            loop: false,
             rtl: isRTL()
         });
     });
@@ -236,9 +236,15 @@
         });
 
         $('.product-card__quickview').on('click', function() {
+            // console.log('this is again real');
             quickview.clickHandler.apply(this, arguments);
         });
+
+        // $('.block-products__list-item').on('click', '.product-card__quickview', function() {
+        //     console.log('this is real');
+        // });
     });
+
 
 
     /*

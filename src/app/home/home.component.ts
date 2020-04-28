@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {Subscription} from "rxjs/index";
 import {Product} from "../models/product";
 import {BaseService} from "../services/base.service";
@@ -7,7 +7,9 @@ import {AuthenticationService} from "../services/authentication.service";
 import {User} from "../models/user";
 import {AlertService} from "../services/alert.service";
 import {StoreService} from "../services/store.service";
-import {isBoolean} from "util";
+declare var $: any;
+import { NgxSmartModalService } from 'ngx-smart-modal';
+import {NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryImageSize} from 'ngx-gallery';
 
 @Component({
   selector: 'app-home',
@@ -17,27 +19,40 @@ import {isBoolean} from "util";
 export class HomeComponent implements OnInit {
   public product: Product[] = [];
   public cart:any = [];
-  private banners : any [];
   currentUser: User;
-  public cart_to_ = {};
+  public cart_to_ : any;
+  public img_file: any;
+  public iscart = false;
+  banner:any;
+  fake:number = 0.75;
+  loading: any = '';
 
-  private allProduct: Subscription;
+
+  private ProductSubscription: Subscription;
   private cartSubscription: Subscription;
   private bannerSubscription: Subscription;
 
-  constructor(private baseservice: BaseService,
+
+
+    bannerSlideConfig = {"slidesToShow": 1, "slidesToScroll": 1, "autoplay": true, "autoplaySpeed": 5000};
+    galleryOptions: NgxGalleryOptions[];
+    galleryImages: NgxGalleryImage[];
+
+    constructor(private baseservice: BaseService,
               private alert: AlertService,
+                public ngxSmartModalService: NgxSmartModalService,
               private storeService: StoreService,
               private authenticationservice: AuthenticationService) {
       this.authenticationservice.currentUser.subscribe(x => this.currentUser = x);
-      this.bannerSubscription = this.baseservice.banner().subscribe(x =>{ this.banners = x });
-      console.log(this.banners);
+      this.checkItems();
+  }
+
+  checkItems() {
       if (this.currentUser) {
           //user cart items
           this.cartSubscription = this.storeService.GetCartItems()
               .subscribe(items => {
                   this.cart = items;
-                  // console.log(this.cart);
               });
       }else{
           this.cart = this.getSavedCartInStorage();
@@ -45,18 +60,49 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.allProduct = this.baseservice.all_product()
+    this.ProductSubscription = this.baseservice.all_product()
         .subscribe((data: any) => {
           if (_.size(data) > 0) {
             this.product.push(data);
             this.product = this.product[0]['products'];
           }
         });
+      this.bannerSubscription = this.baseservice.banner_sr().subscribe(x => this.banner = x['banner_sr']);
   }
-    count(items){
-        return _.size(items);
+
+  setGallery(){
+        this.galleryOptions = [
+            {
+                width: '100%',
+                height: '400px',
+                thumbnailsColumns: 4,
+                imageArrows: false,
+                imageAnimation: NgxGalleryAnimation.Zoom,
+                imageSize: NgxGalleryImageSize.Contain
+            },
+            // max-width 800
+            {
+                breakpoint: 800,
+                width: '100%',
+                height: '600px',
+                imagePercent: 80,
+                thumbnailsPercent: 20,
+                thumbnailsMargin: 20,
+                thumbnailMargin: 20
+            },
+            // max-width 400
+            {
+                breakpoint: 400,
+                preview: false
+            }
+        ];
+
+        // this.galleryImages = this.getImages()
     }
 
+  count(items){
+        return _.size(items);
+    }
     Image_data(item:any,  type:string, nullValue:string) {
         if (type === 'text') {
             if (this.count(item) === 0) {
@@ -76,6 +122,9 @@ export class HomeComponent implements OnInit {
 
     getSavedCartInStorage(){
         return JSON.parse(localStorage.getItem('cart_Items'));
+    }
+    getLatestCart(event) {
+        this.cart = event;
     }
     //checking which product is in cart
     checkItemInCart(product) {
@@ -109,7 +158,7 @@ export class HomeComponent implements OnInit {
                     //first check for notice
                     if (!this.checkForError(resp)) {
                         this.cart = resp.items;
-                        this.cart_to_ = {status: true, data:this.cart};
+                        this.cart_to_ = this.cart;
                         this.alert.snotSimpleSuccess(resp.message);
                     }
 
@@ -137,7 +186,7 @@ export class HomeComponent implements OnInit {
                     localStorage.setItem('cart_Items', JSON.stringify($array));
                     this.alert.snotSimpleSuccess("Your product has been added to cart");
                     this.cart = this.getSavedCartInStorage();
-
+                    this.cart_to_ = this.cart;
                 });
         }else{
 
@@ -157,6 +206,7 @@ export class HomeComponent implements OnInit {
                         localStorage.setItem('cart_Items', JSON.stringify(cartItems));
                         this.alert.snotSimpleSuccess("Your product has been added to cart");
                         this.cart = this.getSavedCartInStorage();
+                        this.cart_to_ = this.cart;
                     });
 
             }
@@ -171,6 +221,40 @@ export class HomeComponent implements OnInit {
             this.alert.infoMsg(data.error,"Info");
             return true;
         }
+    }
+    getBannerUrl() {
+        return `url('${this.Image_data(this.banner['pictures'], 'avatar', null)}')`;
+    }
+    avail(item){
+        let avail = '';
+        if (item > 0)
+            avail = 'In stock';
+        else
+            avail = 'Out of stock';
+
+        return avail;
+    }
+    quickView(item, index) {
+        this.loading = index;
+        this.img_file = item.files;
+        this.setGallery();
+        this.galleryImages = this.getImages(this.img_file);
+        setTimeout(() => {
+            this.ngxSmartModalService.setModalData(item, 'productModal',true);
+            this.ngxSmartModalService.getModal('productModal').open();
+            this.loading = '';
+        }, 1000);
+    }
+    getImages(files){
+        const imageUrls= [];
+        for(let i = 0;i<files.length;i++){
+            imageUrls.push({
+                small:this.Image_data(files[i], 'avatar', null),
+                medium:this.Image_data(files[i], 'avatar', null),
+                big:this.Image_data(files[i], 'avatar', null)
+            })
+        }
+        return imageUrls;
     }
 
 }

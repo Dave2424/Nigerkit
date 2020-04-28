@@ -2945,6 +2945,10 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
 
 .product-card__new-price {
   color: #ff2626;
+  margin-right:3px;
+}
+.modal-width{
+  max-width: calc(100% - 300px) !important;
 }
 
 .product-card__old-price {
@@ -3400,6 +3404,11 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
   .product-card--layout--list .product-card__info {
     padding-left: 4px;
     padding-right: 20px;
+  }
+}
+@media(max-width:992px) {
+  .modal-width{
+    max-width: 100%  !important;
   }
 }
 
@@ -11418,6 +11427,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
 
 .block-banner__title {
   padding-top: 28px;
+  /*padding-top: 40px;*/
   font-size: 30px;
   line-height: 1;
   font-weight: 700;
@@ -11425,6 +11435,24 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
 
 .block-banner__text {
   padding-top: 8px;
+}
+.text-avail{
+  background: #28a745;
+  padding: 2px 4px;
+  font-size: 10px;
+  color: white !important;
+  text-align: center;
+  letter-spacing: 1px;
+  margin: 1px;
+}
+.text-Unavail{
+  background: #ff3333cf;
+  padding: 2px 4px;
+  font-size: 10px;
+  color: white !important;
+  text-align: center;
+  letter-spacing: 1px;
+  margin: 1px;
 }
 
 .block-banner__button {
@@ -13481,6 +13509,22 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
   opacity: 0;
   -webkit-transition: all 1s .2s;
   transition: all 1s .2s;
+}
+.blocks {
+  line-height: 1.625;
+  color:white;
+  transition: all .8s .5s;
+  -webkit-transition: all .8s .5s;
+  -webkit-transform: translateY(15px);
+  transform: translateY(15px);
+}
+
+
+/* Centered text */
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
 }
 
 .block-slideshow__slide-text {
