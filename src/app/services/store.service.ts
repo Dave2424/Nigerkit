@@ -53,9 +53,6 @@ export class StoreService {
 	public getSingleProduct(product_id:number){
 		return this.http.get(`${this.endpoint}/store/get-single-product/${product_id}`).pipe(delay(800));
 	}
-	public mainStoreCalculateProduct(data:any){
-		return this.http.post(`${this.endpoint}/main-store-calculate-product`, data);
-	}
 
 	////////////////////////////////////////////////////////////////////////////
 
@@ -73,7 +70,10 @@ export class StoreService {
 	}
 
 	public CalculateDelivery(data:any){
-		return this.http.post(`${this.endpoint}/main-store-calculate-delivery`, data);
+		return this.http.post(`${this.endpoint}/store-calculate-delivery`, data);
+	}
+	public CalculateProduct(data:any){
+		return this.http.post(`${this.endpoint}/store-calculate-product`, data);
 	}
 
 	public RemoveFromCart(item_id:number){

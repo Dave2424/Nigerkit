@@ -1179,7 +1179,7 @@ h6 {
 .card-header,
 .card-footer {
   padding: 1.5rem 2rem;
-  border-top: none;
+  /*border-top: none;*/
   border-bottom: none;
   background-color: transparent;
 }
@@ -7233,7 +7233,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
 */
 .site-footer {
   margin-top: 16px;
-  background: transparent;
+  background: #f2f2f257;
   border-top: 1px solid #ebebeb;
 }
 
@@ -10354,7 +10354,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
 }
 
 .reviews-list__item:first-child {
-  padding-top: 0;
+  /*padding-top: 0;*/
 }
 
 .reviews-list__pagination {

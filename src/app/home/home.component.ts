@@ -7,9 +7,9 @@ import {AuthenticationService} from "../services/authentication.service";
 import {User} from "../models/user";
 import {AlertService} from "../services/alert.service";
 import {StoreService} from "../services/store.service";
-declare var $: any;
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import {NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryImageSize} from 'ngx-gallery';
+declare var $: any;
 
 @Component({
   selector: 'app-home',
@@ -18,7 +18,7 @@ import {NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryImage
 })
 export class HomeComponent implements OnInit {
   public product: Product[] = [];
-  public cart:any = [];
+  public cart:any = {};
   currentUser: User;
   public cart_to_ : any;
   public img_file: any;
@@ -56,6 +56,15 @@ export class HomeComponent implements OnInit {
               });
       }else{
           this.cart = this.getSavedCartInStorage();
+          this.baseservice.get_skuNos().subscribe( data => {
+              data['sku'].forEach(item => {
+                  this.cart.forEach(cart => {
+                      if (item.id == cart.sku_id) {
+                          cart.sku_no = item;
+                      }
+                  });
+              });
+          });
       }
   }
 
@@ -64,6 +73,7 @@ export class HomeComponent implements OnInit {
         .subscribe((data: any) => {
           if (_.size(data) > 0) {
             this.product.push(data);
+            // console.log(this.product);
             this.product = this.product[0]['products'];
           }
         });
@@ -215,7 +225,6 @@ export class HomeComponent implements OnInit {
 
     }
 
-
     checkForError(data:any){
         if (data.error) {
             this.alert.infoMsg(data.error,"Info");
@@ -256,5 +265,6 @@ export class HomeComponent implements OnInit {
         }
         return imageUrls;
     }
+
 
 }

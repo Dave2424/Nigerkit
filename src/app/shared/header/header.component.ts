@@ -13,63 +13,69 @@ import {Subscription} from "rxjs/index";
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
+  selector: "app-header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.css"],
   // ChangeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
-
   currentUser: User;
   loginForm: FormGroup;
   loading = false;
-  submitted = false; error = '';
+  submitted = false;
+  error = "";
   returnUrl: string;
-  private cart:any = [];
-  private category: any =[];
-  private banners:any = [];
+  private cart: any = [];
+  private category: any = [];
+  private banners: any = [];
   private cartSubscription: Subscription;
   private categorySubscription: Subscription;
   private bannerSubscription: Subscription;
 
-
   @Input() cart_item: any = [];
+  @Input() is_cartNeeded: boolean = true;
   @Output() Update_cart = new EventEmitter<Array<any>>();
 
   constructor(
-              private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private storeService: StoreService,
-              private baseService: BaseService,
-              private authenticationservice: AuthenticationService) {
-
-    this.authenticationservice.currentUser.subscribe(x => this.currentUser = x);
-    this.categorySubscription = this.baseService.allCategory().subscribe(x => this.category = x['category']);
-    this.baseService.banner().subscribe(x => this.banners = x);
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private Ref:ChangeDetectorRef,
+    private storeService: StoreService,
+    private baseService: BaseService,
+    private authenticationservice: AuthenticationService
+  ) {
+    this.authenticationservice.currentUser.subscribe(
+      (x) => (this.currentUser = x)
+    );
+    this.categorySubscription = this.baseService
+      .allCategory()
+      .subscribe((x) => (this.category = x["category"]));
+    this.baseService.banner().subscribe((x) => (this.banners = x));
   }
 
   checkItems() {
     if (this.currentUser) {
       //user cart items
-      this.cartSubscription = this.storeService.GetCartItems()
-          .subscribe(items => {
-            this.cart = items;
-            this.cart_item = this.cart;
-          });
-    }else{
+      this.cartSubscription = this.storeService
+        .GetCartItems()
+        .subscribe((items) => {
+          this.cart = items;
+          this.cart_item = this.cart;
+        });
+    } else {
       this.cart = this.getSavedCartInStorage();
-      this.cart_item  = this.cart;
+      this.cart_item = this.cart;
     }
   }
 
   ngOnInit() {
     this.checkItems();
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required, Validators.minLength(6)]],
     });
-    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || "/";
   }
   handleResponse(data) {
     if (data.user && data.Access_token) {
@@ -79,7 +85,7 @@ export class HeaderComponent implements OnInit {
         return;
       }
       this.authenticationservice.setUser(data.user);
-      //set user access Data for later reference
+      // set user access Data for later reference
       // this.authenticationservice.setUserData(data.accessData);
       this.checkItems();
       this.router.navigate([this.returnUrl]);
@@ -87,10 +93,12 @@ export class HeaderComponent implements OnInit {
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
+  get f() {
+    return this.loginForm.controls;
+  }
 
   onSubmit() {
-    this.error = '';
+    this.error = "";
     this.submitted = true;
 
     // stop here if form is invalid
@@ -98,27 +106,28 @@ export class HeaderComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.authenticationservice.login(this.f.email.value, this.f.password.value)
-        .pipe(first())
-        .subscribe(
-            data => {
-              // console.log(data);
-              if (data.user.email_verified_at) {
-                this.handleResponse(data);
-                this.loading = false;
-              } else {
-                this.error = 'Your email is not verified. Please verify your email';
-                this.loading = false;
-              }
-            },
-            error => {
-              this.error = error;
-              console.log(error);
-              this.loading = false;
-            }
-        )
+    this.authenticationservice
+      .login(this.f.email.value, this.f.password.value)
+      .pipe(first())
+      .subscribe(
+        (data) => {
+          // console.log(data);
+          if (data.user.email_verified_at) {
+            this.handleResponse(data);
+            this.loading = false;
+          } else {
+            this.error = "Your email is not verified. Please verify your email";
+            this.loading = false;
+          }
+        },
+        (error) => {
+          this.error = error;
+          // console.log(error);
+          this.loading = false;
+        }
+      );
   }
-  count(items:any){
+  count(items: any) {
     return _.size(items);
   }
 
@@ -127,52 +136,47 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([this.returnUrl]);
   }
 
-  getSavedCartInStorage(){
-    return JSON.parse(localStorage.getItem('cart_Items'));
+  getSavedCartInStorage() {
+    return JSON.parse(localStorage.getItem("cart_Items"));
   }
 
-  Image_data(item:any,  type:string, nullValue:string) {
-    if (type === 'text') {
+  Image_data(item: any, type: string, nullValue: string) {
+    if (type === "text") {
       if (this.count(item) === 0) {
         return nullValue;
       }
       return item;
     }
 
-    if (type === 'avatar') {
-
+    if (type === "avatar") {
       if (this.count(item) === 0) {
-        return '/assets/images/default/avatar.jpg';
+        return "/assets/images/default/avatar.jpg";
       }
-      return this.authenticationservice.baseurl+item;
+      return this.authenticationservice.baseurl + item;
     }
   }
-
 
   // ===================== Remove ITem From Cart ==================//
   removeFromCart(item: any) {
-
     if (this.currentUser) {
-      this.storeService.RemoveFromCart(item.id)
-          .subscribe(data => {
-            this.cart = data;
-            this.cart_item = this.cart;
-            this.update_cart();
-          });
+      this.storeService.RemoveFromCart(item.id).subscribe((data) => {
+        this.cart = data;
+        this.cart_item = this.cart;
+        this.update_cart();
+      });
     } else {
       this.sliceLocalCart(item);
-      this.cart_item =this.cart;
+      this.cart_item = this.cart;
       this.update_cart();
-
     }
   }
   updateLocalCart() {
-    localStorage.setItem('cart_Items', JSON.stringify(this.cart));
+    localStorage.setItem("cart_Items", JSON.stringify(this.cart));
   }
 
   sliceLocalCart(item) {
     let cartItems = this.getSavedCartInStorage();
-    let search = _.findLastIndex(cartItems, ['product_id', item.product_id]);
+    let search = _.findLastIndex(cartItems, ["product_id", item.product_id]);
 
     cartItems.splice(search, 1);
     this.cart = cartItems;
@@ -182,12 +186,15 @@ export class HeaderComponent implements OnInit {
   }
   Subtotal() {
     let total = 0;
-    this.cart.forEach(item => {
-      total+= item.product.price * item.quantity;
+    this.cart.forEach((item) => {
+      total += item.product.price * item.quantity;
     });
     return total;
   }
   update_cart() {
     this.Update_cart.emit(this.cart_item);
+  }
+  ngOnDestroy() {
+    this.Ref.detach(); // do this
   }
 }

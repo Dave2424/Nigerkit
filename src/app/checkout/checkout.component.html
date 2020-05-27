@@ -1,0 +1,103 @@
+<app-header [is_cartNeeded]="false"></app-header>
+
+<div class="checkout block mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-6 col-xl-7">
+                <div class="card mb-lg-0">
+                    <div class="card-body">
+                        <h3 class="card-title">Shipping Details</h3>
+                        <div class="form-group">
+                            <label for="checkout-name">Name</label>
+                            <input type="text" [disabled]="disabled" class="form-control"
+                                   id="checkout-name" [(ngModel)]="userData.name" placeholder="Name">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="checkout-email">Email address</label>
+                                <input type="email" [disabled]="disabled" class="form-control"
+                                       id="checkout-email" [(ngModel)]="userData.email" placeholder="Email address">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="checkout-phone">Phone</label>
+                                <input type="text" [disabled]="disabled" class="form-control"
+                                       id="checkout-phone" [(ngModel)]="userData.phone" placeholder="Phone">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout-address">Address</label>
+                            <input type="text" [disabled]="disabled" class="form-control"
+                                   id="checkout-address" [(ngModel)]="userData.address" placeholder="Address">
+                        </div>
+
+                        <div class="form-group mt-4">
+                            <div class="form-check">
+                                            <span class="form-check-input input-check">
+                                                <span class="input-check__body">
+                                                    <input class="input-check__input" type="checkbox" id="checkout-create-account">
+                                                    <span class="input-check__box"></span>
+                                                    <svg class="input-check__icon" width="9px" height="7px">
+                                                        <use xlink:href="./assets/images/sprite.svg#check-9x7"></use>
+                                                    </svg>
+                                                </span>
+                                            </span>
+                                <label class="form-check-label" for="checkout-create-account">Create an account?</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-divider"></div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 col-xl-5 mt-4 mt-lg-0">
+                <div class="card mb-0">
+                    <div class="card-body">
+                        <h3 class="card-title">Your Order</h3>
+                        <table class="checkout__totals">
+                            <thead class="checkout__totals-header">
+                            <tr>
+                                <th>Product</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody class="checkout__totals-products">
+                            <tr *ngFor="let item of cart">
+                                <td>{{item.product.name}} × {{item.quantity}}</td>
+                                <td>&#8358;{{item.quantity * item.product.price | number:0}}</td>
+                            </tr>
+                            </tbody>
+                            <tbody class="checkout__totals-subtotals">
+                            <tr>
+                                <th>Subtotal</th>
+                                <td>&#8358;{{Subtotal() | number:0}}</td>
+                            </tr>
+                            <tr>
+                                <th>Delivery fee</th>
+                                <td>$-20.00</td>
+                            </tr>
+                            <tr>
+                                <th>VAT Fee</th>
+                                <td>$25.00</td>
+                            </tr>
+                            </tbody>
+                            <tfoot class="checkout__totals-footer">
+                            <tr>
+                                <th>Total</th>
+                                <td>$5,882.00</td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <button type="submit" class="btn btn-primary btn-block mb-2" (click)="calculateDeliveryFee(cart)" [ladda]="calculating">Proceed</button>
+                        <div class="payment-methods">
+                          <button angular4-paystack [key]="transactionKey" [email]="userData.email" [amount]="1000+'00'"
+                            [ref]="transactionRef.value" [class]="'btn btn-primary'" (close)="transactionCancelled()"
+                            (callback)="transactionSuccessful($event)"
+                            class="btn btn-round btn-primary waves-effect btn-block">
+                            Place Order
+                          </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -15,5 +15,6 @@
 @import "~ngx-toastr/toastr.css";
 @import "~ng-snotify/styles/material.css";
 @import "~ngx-smart-modal/ngx-smart-modal.css";
+@import '~@angular/material/prebuilt-themes/purple-green.css';
 
 

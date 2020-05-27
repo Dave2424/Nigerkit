@@ -36,6 +36,7 @@ export class AuthenticationService {
     public createUser(formData: any){
         return this.http.post<any>(`${this.endPointAuth}/register`, formData);
     }
+
     public get currentUserValue(): User {
         return this.currentUserSubject.value;
     }

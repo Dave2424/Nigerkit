@@ -55,7 +55,7 @@
                                         </span>
                             </a>
                         </div>
-                        <div class="indicator indicator--mobile">
+                        <div class="indicator indicator--mobile" *ngIf="is_cartNeeded">
                             <a href="" class="indicator__button">
                                         <span class="indicator__area">
                                             <svg width="20px" height="20px">
@@ -172,13 +172,12 @@
                         <!-- .nav-links / end -->
                         <div class="nav-panel__indicators">
                             <div class="indicator indicator--trigger--click">
-                                <a href="#" class="indicator__button">
+                                <a href="#" class="indicator__button" *ngIf="is_cartNeeded">
                                             <span class="indicator__area">
                                                 <svg width="20px" height="20px">
                                                     <use xlink:href="./assets/images/sprite.svg#cart-20"></use>
                                                 </svg>
                                                 <span class="indicator__value" *ngIf="count(cart_item) > 0">{{count(cart_item)}}</span>
-                                                <!--<span class="indicator__value" *ngIf="count(cart) > 0">{{count(cart)}}</span>-->
                                             </span>
                                 </a>
                                 <div class="indicator__dropdown" *ngIf="count(cart_item) > 0">
@@ -220,7 +219,7 @@
                                             </div>
                                             <div class="dropcart__buttons">
                                                 <!--<a class="btn btn-secondary" href="cart.html">View Cart</a>-->
-                                                <a class="btn btn-primary" [routerLink]="['/checkout', cart]">Checkout</a>
+                                                <a class="btn btn-primary" [routerLink]="['/cart']">Checkout</a>
                                             </div>
                                         </div>
                                     </div>
@@ -228,7 +227,7 @@
                                 </div>
                             </div>
                             <div class="indicator indicator--trigger--click">
-                                <a href="account-login.html" class="indicator__button">
+                                <a class="indicator__button">
                                             <span class="indicator__area">
                                                   <svg width="20px" height="20px">
                                                     <use xlink:href="./assets/images/sprite.svg#person-20"></use>
@@ -270,7 +269,7 @@
                                             <div class="form-group account-menu__form-button">
                                                 <button type="submit" class="btn btn-primary btn-sm" [ladda]="loading" >Login</button>
                                             </div>
-                                            <div class="account-menu__form-link"><a href="account-login.html">Create An Account</a></div>
+                                            <div class="account-menu__form-link"><a routerLink="signup">Create An Account</a></div>
                                             <div *ngIf="error" class="alert alert-danger">{{error}}</div>
                                         </form>
                                         <div class="account-menu__divider"></div>

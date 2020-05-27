@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map, delay } from 'rxjs/operators';
 import {AuthenticationService} from "./authentication.service";
-// import { User } from '../_models';
-// import * as _ from 'lodash';
+import {debounceTime} from "rxjs/internal/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +23,11 @@ export class BaseService {
     })
   };
 
+  //Google Api Calls
+  public googleSearchPlaces( query:any ){
+    return this.http.post(`${this.endpoint}/address-search-places`, {query:query}).pipe(debounceTime(800));
+  }
+
   public all_product(){
     return this.http.get(`${this.endpoint}/get-product`);
   }
@@ -36,5 +39,11 @@ export class BaseService {
   }
   public banner_sr() {
     return this.http.get(`${this.endpoint}/get-banner_sr`);
+  }
+  public product_details(id) {
+    return this.http.get(`${this.endpoint}/get-product-related-details/${id}`);
+  }
+  public get_skuNos() {
+    return this.http.get(`${this.endpoint}/get-sku_No`);
   }
 }

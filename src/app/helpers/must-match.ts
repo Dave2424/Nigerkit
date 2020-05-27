@@ -6,10 +6,10 @@ export function MustMatch(controlName: string, matchingControlName: string) {
         const control = formGroup.controls[controlName];
         const matchingControl = formGroup.controls[matchingControlName];
 
-        // if (matchingControl.errors && !matchingControl.errors.mustMatch) {
-        //     // return if another validator has already found an error on the matchingControl
-        //     return;
-        // }
+        if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+            // return if another validator has already found an error on the matchingControl
+            return;
+        }
 
         // set error on matchingControl if validation fails
         if (control.value !== matchingControl.value) {
@@ -17,5 +17,5 @@ export function MustMatch(controlName: string, matchingControlName: string) {
         } else {
             matchingControl.setErrors(null);
         }
-    }
+    };
 }
