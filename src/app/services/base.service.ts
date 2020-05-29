@@ -25,7 +25,7 @@ export class BaseService {
 
   //Google Api Calls
   public googleSearchPlaces( query:any ){
-    return this.http.post(`${this.endpoint}/address-search-places`, {query:query}).pipe(debounceTime(800));
+    return this.http.post(`${this.endpoint}/address-search-places`, {query: query}).pipe(debounceTime(8000));
   }
 
   public all_product(){

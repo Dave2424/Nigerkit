@@ -160,12 +160,12 @@ export class HomeComponent implements OnInit {
         };
 
 
-        //check if user is logged in
+        // check if user is logged in
         if (this.currentUser) {
             this.storeService.AddToCart(toCart)
                 .subscribe( (resp:any) => {
 
-                    //first check for notice
+                    // first check for notice
                     if (!this.checkForError(resp)) {
                         this.cart = resp.items;
                         this.cart_to_ = this.cart;
@@ -191,6 +191,7 @@ export class HomeComponent implements OnInit {
 
                     data.product = item.product;
                     data.quantity = 1;
+                    data.amount = 0;
 
                     $array.push(data);
                     localStorage.setItem('cart_Items', JSON.stringify($array));
@@ -211,6 +212,7 @@ export class HomeComponent implements OnInit {
                     .subscribe((item:any) => {
                         data.product = item.product;
                         data.quantity = 1;
+                        data.amount = 0;
 
                         cartItems.push(data);
                         localStorage.setItem('cart_Items', JSON.stringify(cartItems));

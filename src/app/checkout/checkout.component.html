@@ -21,13 +21,31 @@
                             <div class="form-group col-md-6">
                                 <label for="checkout-phone">Phone</label>
                                 <input type="text" [disabled]="disabled" class="form-control"
-                                       id="checkout-phone" [(ngModel)]="userData.phone" placeholder="Phone">
+                                       id="checkout-phone" [(ngModel)]="userData.phone" placeholder="Phone" (keyup)="checkPhone($event)">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="checkout-address">Address</label>
-                            <input type="text" [disabled]="disabled" class="form-control"
-                                   id="checkout-address" [(ngModel)]="userData.address" placeholder="Address">
+                            <div style="width:100%; z-index:9999 !important;" class="ng-autocomplete mt-3" *ngIf="hasphone">
+                                <ng-autocomplete [(ngModel)]="userData.address" [isLoading]="searching" [searchKeyword]="'name'"
+                                    [disabled]="disabled"
+                                    [data]="suggestions" (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
+                                    [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+                                </ng-autocomplete>
+                                <ng-template #itemTemplate let-item>
+                                    <a [innerHTML]="item.name"></a>
+                                </ng-template>
+                            
+                                <ng-template #notFoundTemplate let-notFound>
+                                    <div [innerHTML]="addressNotFound"></div>
+                                </ng-template>
+                            </div>
+                            <br />
+                            <span *ngIf="addressError" class="text-danger mt-3" [innerHtml]="addressError"></span>
+                            
+                            <div *ngIf="verifyError" class="notice_bar danger mt-3 shadow text-center">
+                                <p class="text-danger">{{ verifyError }}</p>
+                            </div>
                         </div>
 
                         <div class="form-group mt-4">
@@ -48,7 +66,7 @@
                     <div class="card-divider"></div>
                 </div>
             </div>
-            <div class="col-12 col-lg-6 col-xl-5 mt-4 mt-lg-0">
+            <div class="col-12 col-lg-6 col-xl-5 mt-4 mt-lg-0" *ngIf="proceed">
                 <div class="card mb-0">
                     <div class="card-body">
                         <h3 class="card-title">Your Order</h3>
@@ -72,25 +90,25 @@
                             </tr>
                             <tr>
                                 <th>Delivery fee</th>
-                                <td>$-20.00</td>
+                                <td>{{deliveryFee| number:0}}</td>
                             </tr>
                             <tr>
                                 <th>VAT Fee</th>
-                                <td>$25.00</td>
+                                <td>{{percentage}}</td>
                             </tr>
                             </tbody>
                             <tfoot class="checkout__totals-footer">
                             <tr>
-                                <th>Total</th>
-                                <td>$5,882.00</td>
+                                <th>GrandTotal</th>
+                                <td>{{grandTotal | number:0}}</td>
                             </tr>
                             </tfoot>
                         </table>
-                        <button type="submit" class="btn btn-primary btn-block mb-2" (click)="calculateDeliveryFee(cart)" [ladda]="calculating">Proceed</button>
                         <div class="payment-methods">
-                          <button angular4-paystack [key]="transactionKey" [email]="userData.email" [amount]="1000+'00'"
+                          <button  angular4-paystack [key]="transactionKey" [email]="userData.email" [amount]="grandTotal+'00'"
                             [ref]="transactionRef.value" [class]="'btn btn-primary'" (close)="transactionCancelled()"
                             (callback)="transactionSuccessful($event)"
+                            [ladda]="processing"
                             class="btn btn-round btn-primary waves-effect btn-block">
                             Place Order
                           </button>

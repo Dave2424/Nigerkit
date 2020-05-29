@@ -69,10 +69,10 @@ export class StoreService {
 		return this.http.post(`${this.endpoint}/store/store-add-to-cart`, data);
 	}
 
-	public CalculateDelivery(data:any){
-		return this.http.post(`${this.endpoint}/store-calculate-delivery`, data);
+	public CalculateDelivery(formData: any ) {
+		return this.http.post(`${this.endpoint}/store/store-calculate-delivery`, formData);
 	}
-	public CalculateProduct(data:any){
+	public CalculateProduct(data: any ) {
 		return this.http.post(`${this.endpoint}/store-calculate-product`, data);
 	}
 
