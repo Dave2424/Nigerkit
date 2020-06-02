@@ -1,3 +1,4 @@
+import { BlogResolve } from './resolvers/blog.resolver';
 import {
   BrowserModule,
   HAMMER_GESTURE_CONFIG,
@@ -9,15 +10,15 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./shared/header/header.component";
 import { FooterComponent } from "./shared/footer/footer.component";
-import { HomeComponent } from "./home/home.component";
+import { HomeComponent } from "./pages/home/home.component";
 import { HomeMainComponent } from "./home-main/home-main.component";
 import { SlickCarouselModule } from "ngx-slick-carousel";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { JwtInterceptor } from "./helpers/jwt.interceptor";
 import { ErrorInterceptor } from "./helpers/error.interceptor";
-import { ProductsComponent } from "./products/products.component";
-import { BannersComponent } from "./banners/banners.component";
+import { ProductsComponent } from "./pages/products/products.component";
+import { BannersComponent } from "./pages/banners/banners.component";
 import { LaddaModule } from "angular7-ladda";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SnotifyModule, SnotifyService, ToastDefaults } from "ng-snotify";
@@ -31,15 +32,22 @@ import { ProductDetailsResolve } from "./resolvers/product.resolver";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatPaginatorModule } from "@angular/material";
 import { Angular4PaystackModule } from "angular4-paystack";
-import { CartComponent } from "./cart/cart.component";
-import { CheckoutComponent } from "./checkout/checkout.component";
+import { CartComponent } from "./pages/cart/cart.component";
+import { CheckoutComponent } from "./pages/checkout/checkout.component";
 import { AutocompleteLibModule } from "angular-ng-autocomplete";
-import { SignupComponent } from "./signup/signup.component";
+import { SignupComponent } from "./pages/signup/signup.component";
 import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
+import { ProfileComponent } from './pages/dashboard/profile/profile.component';
 import {
   GoogleLoginProvider,
   FacebookLoginProvider,
 } from "angularx-social-login";
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { OrderlistComponent } from './pages/dashboard/orderlist/orderlist.component';
+import { OrderdetailsComponent } from './pages/dashboard/orderdetails/orderdetails.component';
+import { PasswordComponent } from './pages/dashboard/password/password.component';
+import { BlogComponent } from './pages/blog/blog.component';
+import { PostComponent } from './pages/blog/post/post.component';
 
 const config = new AuthServiceConfig([
   {
@@ -69,6 +77,13 @@ export function provideConfig() {
     CartComponent,
     CheckoutComponent,
     SignupComponent,
+    ProfileComponent,
+    DashboardComponent,
+    OrderlistComponent,
+    OrderdetailsComponent,
+    PasswordComponent,
+    BlogComponent,
+    PostComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -107,6 +122,7 @@ export function provideConfig() {
     SnotifyService,
     BaseService,
     ProductDetailsResolve,
+    BlogResolve,
   ],
   bootstrap: [AppComponent],
 })

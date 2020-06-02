@@ -1,12 +1,15 @@
+import { BlogResolve } from './resolvers/blog.resolver';
+import { BlogComponent } from './pages/blog/blog.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {HomeComponent} from "./home/home.component";
-import {ProductsComponent} from "./products/products.component";
+import {HomeComponent} from "./pages/home/home.component";
+import {ProductsComponent} from "./pages/products/products.component";
 import {ProductDetailsResolve} from "./resolvers/product.resolver";
-import {CartComponent} from "./cart/cart.component";
-import {CheckoutComponent} from "./checkout/checkout.component";
+import {CartComponent} from "./pages/cart/cart.component";
+import {CheckoutComponent} from "./pages/checkout/checkout.component";
 import {CheckOutGuard} from "./guards/checkout.guard";
-import { SignupComponent } from './signup/signup.component';
+import { SignupComponent } from './pages/signup/signup.component';
 
 
 const routes: Routes = [
@@ -19,6 +22,10 @@ const routes: Routes = [
   {path: 'cart', component: CartComponent},
   {path: 'checkout', component: CheckoutComponent, canActivate:[CheckOutGuard]},
   {path: 'signup', component: SignupComponent},
+  {path: 'dashboard', component: DashboardComponent},
+  {path: 'blog', component: BlogComponent,
+    resolve: {blogdetails: BlogResolve}
+  },
 
 // otherwise redirect to home
   { path: '**', redirectTo: '' }

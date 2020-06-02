@@ -161,7 +161,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-links__item  nav-links__item--has-submenu ">
-                                    <a class="nav-links__item-link" href="#">
+                                    <a class="nav-links__item-link" [routerLink]="['/blog']">
                                         <div class="nav-links__item-body">
                                             Blog
                                         </div>
@@ -233,7 +233,7 @@
                                                     <use xlink:href="./assets/images/sprite.svg#person-20"></use>
                                                 </svg>
                                             </span>
-                                    <span *ngIf="currentUser">Hey {{currentUser.name}}</span>
+                                    <span *ngIf="currentUser">Hey {{currentUser.fname}}</span>
                                 </a>
                                 <div class="indicator__dropdown">
                                     <div class="account-menu">
@@ -279,14 +279,14 @@
                                                     <img src="./assets/images/avatars/avatar-3.jpg" alt="">
                                                 </div>
                                                 <div class="account-menu__user-info">
-                                                    <div class="account-menu__user-name">{{currentUser.name}}</div>
+                                                    <div class="account-menu__user-name">{{currentUser.fname}}</div>
                                                     <div class="account-menu__user-email">{{currentUser.email}}</div>
                                                 </div>
                                             </a>
                                             <div class="account-menu__divider"></div>
                                             <ul class="account-menu__links">
-                                                <li><a href="account-profile.html">Edit Profile</a></li>
-                                                <li><a href="account-orders.html">Order History</a></li>
+                                                <li><a [routerLink]="['/dashboard']">Edit Profile</a></li>
+                                                <li><a [routerLink]="['/dashboard']">Order History</a></li>
                                             </ul>
                                             <div class="account-menu__divider"></div>
                                             <ul class="account-menu__links">

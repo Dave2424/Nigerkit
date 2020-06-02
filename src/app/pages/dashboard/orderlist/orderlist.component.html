@@ -1,0 +1,84 @@
+    <div class="card">
+        <div class="card-header">
+            <h5>Order History</h5>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-table">
+            <div class="table-responsive-sm">
+            <table>
+                <thead>
+                <tr>
+                    <th>Order</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let list of lists">
+                    <td><a style="cursor: pointer;" class="mex_"
+                        (click)="navigate(list.identifier_id)">#{{list.identifier_id}}</a>
+                    </td>
+                    <td>{{list.created_at | date: 'medium'}}</td>
+                    <!-- <td *ngIf="list.flag == 0">Paid|Not shipped</td> -->
+                    <td *ngIf="list.flag == 0"><span class="badge badge-success">Paid</span> &nbsp; <span class="badge badge-warning">Not
+                        shipped</span></td>
+                    <td *ngIf="list.flag == 1"><span class="badge badge-success">Shipped</span></td>
+
+
+                    <td>{{list.amount | number:0}}</td>
+                </tr>
+                <tr *ngIf="count(orderlist) == 0">
+                  <td colspan="4" style="text-align: center;">No record</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            <div class="style" *ngIf="show">
+              <div class="lds-facebook">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+        </div>
+        <div class="card-divider"></div>
+        <div class="card-footer" *ngIf="orderlist">
+            <div class="row">
+                <div class="col-sm-7">
+                  <ul class="pagination justify-content-start" *ngIf="orderlist.total > orderlist.per_page">
+                    <li class="page-item" (click)="firstPage(orderlist)">
+                      <a class="page-link page-link--with-arrow"><i class="fa fa-angle-double-left"></i></a>
+                    </li>
+                    <li class="page-item" *ngIf="orderlist.prev_page_url">
+                      <a class="page-link page-link--with-arrow" aria-label="Previous" (click)="Previous(orderlist)">
+                        <svg class="page-link__arrow page-link__arrow--left" aria-hidden="true" width="8px"
+                          height="13px">
+                          <use xlink:href="assets/images/sprite.svg#arrow-rounded-left-8x13"></use>
+                        </svg>
+                      </a>
+                    </li>
+                    <li class="page-item active"><a class="page-link">{{ orderlist.current_page }} <span
+                          class="sr-only">(current)</span></a></li>
+                    <li class="page-item" *ngIf="orderlist.next_page_url">
+                      <a class="page-link page-link--with-arrow" aria-label="Next" (click)="next(orderlist)">
+                        <svg class="page-link__arrow page-link__arrow--right" aria-hidden="true" width="8px"
+                          height="13px">
+                          <use xlink:href="assets/images/sprite.svg#arrow-rounded-right-8x13"></use>
+                        </svg>
+                      </a>
+                    </li>
+                    <li class="kt-pagination__link--first" *ngIf="orderlist.last_page_url">
+                      <a class="page-link page-link--with-arrow" ng-click="lastPage(orderlist)"><i
+                          class="fa fa-angle-double-right"></i></a>
+                    </li>
+                  </ul>
+
+                </div>
+                <div class="col-sm-5">
+                  <p class="justify-content-end" style="text-align: end;">
+                    Displaying {{ orderlist.to }} of {{ orderlist.total }} records </p>
+                </div>
+            </div>
+        </div>
+</div>

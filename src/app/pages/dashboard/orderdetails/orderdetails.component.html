@@ -1,0 +1,62 @@
+  <div class="card" *ngIf="details">
+    <div class="order-header">
+      <!-- <div class="order-header__actions">
+        <a href="account-orders.html" class="btn btn-xs btn-secondary">Back to list</a>
+      </div> -->
+      <h5 class="order-header__title">Order #{{details.identifier_id}}</h5>
+      <div class="order-header__subtitle">
+        Was placed on <mark class="order-header__date">{{details.created_at  | date: 'medium'}}</mark>
+        and is currently <mark class="order-header__status">
+          <span *ngIf="details.flag == 0"
+            class="badge badge-success">Paid</span> <span style="margin-left: 2px;" class="badge badge-warning">Not shipped</span>
+            <span *ngIf="details.flag == 1" class="badge badge-success">Shipped</span>
+          </mark>
+      </div>
+    </div>
+    <div class="card-divider"></div>
+    <div class="card-table">
+      <div class="table-responsive-sm">
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody class="card-table__body card-table__body--merge-rows">
+            <tr *ngFor="let item of orderedItem">
+              <td>{{item.product_name}} (&#8358;{{item.unit_cost| number:0}}) × {{item.quantity}}</td>
+              <td>&#8358; {{item.unit_cost * item.quantity | number:0}}</td>
+            </tr>
+          </tbody>
+          <tbody class="card-table__body card-table__body--merge-rows">
+            <tr>
+              <th>Subtotal</th>
+              <td>&#8358; {{details.user_invoice.sub_total| number:0}}</td>
+            </tr>
+            <tr>
+              <th>Delivery fee</th>
+              <td>&#8358; {{1000 | number: 0}}</td>
+            </tr>
+            <tr>
+              <th>VAT Fee</th>
+              <td>&#8358; {{vatfee * details.user_invoice.sub_total / 100}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Total</th>
+              <td>&#8358; {{details.user_invoice.total| number:0}}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="style" *ngIf="count(details) == 0">
+  <div class="lds-facebook">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>

@@ -8,10 +8,15 @@
                     <div class="card-body">
                         <h3 class="card-title">Shipping Details</h3>
                         <div class="form-group">
-                            <label for="checkout-name">Name</label>
+                            <label for="checkout-name">First name</label>
                             <input type="text" [disabled]="disabled" class="form-control"
-                                   id="checkout-name" [(ngModel)]="userData.name" placeholder="Name">
+                                   id="checkout-fname" [(ngModel)]="userData.fname" placeholder="First name">
                         </div>
+                          <div class="form-group">
+                            <label for="checkout-name">Last name</label>
+                            <input type="text" [disabled]="disabled" class="form-control" id="checkout-lname"
+                              [(ngModel)]="userData.lname" placeholder="Last name">
+                          </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="checkout-email">Email address</label>

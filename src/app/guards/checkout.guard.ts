@@ -10,7 +10,7 @@ export class CheckOutGuard implements CanActivate {
     }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        this.checkout = JSON.parse(localStorage.getItem('ready_to_buy'));
+        this.checkout = JSON.parse(localStorage.getItem('cart_Items'));
         if (this.checkout)
             return true;
         else

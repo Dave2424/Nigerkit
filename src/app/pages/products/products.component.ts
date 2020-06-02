@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import * as _ from 'lodash';
-import {Subscription} from "rxjs/index";
-import {StoreService} from "../services/store.service";
-import {AuthenticationService} from "../services/authentication.service";
-import {User} from "../models/user";
+import {Subscription} from "rxjs";
+import {StoreService} from "../../services/store.service";
+import {AuthenticationService} from "../../services/authentication.service";
+import {User} from "../../models/user";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgxGalleryAnimation, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOptions} from "ngx-gallery";
 import {MatPaginator,PageEvent} from '@angular/material';
-import {Product} from "../models/product";
+import {Product} from "../../models/product";
 
 @Component({
   selector: 'app-products',

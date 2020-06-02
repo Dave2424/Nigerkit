@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Subscription} from "rxjs/index";
-import {StoreService} from "../services/store.service";
-import {AuthenticationService} from "../services/authentication.service";
-import {User} from "../models/user";
+import {Subscription} from "rxjs";
+import {StoreService} from "../../services/store.service";
+import {AuthenticationService} from "../../services/authentication.service";
+import {User} from "../../models/user";
 import * as _ from 'lodash';
-import {BaseService} from "../services/base.service";
+import {BaseService} from "../../services/base.service";
 
 @Component({
   selector: 'app-cart',
@@ -135,7 +135,7 @@ export class CartComponent implements OnInit {
     this.updateCartWithSku();
   }
   addCartToLocal(cart) {
-    localStorage.setItem('ready_to_buy', JSON.stringify(cart));
+    localStorage.setItem('cart_Items', JSON.stringify(cart));
   }
 
 }

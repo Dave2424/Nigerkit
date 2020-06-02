@@ -28,6 +28,14 @@ export class BaseService {
     return this.http.post(`${this.endpoint}/address-search-places`, {query: query}).pipe(debounceTime(8000));
   }
 
+  // Update user profile
+  public update(formData: any) {
+    return this.http.post<any>(`${this.endpoint}/update`, formData);
+  }
+  public updateUserData(formData: any, id: number) {
+    return this.http.post<any>(`${this.endpoint}/update-password-data/${id}`, formData);
+  }
+
   public all_product(){
     return this.http.get(`${this.endpoint}/get-product`);
   }
@@ -45,5 +53,9 @@ export class BaseService {
   }
   public get_skuNos() {
     return this.http.get(`${this.endpoint}/get-sku_No`);
+  } 
+  public vatFee() {
+    return this.http.get(`${this.endpoint}/vatfee`);
   }
+
 }

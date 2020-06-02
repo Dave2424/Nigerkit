@@ -1,0 +1,142 @@
+<app-header [is_cartNeeded]="false"></app-header>
+
+  <div class="block mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-lg-3 d-flex">
+          <div class="account-nav flex-grow-1">
+            <h4 class="account-nav__title">Navigation</h4>
+            <ul>
+              <li class="account-nav__item" 
+                [ngClass]="{'account-nav__item--active': url == 'dashboard' || url == ''}">
+                <a (click)="navigate('dashboard')" style="cursor: pointer;">Dashboard</a>
+              </li>
+              <li class="account-nav__item " 
+                [ngClass]="{'account-nav__item--active': url == 'profile'}">
+                <a (click)="navigate('profile')" style="cursor: pointer;">Edit Profile</a>
+              </li>
+              <li class="account-nav__item" 
+                [ngClass]="{'account-nav__item--active': url == 'orderlist'}">
+                <a (click)="navigate('orderlist')" style="cursor: pointer;">Order History</a>
+              </li>
+              <li class="account-nav__item " [ngClass]="{'account-nav__item--active': url == 'orderdetails'}">
+                <a style="cursor: pointer;">Order Details</a>
+              </li>
+              <li class="account-nav__item " [ngClass]="{'account-nav__item--active': url == 'password'}">
+                <a (click)="navigate('password')" style="cursor: pointer;">Password</a>
+              </li>
+              <li class="account-nav__item ">
+                <a (click)="logout()" style="cursor: pointer;">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-12 col-lg-9 mt-4 mt-lg-0">
+
+            <!-- Dashboard -->
+          <div class="dashboard" *ngIf="url == 'dashboard' || url == ''">
+            <div class="dashboard__profile card profile-card">
+              <div class="card-body profile-card__body">
+                <div class="profile-card__avatar">
+                  <img src="assets/images/avatars/avatar.jpg" alt="profile picture">
+                </div>
+                <div class="profile-card__name">{{currentUser.name}}</div>
+                <div class="profile-card__email">{{currentUser.email}}</div>
+                <div class="profile-card__edit">
+                  <button class="btn btn-secondary btn-sm">Edit Profile</button>
+                </div>
+              </div>
+            </div>
+            <div class="dashboard__address card address-card address-card--featured">
+              <div class="address-card__badge">Profile detail</div>
+              <div class="address-card__body">
+                <div class="address-card__name">{{currentUser.fname}} {{currentUser.lname}}</div>
+                <div class="address-card__row">
+                  <div class="address-card__row-title">Address</div>
+                  <div class="address-card__row-content">{{currentUser.address}}</div>
+                </div>
+                <div class="address-card__row">
+                  <div class="address-card__row-title">Phone Number</div>
+                  <div class="address-card__row-content">{{currentUser.phone}}</div>
+                </div>
+                <div class="address-card__row">
+                  <div class="address-card__row-title">Email Address</div>
+                  <div class="address-card__row-content">{{currentUser.email}}</div>
+                </div>
+                <!-- <div class="address-card__footer">
+                  <a href="account-edit-address.html">Edit Address</a>
+                </div> -->
+              </div>
+            </div>
+            <div class="dashboard__orders card">
+              <div class="card-header">
+                <h5>Recent Orders</h5>
+              </div>
+              <div class="card-divider"></div>
+              <div class="card-table">
+                <div class="table-responsive-sm">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Order</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <!-- *ngIf="recent" -->
+                          <tr *ngFor="let list of recent">
+                            <td><a style="cursor: pointer;" class="mex_" (click)="navigate('orderdetails',list.identifier_id)">#{{list.identifier_id}}</a>
+                            </td>
+                            <td>{{list.created_at | date: 'medium'}}</td>
+                            <td *ngIf="list.flag == 0"><span class="badge badge-success">Paid</span> &nbsp; <span class="badge badge-warning">Not shipped</span></td>
+                            <td *ngIf="list.flag == 1"><span class="badge badge-success">Shipped</span></td>
+                            <td>{{list.amount | number:0}}</td>
+                          </tr>
+                          <tr *ngIf="count(recent) == 0">
+                            <td colspan="4" style="text-align: center;">No record</td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                </div>
+
+                <div class="style" *ngIf="show">
+                    <div class="lds-facebook">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+          <!-- End of Dashboard -->
+
+          <!-- Profile -->
+          <app-profile *ngIf="url == 'profile'" [user]="currentUser"></app-profile>
+          <!-- End of profile-card -->
+
+          <!-- Orderlist -->
+          <app-orderlist *ngIf="url == 'orderlist'" (identifier)="getIdentifierdetail($event)"></app-orderlist>
+          <!-- End of Orderlist --> 
+
+          <!-- orderdetails -->
+          <app-orderdetails *ngIf="url == 'orderdetails'" [identifier]="identifier"></app-orderdetails>
+          <!-- End of orderdetails -->
+
+          <!-- Password -->
+          <app-password *ngIf="url == 'password'" (back)="back($event)"></app-password>
+          <!-- end of Password -->
+        </div>
+
+
+        
+      </div>
+    </div>
+  </div>
+<!-- </div> -->
+<!-- site__body / end -->   

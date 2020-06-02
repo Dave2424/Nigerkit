@@ -1,9 +1,9 @@
-import { AlertService } from "./../services/alert.service";
-import { AuthenticationService } from "./../services/authentication.service";
+import { AlertService } from "../../services/alert.service";
+import { AuthenticationService } from "../../services/authentication.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MustMatch } from "../helpers/must-match";
+import { MustMatch } from "../../helpers/must-match";
 import { first } from "rxjs/operators";
 import { AuthService, SocialUser } from "angularx-social-login";
 import {

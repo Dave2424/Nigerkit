@@ -3,7 +3,8 @@
  */
 export class User {
     id: any;
-    name: string;
+    fname: string;
+    lname:string;
     email: string;
     password: string;
     avatar: string;

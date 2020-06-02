@@ -47,6 +47,7 @@ export class HeaderComponent implements OnInit {
   ) {
     this.authenticationservice.currentUser.subscribe(
       (x) => (this.currentUser = x)
+  
     );
     this.categorySubscription = this.baseService
       .allCategory()
@@ -76,6 +77,7 @@ export class HeaderComponent implements OnInit {
       password: ["", [Validators.required, Validators.minLength(6)]],
     });
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || "/";
+    
   }
   handleResponse(data) {
     if (data.user && data.Access_token) {
@@ -87,6 +89,8 @@ export class HeaderComponent implements OnInit {
       this.authenticationservice.setUser(data.user);
       // set user access Data for later reference
       // this.authenticationservice.setUserData(data.accessData);
+      this.cart = this.getSavedCartInStorage();
+      // this.cart.user_id = this.currentUser.id;
       this.checkItems();
       this.router.navigate([this.returnUrl]);
     }

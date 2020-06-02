@@ -1,11 +1,11 @@
-import { AlertService } from './../services/alert.service';
+import { AlertService } from '../../services/alert.service';
 import {ChangeDetectorRef, Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {StoreService} from "../services/store.service";
-import {AuthenticationService} from "../services/authentication.service";
-import {Subscription} from "rxjs/index";
-import {User} from "../models/user";
+import {StoreService} from "../../services/store.service";
+import {AuthenticationService} from "../../services/authentication.service";
+import {Subscription} from "rxjs";
+import {User} from "../../models/user";
 import {ActivatedRoute, Router} from "@angular/router";
-import {BaseService} from "../services/base.service";
+import {BaseService} from "../../services/base.service";
 import * as _ from 'lodash';
 import {Guid} from "guid-typescript";
 
@@ -60,8 +60,9 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cart = JSON.parse(localStorage.getItem('ready_to_buy'));
-    this.userData.name = this.currentUser.name ? this.currentUser.name : '';
+    this.cart = JSON.parse(localStorage.getItem('cart_Items'));
+    this.userData.fname = this.currentUser.fname ? this.currentUser.fname : '';
+    this.userData.lname = this.currentUser.lname ? this.currentUser.lname : '';
     this.userData.email = this.currentUser.email ? this.currentUser.email : '';
     this.userData.phone = this.currentUser.phone ? this.currentUser.phone : 0;
     if (this.userData.phone.length != 11) {
@@ -161,10 +162,11 @@ export class CheckoutComponent implements OnInit {
     this.calculating = true;
     console.log(this.cart);
     let address = this.userData.address.name ? this.userData.address.name : this.userData.address;
+    let name = this.userData.fname + ' ' + this.userData.lname;
     let formData = new FormData();
     formData.append('cart_item', JSON.stringify(this.cart));
     formData.append('email', this.userData.email);
-    formData.append('name', this.userData.name);
+    formData.append('name', name);
     formData.append('phone', this.userData.phone);
     formData.append('delivery_address', address);
     formData.append('user_id', this.currentUser ? this.currentUser.id : 0);

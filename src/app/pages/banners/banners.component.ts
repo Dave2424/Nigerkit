@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {BaseService} from "../services/base.service";
-import {Subscription} from "rxjs/index";
-import {AuthenticationService} from "../services/authentication.service";
+import {BaseService} from "../../services/base.service";
+import {Subscription} from "rxjs";
+import {AuthenticationService} from "../../services/authentication.service";
 import * as _ from 'lodash';
 
 @Component({

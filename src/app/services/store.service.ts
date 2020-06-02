@@ -6,7 +6,6 @@ import * as _ from 'lodash';
 import { AuthenticationService } from './authentication.service';
 import {User} from "../models/user";
 
-
 @Injectable({
 	providedIn: 'root'
 })
@@ -83,4 +82,19 @@ export class StoreService {
 	public PlaceOrder(formData:any){
 		return this.http.post(`${this.endpoint}/store/store-place-order`, formData);
 	}
+	public OrderList(data: any) {
+		return this.http.get(`${this.endpoint}/store/order-list/${data}`);
+	}
+	public OrderListRecent(client_id: any) {
+		return this.http.get(`${this.endpoint}/store/order-list-recent/${client_id}`);
+	}
+	public OrderDetails(identifier: any) {
+		return this.http.get(`${this.endpoint}/store/order-detail/${identifier}`);
+	}
+
+	// Navigation on pagination
+	public Navigate(url: any) {
+		return this.http.get(url);
+	}
+	// End navigation on pagination
 }

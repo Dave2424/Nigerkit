@@ -1,12 +1,12 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {Subscription} from "rxjs/index";
-import {Product} from "../models/product";
-import {BaseService} from "../services/base.service";
+import {Subscription} from "rxjs";
+import {Product} from "../../models/product";
+import {BaseService} from "../../services/base.service";
 import * as _ from 'lodash';
-import {AuthenticationService} from "../services/authentication.service";
-import {User} from "../models/user";
-import {AlertService} from "../services/alert.service";
-import {StoreService} from "../services/store.service";
+import {AuthenticationService} from "../../services/authentication.service";
+import {User} from "../../models/user";
+import {AlertService} from "../../services/alert.service";
+import {StoreService} from "../../services/store.service";
 import { NgxSmartModalService } from 'ngx-smart-modal';
 import {NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryImageSize} from 'ngx-gallery';
 declare var $: any;
@@ -49,21 +49,24 @@ export class HomeComponent implements OnInit {
 
   checkItems() {
       if (this.currentUser) {
-          //user cart items
+          // user cart items
           this.cartSubscription = this.storeService.GetCartItems()
               .subscribe(items => {
                   this.cart = items;
               });
-      }else{
+      } else {
           this.cart = this.getSavedCartInStorage();
-          this.baseservice.get_skuNos().subscribe( data => {
-              data['sku'].forEach(item => {
-                  this.cart.forEach(cart => {
-                      if (item.id == cart.sku_id) {
-                          cart.sku_no = item;
-                      }
-                  });
-              });
+          this.baseservice.get_skuNos().subscribe( (data: any) => {
+            //   console.log(data);
+            if (this.cart) {
+                data.sku.forEach(item => {
+                    this.cart.forEach(cart => {
+                        if (item.id == cart.sku_id) {
+                            cart.sku_no = item;
+                        }
+                    });
+                });
+            }
           });
       }
   }
