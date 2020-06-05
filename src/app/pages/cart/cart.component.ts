@@ -24,7 +24,7 @@ export class CartComponent implements OnInit {
       private storeService: StoreService,
       private baseService: BaseService,
       private authenticationservice: AuthenticationService) {
-    this.authenticationservice.currentUser.subscribe(x => this.currentUser = x ) }
+    this.authenticationservice.currentUser.subscribe(x => this.currentUser = x );}
 
   ngOnInit() {
     this.checkItems();

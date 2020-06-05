@@ -40,20 +40,20 @@
                 <!-- .product__gallery / end -->
                 <!-- .product__info -->
                 <div class="product__info">
-                    <h1 class="product__name">{{product.name}}</h1>
+                    <h1 class="product__name">{{product['name']}}</h1>
                     <div class="product__rating">
                         <div class="product__rating-legend">
                             <a href="#" *ngIf="count(reviews) > 0">{{count(reviews)}} Reviews</a>
                         </div>
                     </div>
                     <div class="product__description">
-                        {{product.description}}
+                        {{product['description']}}
                     </div>
                     <ul class="product__meta">
                         <li class="product__meta-availability">Availability:
-                            <span  [ngClass]="product.quantity > 0 ? 'text-avail': 'text-Unavail'">{{avail(product.quantity)}}</span>
+                            <span  [ngClass]="product['quantity'] > 0 ? 'text-avail': 'text-Unavail'">{{avail(product['quantity'])}}</span>
                         </li>
-                        <li>Brand: <a href="">{{product.brand}}</a></li>
+                        <li>Brand: <a href="">{{product['brand']}}</a></li>
                         <li>SKU: {{relateDetails.sku.sku_no}}</li>
                     </ul>
                 </div>
@@ -64,7 +64,7 @@
                         Availability: <span class="text-success">In Stock</span>
                     </div>
                     <div class="product__prices">
-                        &#8358;{{product.price | number:0}}
+                        &#8358;{{product['price'] | number:'0'}}
                     </div>
                     <!-- .product__options -->
                     <form class="product__options">

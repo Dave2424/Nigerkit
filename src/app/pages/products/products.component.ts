@@ -19,9 +19,9 @@ export class ProductsComponent implements OnInit {
   private cart:any = [];
   private cartSubscription: Subscription;
   currentUser: User;
-  public relateDetails : any = {};
-  private product: Product[] = [];
-  private reviews: any[] = [];
+  relateDetails : any = {};
+  product: Product[] = [];
+  reviews: any[] = [];
   public img_file: any;
 
   galleryOptions: NgxGalleryOptions[];

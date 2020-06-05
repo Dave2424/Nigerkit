@@ -25,8 +25,8 @@ export class HeaderComponent implements OnInit {
   submitted = false;
   error = "";
   returnUrl: string;
-  private cart: any = [];
-  private category: any = [];
+  cart: any = [];
+  category: any = [];
   private banners: any = [];
   private cartSubscription: Subscription;
   private categorySubscription: Subscription;

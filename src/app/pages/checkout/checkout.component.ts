@@ -21,7 +21,7 @@ export class CheckoutComponent implements OnInit {
   public cart_to_ : any;
   private cartSubscription: Subscription;
   currentUser: User;
-  transactionRef:Guid;
+  public transactionRef:Guid;
   searching: boolean = false;
   public addressError:string = '';
   public verifyError:string = '';

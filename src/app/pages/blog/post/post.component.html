@@ -9,11 +9,11 @@
                     <div class="post-header__categories">
                         <a href="">Latest news</a>
                     </div>
-                    <h1 class="post-header__title">{{details.title}}</h1>
+                    <h1 class="post-header__title">{{details['title']}}</h1>
                     <div class="post-header__meta">
                         <!-- <div class="post-header__meta-item">By <a href="">Jessica Moore</a></div> -->
-                        <div class="post-header__meta-item"><a >{{details.time | date:'longDate'}}</a></div>
-                        <div class="post-header__meta-item"><a>{{count(details.comment)}} comments</a></div>
+                        <div class="post-header__meta-item"><a >{{details['time'] | date:'longDate'}}</a></div>
+                        <div class="post-header__meta-item"><a>{{count(details['comment'])}} comments</a></div>
                     </div>
                 </div>
                 <div class="post__featured">
@@ -22,7 +22,7 @@
                     </a>
                 </div>
                 <div class="post__content typography ">
-                    <p [innerHTML]="details.body"></p>
+                    <p [innerHTML]="details['body']"></p>
                 </div>
                 <div class="post__footer" style="margin-top: 40px;">
                     <div class="post__tags-share-links" style="margin-bottom: 0;">
@@ -40,10 +40,10 @@
                 </div>
 
                 <section class="post__section">
-                    <h4 class="post__section-title">Comments ({{count(details.comment)}})</h4>
+                    <h4 class="post__section-title">Comments ({{count(details['comment'])}})</h4>
                     <ol class="comments-list comments-list--level--0">
-                        <li class="comments-list__item" *ngIf="details.comment">
-                            <div class="comment mb-2" *ngFor="let comment of details.comment">
+                        <li class="comments-list__item" *ngIf="details['comment']">
+                            <div class="comment mb-2" *ngFor="let comment of details['comment']">
                                 <div class="comment__avatar">
                                     <a href=""><img [src]="Image_data('', 'avatar', 'null')"></a>
                                 </div>

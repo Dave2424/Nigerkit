@@ -25,7 +25,7 @@
                         <li *ngIf="item.sku_no">Sku: {{item.sku_no.sku_no}}</li>
                     </ul>
                 </td>
-                <td class="cart-table__column cart-table__column--price" data-title="Price"> &#8358; {{item.product.price | number:0}}</td>
+                <td class="cart-table__column cart-table__column--price" data-title="Price"> &#8358; {{item.product.price | number:'0'}}</td>
                 <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
                     <div class="input-number">
                         <input class="form-control input-number__input" disabled type="number" min="1" value="{{item.quantity}}">
@@ -33,7 +33,7 @@
                         <div class="input-number__sub" (click)="decrease(item)"></div>
                     </div>
                 </td>
-                <td class="cart-table__column cart-table__column--total" data-title="Total">&#8358; {{calculateTotal(item) | number:0}}</td>
+                <td class="cart-table__column cart-table__column--total" data-title="Total">&#8358; {{calculateTotal(item) | number:'0'}}</td>
                 <td class="cart-table__column cart-table__column--remove">
                     <button type="button" class="btn btn-light btn-sm btn-svg-icon" (click)="removeFromCart(item)">
                         <svg width="12px" height="12px">
@@ -46,7 +46,7 @@
             <tfoot class="cart-table__head">
                 <tr class="cart-table__row">
                     <th class="cart-table__column" style="font-weight: 500;text-align: end"
-                        colspan="6">Subtotal &#8358; {{Subtotal(item) | number:0}}</th>
+                        colspan="6">Subtotal &#8358; {{Subtotal() | number:'0'}}</th>
                 </tr>
             </tfoot>
         </table>

@@ -11,7 +11,7 @@ import * as _ from 'lodash';
 })
 export class BannersComponent implements OnInit {
 
-  private banners: any = [];
+  banners: any = [];
   private bannerSubscription: Subscription;
 
   bannerSlideConfig = {"slidesToShow": 1, "slidesToScroll": 1, "autoplay": true, "autoplaySpeed": 5000};
