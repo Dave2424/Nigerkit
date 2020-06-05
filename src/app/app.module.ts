@@ -1,3 +1,4 @@
+import { BlogDetailsResolve } from './resolvers/blogdetails.resolver';
 import { BlogResolve } from './resolvers/blog.resolver';
 import {
   BrowserModule,
@@ -47,7 +48,8 @@ import { OrderlistComponent } from './pages/dashboard/orderlist/orderlist.compon
 import { OrderdetailsComponent } from './pages/dashboard/orderdetails/orderdetails.component';
 import { PasswordComponent } from './pages/dashboard/password/password.component';
 import { BlogComponent } from './pages/blog/blog.component';
-import { PostComponent } from './pages/blog/post/post.component';
+import { PostComponent } from "./pages/blog/post/post.component";
+import { LineTruncationLibModule } from 'ngx-line-truncation';
 
 const config = new AuthServiceConfig([
   {
@@ -101,6 +103,7 @@ export function provideConfig() {
     MatPaginatorModule,
     Angular4PaystackModule,
     SocialLoginModule,
+    LineTruncationLibModule,
     NgxSmartModalModule.forRoot(),
     LaddaModule.forRoot({
       style: "expand-right",
@@ -123,6 +126,7 @@ export function provideConfig() {
     BaseService,
     ProductDetailsResolve,
     BlogResolve,
+    BlogDetailsResolve,
   ],
   bootstrap: [AppComponent],
 })

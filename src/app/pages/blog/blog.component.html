@@ -3,25 +3,6 @@
     <div class="site__body">
       <div class="page-header">
         <div class="page-header__container container">
-          <!-- <div class="page-header__breadcrumb">
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                  <a href="index.html">Home</a>
-                  <svg class="breadcrumb-arrow" width="6px" height="9px">
-                    <use xlink:href="images/sprite.svg#arrow-rounded-right-6x9"></use>
-                  </svg>
-                </li>
-                <li class="breadcrumb-item">
-                  <a href="">Breadcrumb</a>
-                  <svg class="breadcrumb-arrow" width="6px" height="9px">
-                    <use xlink:href="images/sprite.svg#arrow-rounded-right-6x9"></use>
-                  </svg>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">Latest News</li>
-              </ol>
-            </nav>
-          </div> -->
           <div class="page-header__title">
             <h1>Latest News</h1>
           </div>
@@ -41,19 +22,15 @@
                             <img src="{{blog.image}}" alt="">
                           </a>
                         </div>
-                        <div class="post-card__info">
+                        <div class="post-card__info" style="display: flex;">
                           <div class="post-card__category">
                             <a href="">Special Offers</a>
                           </div>
                           <div class="post-card__name">
-                            <a href="">{{blog.title}}</a>
+                            <a [routerLink]="['/blog', blog.id]">{{blog.title}}</a>
                           </div>
                           <div class="post-card__date">{{blog.time | date:'longDate'}}</div>
-                          <div class="post-card__content">{{blog.body}}
-                          </div>
-                          <div class="post-card__read-more">
-                            <a href="" class="btn btn-secondary btn-sm">Read More</a>
-                          </div>
+                          <div class="post-card__content" [line-truncation]="3" [innerHTML]="blog.body"></div>
                         </div>
                       </div>
                     </div>

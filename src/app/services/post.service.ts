@@ -24,6 +24,13 @@ export class PostService {
   public getPost() {
     return this.http.get(`${this.endpoint}/post/get-all-post`);
   }
+  public getPostDetails(postId) {
+    return this.http.get(`${this.endpoint}/post/get-post-details/${postId}`);
+  }
+  public sendComment(formData: any) {
+    return this.http.post(`${this.endpoint}/post/send-comment`, formData);
+  }
+  
   // Navigation on pagination
   public Navigate(url: any) {
     return this.http.get(url);

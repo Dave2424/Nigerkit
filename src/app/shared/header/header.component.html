@@ -139,29 +139,29 @@
                         <!-- .nav-links -->
                         <div class="nav-panel__nav-links nav-links">
                             <ul class="nav-links__list">
-                                <li class="nav-links__item  nav-links__item--has-submenu ">
-                                    <a class="nav-links__item-link active" href="#">
-                                        <div class="nav-links__item-body">
-                                            Home
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="nav-links__item  nav-links__item--has-submenu ">
-                                    <a class="nav-links__item-link" href="#">
-                                        <div class="nav-links__item-body">
-                                            Megamenu
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="nav-links__item  nav-links__item--has-submenu ">
-                                    <a class="nav-links__item-link" href="#">
+                                <li class="nav-links__item nav_hover">
+                                    <a class="nav-links__item-link active" [routerLink]="['']">
                                         <div class="nav-links__item-body">
                                             Shop
                                         </div>
                                     </a>
                                 </li>
-                                <li class="nav-links__item  nav-links__item--has-submenu ">
-                                    <a class="nav-links__item-link" [routerLink]="['/blog']">
+                                <!-- <li class="nav-links__item  nav-links__item--has-submenu ">
+                                    <a class="nav-links__item-link" href="#">
+                                        <div class="nav-links__item-body">
+                                            Megamenu
+                                        </div>
+                                    </a>
+                                </li> -->
+                                <!-- <li class="nav-links__item  nav-links__item--has-submenu ">
+                                    <a class="nav-links__item-link">
+                                        <div class="nav-links__item-body">
+                                            Shop
+                                        </div>
+                                    </a>
+                                </li> -->
+                                <li class="nav-links__item">
+                                    <a class="nav-links__item-link  nav_hover" [routerLink]="['/blog']">
                                         <div class="nav-links__item-body">
                                             Blog
                                         </div>
@@ -172,7 +172,7 @@
                         <!-- .nav-links / end -->
                         <div class="nav-panel__indicators">
                             <div class="indicator indicator--trigger--click">
-                                <a href="#" class="indicator__button" *ngIf="is_cartNeeded">
+                                <a class="indicator__button nav_hover" *ngIf="is_cartNeeded">
                                             <span class="indicator__area">
                                                 <svg width="20px" height="20px">
                                                     <use xlink:href="./assets/images/sprite.svg#cart-20"></use>
@@ -187,7 +187,7 @@
                                             <div class="dropcart__products-list">
                                                 <div class="dropcart__product" *ngFor="let item of cart_item">
                                                     <div class="dropcart__product-image">
-                                                        <a href="product.html">
+                                                        <a [routerLink]="['/product', item.product.id]">
                                                             <img [src]="Image_data(item.product.files[0],'avatar', 'null')" alt=""></a>
                                                     </div>
                                                     <div class="dropcart__product-info">
@@ -258,7 +258,7 @@
                                                            formControlName="password"
                                                            [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
                                                            class="form-control form-control-sm" placeholder="Password">
-                                                    <a href="" class="account-menu__form-forgot-link"
+                                                    <a class="account-menu__form-forgot-link"
                                                        [ngClass]="{'is-invalidx': submitted && f.password.errors}">Forgot?</a>
                                                     <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                                                         <div *ngIf="f.password.errors.required">Password is required</div>
@@ -274,7 +274,7 @@
                                         </form>
                                         <div class="account-menu__divider"></div>
                                         <div *ngIf="currentUser">
-                                            <a href="account-dashboard.html" class="account-menu__user">
+                                            <a routerLink="['dashboard']" class="account-menu__user">
                                                 <div class="account-menu__user-avatar">
                                                     <img src="./assets/images/avatars/avatar-3.jpg" alt="">
                                                 </div>

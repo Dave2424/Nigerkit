@@ -858,6 +858,7 @@
             // sticky nav-panel
             */
             const nav = $('.nav-panel--sticky');
+            // console.log(nav);
 
             if (nav.length) {
                 const mode = nav.data('sticky-mode') ? nav.data('sticky-mode') : 'alwaysOnTop'; // one of [alwaysOnTop, pullToShow]

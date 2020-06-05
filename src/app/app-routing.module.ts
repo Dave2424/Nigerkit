@@ -1,3 +1,5 @@
+import { BlogDetailsResolve } from './resolvers/blogdetails.resolver';
+import { PostComponent } from './pages/blog/post/post.component';
 import { BlogResolve } from './resolvers/blog.resolver';
 import { BlogComponent } from './pages/blog/blog.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -25,6 +27,10 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'blog', component: BlogComponent,
     resolve: {blogdetails: BlogResolve}
+  },
+  {
+    path: 'blog/:id', component: PostComponent,
+    resolve: {details: BlogDetailsResolve}
   },
 
 // otherwise redirect to home
