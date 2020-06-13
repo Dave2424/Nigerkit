@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
   public iscart = false;
   banner:any;
   fake:number = 0.75;
+  sku_no: any;
   loading: any = '';
 
 
@@ -58,6 +59,7 @@ export class HomeComponent implements OnInit {
           this.cart = this.getSavedCartInStorage();
           this.baseservice.get_skuNos().subscribe( (data: any) => {
             //   console.log(data);
+            this.sku_no = data;
             if (this.cart) {
                 data.sku.forEach(item => {
                     this.cart.forEach(cart => {
@@ -184,7 +186,8 @@ export class HomeComponent implements OnInit {
 
 
     saveToSession(data:any){
-
+        // console.log(data);
+        // console.log(this.sku_no);
         if (this.count(this.getSavedCartInStorage()) === 0) {
 
             let $array = [];
@@ -193,6 +196,11 @@ export class HomeComponent implements OnInit {
                 .subscribe((item:any) => {
 
                     data.product = item.product;
+                    this.sku_no.sku.forEach(item => {
+                        if (item.id == data.sku_id) {
+                            data.sku_no = item;
+                        }
+                        });
                     data.quantity = 1;
                     data.amount = 0;
 
@@ -204,7 +212,7 @@ export class HomeComponent implements OnInit {
                 });
         }else{
 
-            //check is item already exists
+            // check is item already exists
             let cartItems = this.getSavedCartInStorage();
             let search = _.findLast(cartItems, ['product_id', data.product_id]);
 

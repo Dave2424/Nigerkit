@@ -15,12 +15,18 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('current_user')));
     this.currentUser = this.currentUserSubject.asObservable();
+    // console.log(this.currentUser);
   }
 
-    //Local
-    public endpoint = 'http://nigerkit.test//api';
-    public baseurl = 'http://nigerkit.test/';
-    public endPointAuth = 'http://nigerkit.test//api/auth';
+    // Local
+    // public endpoint = 'http://nigerkit.test//api';
+    // public baseurl = 'http://nigerkit.test/';
+    // public endPointAuth = 'http://nigerkit.test//api/auth';
+
+  // Online
+  public endpoint = 'http://admin.nigerkit.com/api';
+  public baseurl = 'http://admin.nigerkit.com';
+  public endPointAuth = 'http://admin.nigerkit.com/api/auth';
 
   private iss = {
     login: `${this.endPointAuth}/login`,

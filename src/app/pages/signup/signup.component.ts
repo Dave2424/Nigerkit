@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
   submitted = false;
   error = "";
   returnUrl = "";
-  user = { fname: "", lname: "", email: "" };
+  user = { fname: '', lname: '', email: '', phone: '' };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,6 +39,7 @@ export class SignupComponent implements OnInit {
       {
         fname: ["", Validators.required],
         lname: ["", Validators.required],
+        phone: ["", Validators.required],
         email: ["", [Validators.required, Validators.email]],
         password: ["", [Validators.required, Validators.minLength(6)]],
         confirmPassword: ["", Validators.required],
@@ -85,6 +86,7 @@ export class SignupComponent implements OnInit {
           fname: data.firstName,
           lname: data.lastName,
           email: data.email,
+          phone: ''
         };
       },
       (error) => {

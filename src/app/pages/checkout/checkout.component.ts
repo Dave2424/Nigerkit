@@ -51,10 +51,10 @@ export class CheckoutComponent implements OnInit {
       private alert: AlertService,
       private cdr: ChangeDetectorRef,
       private authenticationservice: AuthenticationService) {
-    this.authenticationservice.currentUser.subscribe(x => this.currentUser = x );
+    this.authenticationservice.currentUser.subscribe(x => { this.currentUser = x;} );
     this.transactionRef = Guid.create();
-    //disable resuable route
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+    // disable resuable route
+    this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
   }
@@ -70,6 +70,7 @@ export class CheckoutComponent implements OnInit {
     }
     // check if address of already logged in user is google verfied
     this.verifyLoggedUserAddress(this.currentUser);
+    // console.log(this.currentUser);
   }
 
   getSavedCartInStorage(){
@@ -160,7 +161,6 @@ export class CheckoutComponent implements OnInit {
 
   calculateDeliveryFee() {
     this.calculating = true;
-    console.log(this.cart);
     let address = this.userData.address.name ? this.userData.address.name : this.userData.address;
     let name = this.userData.fname + ' ' + this.userData.lname;
     let formData = new FormData();

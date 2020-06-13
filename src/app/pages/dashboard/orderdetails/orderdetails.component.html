@@ -25,18 +25,18 @@
           </thead>
           <tbody class="card-table__body card-table__body--merge-rows">
             <tr *ngFor="let item of orderedItem">
-              <td>{{item.product_name}} (&#8358;{{item.unit_cost| number:'0'}}) × {{item.quantity}}</td>
-              <td>&#8358; {{item.unit_cost * item.quantity | number:'0'}}</td>
+              <td>{{item.product_name}} (&#8358;{{item.unit_cost| number}}) × {{item.quantity}}</td>
+              <td>&#8358; {{item.unit_cost * item.quantity | number}}</td>
             </tr>
           </tbody>
           <tbody class="card-table__body card-table__body--merge-rows">
             <tr>
               <th>Subtotal</th>
-              <td>&#8358; {{details.user_invoice.sub_total| number:'0'}}</td>
+              <td>&#8358; {{details.user_invoice.sub_total| number}}</td>
             </tr>
             <tr>
               <th>Delivery fee</th>
-              <td>&#8358; {{1000 | number: 0}}</td>
+              <td>&#8358; {{1000 | number}}</td>
             </tr>
             <tr>
               <th>VAT Fee</th>
@@ -46,7 +46,7 @@
           <tfoot>
             <tr>
               <th>Total</th>
-              <td>&#8358; {{details.user_invoice.total| number:'0'}}</td>
+              <td>&#8358; {{details.user_invoice.total| number}}</td>
             </tr>
           </tfoot>
         </table>

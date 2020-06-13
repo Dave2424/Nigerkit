@@ -1,3 +1,5 @@
+import { AlertService } from './../../services/alert.service';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {Subscription} from "rxjs";
 import {StoreService} from "../../services/store.service";
@@ -23,6 +25,8 @@ export class CartComponent implements OnInit {
   constructor(
       private storeService: StoreService,
       private baseService: BaseService,
+      private router: Router,
+      private alert: AlertService,
       private authenticationservice: AuthenticationService) {
     this.authenticationservice.currentUser.subscribe(x => this.currentUser = x );}
 
@@ -31,12 +35,20 @@ export class CartComponent implements OnInit {
   }
   checkItems() {
     if (this.currentUser) {
-      //user cart items
-      this.cartSubscription = this.storeService.GetCartItems()
-          .subscribe(items => {
-            this.cart = items;
-          });
-    }else{
+      // user cart items
+      this.cartSubscription = this.storeService
+        .GetCartItems()
+        .subscribe((items) => {
+          this.cart = items;
+          let carts = this.getSavedCartInStorage();
+          if (carts) {
+            carts.forEach(items => {
+              this.cart.push(items);
+              this.updateCartWithSku();
+            });
+          }
+        });
+    } else {
       this.cart = this.getSavedCartInStorage();
       this.updateCartWithSku();
     }
@@ -120,10 +132,11 @@ export class CartComponent implements OnInit {
     this.updateCartWithSku();
     this.updateLocalCart();
   }
-  Subtotal() {
+  subtotal() {
     let total = 0;
     this.cart.forEach(item => {
-      total+= item.product.price * item.quantity;
+      total += item.product.price * item.quantity;
+      // console.log(total);
     });
     return total;
   }
@@ -136,6 +149,11 @@ export class CartComponent implements OnInit {
   }
   addCartToLocal(cart) {
     localStorage.setItem('cart_Items', JSON.stringify(cart));
+    if (this.currentUser) {
+      this.router.navigate(['/checkout']);
+    } else {
+      this.alert.infoMsg('You must Log in to proceed', 'Notice');
+    }
   }
 
 }

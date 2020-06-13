@@ -13,7 +13,7 @@
                 <th class="cart-table__column cart-table__column--remove"></th>
             </tr>
             </thead>
-            <tbody class="cart-table__body">
+            <tbody class="cart-table__body" style="margin-top:10px;">
             <tr class="cart-table__row" *ngFor="let item of cart">
                 <td class="cart-table__column cart-table__column--image">
                     <a href="#"><img [src]="Image_data(item.product.files[0],'avatar', null)" alt=""></a>
@@ -25,7 +25,7 @@
                         <li *ngIf="item.sku_no">Sku: {{item.sku_no.sku_no}}</li>
                     </ul>
                 </td>
-                <td class="cart-table__column cart-table__column--price" data-title="Price"> &#8358; {{item.product.price | number:'0'}}</td>
+                <td class="cart-table__column cart-table__column--price" data-title="Price"> &#8358; {{item.product.price | number}}</td>
                 <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
                     <div class="input-number">
                         <input class="form-control input-number__input" disabled type="number" min="1" value="{{item.quantity}}">
@@ -33,7 +33,7 @@
                         <div class="input-number__sub" (click)="decrease(item)"></div>
                     </div>
                 </td>
-                <td class="cart-table__column cart-table__column--total" data-title="Total">&#8358; {{calculateTotal(item) | number:'0'}}</td>
+                <td class="cart-table__column cart-table__column--total" data-title="Total">&#8358; {{calculateTotal(item) | number}}</td>
                 <td class="cart-table__column cart-table__column--remove">
                     <button type="button" class="btn btn-light btn-sm btn-svg-icon" (click)="removeFromCart(item)">
                         <svg width="12px" height="12px">
@@ -45,16 +45,15 @@
             </tbody>
             <tfoot class="cart-table__head">
                 <tr class="cart-table__row">
-                    <th class="cart-table__column" style="font-weight: 500;text-align: end"
-                        colspan="6">Subtotal &#8358; {{Subtotal() | number:'0'}}</th>
+                    <th class="cart-table__column" style="font-weight: 500; text-align: end;" colspan="6">
+                        Subtotal &#8358; {{subtotal() | number}}</th>
                 </tr>
             </tfoot>
         </table>
         <div style="text-align: right !Important; margin-top: 2rem;" class="text-sm-center">
-            <a href="#" [routerLink]="['']" class="btn btn-light">Continue Shopping</a>
-            <a class="btn btn-primary ml-1" href="#"
-               (click)="addCartToLocal(cart)"
-               [routerLink]="['/checkout']">Proceed to checkout</a>
+            <a [routerLink]="['']" class="btn btn-light">Continue Shopping</a>
+            <a class="btn btn-primary ml-1 text-white"
+               (click)="addCartToLocal(cart)">Proceed to checkout</a>
         </div>
     </div>
 </div>
@@ -62,6 +61,6 @@
 <div class="block-empty__body" *ngIf="count( cart )  == 0">
     <div class="block-empty__message">Your shopping cart is empty!</div>
     <div class="block-empty__actions">
-        <a class="btn btn-primary btn-sm" href="#" [routerLink]="['/']">Continue</a>
+        <a class="btn btn-primary btn-sm" [routerLink]="['/']">Continue</a>
     </div>
 </div>

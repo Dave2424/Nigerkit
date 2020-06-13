@@ -37,7 +37,7 @@
                             </div>
                             <div class="product-card__actions">
                                 <div class="product-card__prices">
-                                    &#8358;{{item.price | number:'0'}}
+                                    &#8358;{{item.price | number}}
                                 </div>
                                 <div class="product-card__buttons">
                                     <button class="btn btn-primary product-card__addtocart"
@@ -121,7 +121,7 @@
                                         <span  [ngClass]="item.quantity > 0 ? 'text-avail': 'text-Unavail'">{{avail(item.quantity)}}</span>
                                     </div>
                                     <div class="product-card__prices">
-                                        &#8358;{{item.price | number:'0'}}
+                                        &#8358;{{item.price | number}}
                                     </div>
                                 </div>
                             </div>
@@ -163,8 +163,8 @@
                                     </div>
                                     <div class="product-card__prices">
                                         <span class="product-card__new-price">
-                                            &#8358;{{items.price | number:'0'}}</span>
-                                        <span class="product-card__old-price">{{items.price *2 | number:'0'}}</span>
+                                            &#8358;{{items.price | number}}</span>
+                                        <span class="product-card__old-price">{{items.price *2 | number}}</span>
                                     </div>
                                     <div class="product-card__buttons">
                                         <button class="btn btn-primary product-card__addtocart" type="button">Add To Cart</button>
@@ -207,7 +207,7 @@
                                         Availability: <span class="text-success">In Stock</span>
                                     </div>
                                     <div class="product-card__prices">
-                                        &#8358;{{items.price | number:'0'}}
+                                        &#8358;{{items.price | number}}
                                     </div>
                                     <div class="product-card__buttons">
                                         <button class="btn btn-primary product-card__addtocart" type="button">Add To Cart</button>
@@ -364,7 +364,7 @@
                         Availability: <span class="text-avail">In Stock</span>
                     </div>
                     <div class="product__prices">
-                        &#8358;{{productModal.getData().price | number:'0'}}
+                        &#8358;{{productModal.getData().price|number}}
                     </div>
                     <!-- .product__options -->
                     <form class="product__options">

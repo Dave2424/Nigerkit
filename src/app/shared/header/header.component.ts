@@ -57,11 +57,17 @@ export class HeaderComponent implements OnInit {
 
   checkItems() {
     if (this.currentUser) {
-      //user cart items
+      // user cart items
       this.cartSubscription = this.storeService
         .GetCartItems()
         .subscribe((items) => {
           this.cart = items;
+          let carts = this.getSavedCartInStorage();
+          if (carts) {
+            carts.forEach( items => {
+              this.cart.push(items);
+            });
+          }
           this.cart_item = this.cart;
         });
     } else {
@@ -77,7 +83,7 @@ export class HeaderComponent implements OnInit {
       password: ["", [Validators.required, Validators.minLength(6)]],
     });
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || "/";
-    
+    // console.log(this.returnUrl);
   }
   handleResponse(data) {
     if (data.user && data.Access_token) {
@@ -189,6 +195,7 @@ export class HeaderComponent implements OnInit {
     // this.update_cart();
   }
   Subtotal() {
+    // console.log(this.cart);
     let total = 0;
     this.cart.forEach((item) => {
       total += item.product.price * item.quantity;

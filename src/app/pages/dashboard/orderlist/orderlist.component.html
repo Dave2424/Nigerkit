@@ -25,7 +25,7 @@
                         shipped</span></td>
                     <td *ngIf="list.flag == 1"><span class="badge badge-success">Shipped</span></td>
 
-                    <td>{{list.amount | number:'0'}}</td>
+                    <td>{{list.amount | number}}</td>
                 </tr>
                 <tr *ngIf="count(orderlist) == 0">
                   <td colspan="4" style="text-align: center;">No record</td>

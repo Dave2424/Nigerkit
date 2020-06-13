@@ -85,17 +85,17 @@
                             <tbody class="checkout__totals-products">
                             <tr *ngFor="let item of cart">
                                 <td>{{item.product.name}} × {{item.quantity}}</td>
-                                <td>&#8358;{{item.quantity * item.product.price | number:'0'}}</td>
+                                <td>&#8358;{{item.quantity * item.product.price | number}}</td>
                             </tr>
                             </tbody>
                             <tbody class="checkout__totals-subtotals">
                             <tr>
                                 <th>Subtotal</th>
-                                <td>&#8358;{{Subtotal() | number:'0'}}</td>
+                                <td>&#8358;{{Subtotal() | number}}</td>
                             </tr>
                             <tr>
                                 <th>Delivery fee</th>
-                                <td>{{deliveryFee| number:'0'}}</td>
+                                <td>{{deliveryFee| number}}</td>
                             </tr>
                             <tr>
                                 <th>VAT Fee</th>
@@ -105,7 +105,7 @@
                             <tfoot class="checkout__totals-footer">
                             <tr>
                                 <th>GrandTotal</th>
-                                <td>{{grandTotal | number:'0'}}</td>
+                                <td>{{grandTotal | number}}</td>
                             </tr>
                             </tfoot>
                         </table>
