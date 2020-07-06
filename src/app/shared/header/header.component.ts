@@ -2,12 +2,13 @@ import {
   ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit,
   Output
 } from '@angular/core';
+import * as $ from "jquery";
 import {BaseService} from "../../services/base.service";
 import {AuthenticationService} from "../../services/authentication.service";
 import {User} from "../../models/user";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Event, Router, ActivatedRoute, NavigationEnd, RouterOutlet, NavigationStart } from '@angular/router';
 import {first} from "rxjs/internal/operators";
-import {ActivatedRoute, Router} from "@angular/router";
 import {StoreService} from "../../services/store.service";
 import {Subscription} from "rxjs/index";
 import * as _ from 'lodash';
@@ -23,10 +24,13 @@ export class HeaderComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;
   submitted = false;
+  searching = false;
   error = "";
   returnUrl: string;
   cart: any = [];
   category: any = [];
+  searchTerm = '';
+  suggestion: any = [];
   private banners: any = [];
   private cartSubscription: Subscription;
   private categorySubscription: Subscription;
@@ -47,12 +51,12 @@ export class HeaderComponent implements OnInit {
   ) {
     this.authenticationservice.currentUser.subscribe(
       (x) => (this.currentUser = x)
-  
     );
     this.categorySubscription = this.baseService
       .allCategory()
       .subscribe((x) => (this.category = x["category"]));
     this.baseService.banner().subscribe((x) => (this.banners = x));
+
   }
 
   checkItems() {
@@ -77,6 +81,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    // this.cart_item = this.authenticationservice.cartItem;
+    // console.log(this.cart_item);
     this.checkItems();
     this.loginForm = this.formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
@@ -207,5 +214,26 @@ export class HeaderComponent implements OnInit {
   }
   ngOnDestroy() {
     this.Ref.detach(); // do this
+  }
+
+  search() {
+    if(this.searchTerm) {
+      this.searching = true;
+      $('.search').each(function (index, element) {
+        const search = $(element);
+        search.addClass('search--suggestions-open');
+        search.toggleClass('search--has-suggestions', true);
+      });
+      var fd = new FormData();
+      fd.append('searchTerm', this.searchTerm);
+
+      this.baseService.search_product(fd)
+        .subscribe(item => {
+          this.suggestion = item;
+          this.searching = false;
+        }, (error: any) => {
+          console.log(error);
+        });
+    }
   }
 }

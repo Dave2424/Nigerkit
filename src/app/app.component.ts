@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Event, Router, NavigationEnd, RouterOutlet, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,21 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Nigerkit';
+
+  constructor(
+    private router: Router) {
+    // =================== Subscribe to route events ======================//
+    this.router.events.subscribe((routerEvent: Event) => {
+      // if (routerEvent instanceof NavigationStart) {
+      //   // this.loading = true;
+      //   this.router.navigated = true;
+      // }
+
+      if (routerEvent instanceof NavigationEnd) {
+        // this.loading = false;
+        this.router.navigated = false;
+      }
+    });
+  }
 }
+

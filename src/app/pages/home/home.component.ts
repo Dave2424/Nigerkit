@@ -49,41 +49,42 @@ export class HomeComponent implements OnInit {
   }
 
   checkItems() {
-      if (this.currentUser) {
-          // user cart items
-          this.cartSubscription = this.storeService.GetCartItems()
-              .subscribe(items => {
-                  this.cart = items;
-              });
-      } else {
-          this.cart = this.getSavedCartInStorage();
-          this.baseservice.get_skuNos().subscribe( (data: any) => {
-            //   console.log(data);
-            this.sku_no = data;
-            if (this.cart) {
-                data.sku.forEach(item => {
-                    this.cart.forEach(cart => {
-                        if (item.id == cart.sku_id) {
-                            cart.sku_no = item;
-                        }
-                    });
+        if (this.currentUser) {
+            // user cart items
+            this.cartSubscription = this.storeService.GetCartItems()
+                .subscribe(items => {
+                    this.cart = items;
                 });
-            }
-          });
-      }
+        } else {
+            this.cart = this.getSavedCartInStorage();
+            this.baseservice.get_skuNos().subscribe( (data: any) => {
+                //   console.log(data);
+                this.sku_no = data;
+                if (this.cart) {
+                    data.sku.forEach(item => {
+                        this.cart.forEach(cart => {
+                            if (item.id == cart.sku_id) {
+                                cart.sku_no = item;
+                            }
+                        });
+                    });
+                }
+            });
+        }
   }
 
-  ngOnInit() {
-    this.ProductSubscription = this.baseservice.all_product()
-        .subscribe((data: any) => {
-          if (_.size(data) > 0) {
-            this.product.push(data);
-            // console.log(this.product);
-            this.product = this.product[0]['products'];
-          }
-        });
-      this.bannerSubscription = this.baseservice.banner_sr().subscribe(x => this.banner = x['banner_sr']);
-  }
+    ngOnInit() {
+        //   this.cart = this.authenticationservice.
+        this.ProductSubscription = this.baseservice.all_product()
+            .subscribe((data: any) => {
+            if (_.size(data) > 0) {
+                this.product.push(data);
+                // console.log(this.product);
+                this.product = this.product[0]['products'];
+            }
+            });
+        this.bannerSubscription = this.baseservice.banner_sr().subscribe(x => this.banner = x['banner_sr']);
+    }
 
   setGallery(){
         this.galleryOptions = [
@@ -141,7 +142,7 @@ export class HomeComponent implements OnInit {
     getLatestCart(event) {
         this.cart = event;
     }
-    //checking which product is in cart
+    // checking which product is in cart
     checkItemInCart(product) {
         let result: boolean;
         if (this.cart) {
@@ -161,7 +162,7 @@ export class HomeComponent implements OnInit {
         let toCart = {
             product_id: product.id,
             sku_id: product.Sku,
-            user_id: this.currentUser?this.currentUser.id:0
+            user_id: this.currentUser ? this.currentUser.id : 0
         };
 
 
@@ -174,12 +175,13 @@ export class HomeComponent implements OnInit {
                     if (!this.checkForError(resp)) {
                         this.cart = resp.items;
                         this.cart_to_ = this.cart;
+                        this.authenticationservice.setCartItems(this.cart_to_);
                         this.alert.snotSimpleSuccess(resp.message);
                     }
 
                 });
-        }else{
-            //use local storage
+        } else {
+            // use local storage
             this.saveToSession(toCart);
         }
     }
@@ -209,8 +211,9 @@ export class HomeComponent implements OnInit {
                     this.alert.snotSimpleSuccess("Your product has been added to cart");
                     this.cart = this.getSavedCartInStorage();
                     this.cart_to_ = this.cart;
+                    this.authenticationservice.setCartItems(this.cart_to_);
                 });
-        }else{
+        } else {
 
             // check is item already exists
             let cartItems = this.getSavedCartInStorage();
@@ -230,6 +233,7 @@ export class HomeComponent implements OnInit {
                         this.alert.snotSimpleSuccess("Your product has been added to cart");
                         this.cart = this.getSavedCartInStorage();
                         this.cart_to_ = this.cart;
+                        this.authenticationservice.setCartItems(this.cart_to_);
                     });
 
             }

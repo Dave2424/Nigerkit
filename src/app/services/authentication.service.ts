@@ -11,22 +11,29 @@ import {User} from "../models/user";
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
+  private cartItemSubject: BehaviorSubject<[]>;
+  public cartItem: Observable<[]>;
+
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('current_user')));
     this.currentUser = this.currentUserSubject.asObservable();
     // console.log(this.currentUser);
+
+    // Carting subject behaviour
+    this.cartItemSubject = new BehaviorSubject<[]>(JSON.parse(localStorage.getItem('cart_Items')));
+    this.cartItem = this.cartItemSubject.asObservable();
   }
 
     // Local
-    // public endpoint = 'http://nigerkit.test//api';
-    // public baseurl = 'http://nigerkit.test/';
-    // public endPointAuth = 'http://nigerkit.test//api/auth';
+    public endpoint = 'http://nigerkit.test//api';
+    public baseurl = 'http://nigerkit.test/';
+    public endPointAuth = 'http://nigerkit.test//api/auth';
 
   // Online
-  public endpoint = 'http://admin.nigerkit.com/api';
-  public baseurl = 'http://admin.nigerkit.com';
-  public endPointAuth = 'http://admin.nigerkit.com/api/auth';
+  // public endpoint = 'http://admin.nigerkit.com/api';
+  // public baseurl = 'http://admin.nigerkit.com';
+  // public endPointAuth = 'http://admin.nigerkit.com/api/auth';
 
   private iss = {
     login: `${this.endPointAuth}/login`,
@@ -51,13 +58,18 @@ export class AuthenticationService {
         return localStorage.getItem('Access_token');
     }
 
-  //setUser
+  // setUser
   setUser(user){
     localStorage.setItem('current_user', JSON.stringify(user));
     this.currentUserSubject.next(user);
   }
-
-  //set basic user data
+  public get currentCartItem() {
+    return this.cartItemSubject.value;
+  }
+  setCartItems(items) {
+    this.currentUserSubject.next(items);
+  }
+  // set basic user data
   setUserData(data){
     localStorage.setItem('user_Data', JSON.stringify(data));
   }
@@ -126,6 +138,7 @@ export class AuthenticationService {
     // remove access_token
     this.removeToken();
     this.currentUserSubject.next(null);
+    this.cartItemSubject.next(null);
   }
 
 }

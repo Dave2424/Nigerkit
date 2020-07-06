@@ -21,7 +21,7 @@ export class ProductsComponent implements OnInit {
   currentUser: User;
   relateDetails : any = {};
   product: Product[] = [];
-  reviews: any[] = [];
+  reviews: any;
   public img_file: any;
 
   galleryOptions: NgxGalleryOptions[];
@@ -35,6 +35,7 @@ export class ProductsComponent implements OnInit {
       private storeService: StoreService,
       private route : ActivatedRoute,
       private router : Router,
+      private storeservice: StoreService,
       private authenticationservice: AuthenticationService) {
     this.authenticationservice.currentUser.subscribe(x => this.currentUser = x);
     //disable resuable route
@@ -56,9 +57,10 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.relateDetails = this.route.snapshot.data['relateDetails']['details'][0];
-    this.product = this.route.snapshot.data['relateDetails']['product'][0];
+    // this.relateDetails = this.route.snapshot.data['relateDetails']['details'][0];
+    this.product = this.route.snapshot.data['relateDetails']['product'];
     this.reviews = this.route.snapshot.data['relateDetails']['reviews'];
+    // console.log(this.reviews);
     // this.reviews
     // console.log(this.relateDetails);
     // console.log(this.product);
@@ -158,4 +160,31 @@ export class ProductsComponent implements OnInit {
     }
     return result;
   }
+
+  // Navigation
+  Previous(record) {
+    this.storeservice.Navigate(record.prev_page_url)
+      .subscribe((data: any) => {
+        this.reviews = data.reviews;
+      });
+  }
+  next(record) {
+    this.storeservice.Navigate(record.next_page_url)
+      .subscribe((data: any) => {
+        this.reviews = data.reviews;
+      });
+  }
+  firstPage(record) {
+    this.storeservice.Navigate(record.first_page_url)
+      .subscribe((data: any) => {
+        this.reviews = data.reviews;
+      });
+  }
+  lastPage(record) {
+    this.storeservice.Navigate(record.last_page_url)
+      .subscribe((data: any) => {
+        this.reviews = data.reviews;
+      });
+  }
+    // End of Navigation
 }

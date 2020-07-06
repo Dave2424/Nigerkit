@@ -5,10 +5,11 @@ export class Product {
     id: any;
     name: string;
     description: string;
-    quantity: string;
+    quantity: number;
     brand: string;
     price: string;
     Sku: string;
     category_id: string;
     files: Array<any>;
+    slug: string;
 }

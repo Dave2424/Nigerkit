@@ -24,8 +24,8 @@ export class PostService {
   public getPost() {
     return this.http.get(`${this.endpoint}/post/get-all-post`);
   }
-  public getPostDetails(postId) {
-    return this.http.get(`${this.endpoint}/post/get-post-details/${postId}`);
+  public getPostDetails(slug) {
+    return this.http.get(`${this.endpoint}/post/get-post-details/${slug}`);
   }
   public sendComment(formData: any) {
     return this.http.post(`${this.endpoint}/post/send-comment`, formData);

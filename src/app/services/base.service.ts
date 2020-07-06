@@ -39,6 +39,9 @@ export class BaseService {
   public all_product(){
     return this.http.get(`${this.endpoint}/get-product`);
   }
+  public search_product(formData: any) {
+    return this.http.post<any>(`${this.endpoint}/search-product`, formData);
+  }
   public allCategory() {
     return this.http.get(`${this.endpoint}/get-category`);
   }
@@ -48,8 +51,8 @@ export class BaseService {
   public banner_sr() {
     return this.http.get(`${this.endpoint}/get-banner_sr`);
   }
-  public product_details(id) {
-    return this.http.get(`${this.endpoint}/get-product-related-details/${id}`);
+  public product_details(slug) {
+    return this.http.get(`${this.endpoint}/get-product-related-details/${slug}`);
   }
   public get_skuNos() {
     return this.http.get(`${this.endpoint}/get-sku_No`);

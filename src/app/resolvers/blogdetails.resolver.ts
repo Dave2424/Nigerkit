@@ -20,7 +20,7 @@ export class BlogDetailsResolve implements Resolve<any> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> {
-    const id = route.paramMap.get('id');
-    return this.postservice.getPostDetails(id);
+    const slug = route.paramMap.get('slug');
+    return this.postservice.getPostDetails(slug);
   }
 }

@@ -1,7 +1,8 @@
 import { AuthenticationService } from './../../services/authentication.service';
-import { ActivatedRoute } from '@angular/router';
+// import { ActivatedRoute } from '@angular/router';
 import { PostService } from './../../services/post.service';
 import { Component, OnInit } from '@angular/core';
+import { Event, Router, ActivatedRoute, NavigationEnd, RouterOutlet, NavigationStart } from '@angular/router';
 import * as _ from 'lodash';
 
 @Component({
@@ -14,9 +15,27 @@ export class BlogComponent implements OnInit {
   blogs: any;
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private postservice: PostService,
     private authenticationservice: AuthenticationService
-  ) { }
+  ) {
+
+    // =================== Subscribe to route events ======================//
+    this.router.routeReuseStrategy.shouldReuseRoute = () => {
+      return false;
+    };
+
+    // this.router.events.subscribe((routerEvent: Event) => {
+    //   // if (routerEvent instanceof NavigationStart) {
+    //   //   // this.loading = true;
+    //   // }
+
+    //   if (routerEvent instanceof NavigationEnd) {
+    //     // this.loading = false;
+    //     this.router.navigated = false;
+    //   }
+    // });
+  }
 
   ngOnInit() {
     this.blogs = this.route.snapshot.data.blogdetails.post;

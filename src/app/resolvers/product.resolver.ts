@@ -11,7 +11,7 @@ export class ProductDetailsResolve implements Resolve<any> {
     constructor(private baseService: BaseService) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-        return this.baseService.product_details(route.params.id);
+        return this.baseService.product_details(route.params.slug);
     }
 }
 

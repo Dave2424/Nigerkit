@@ -50,6 +50,7 @@ import { PasswordComponent } from './pages/dashboard/password/password.component
 import { BlogComponent } from './pages/blog/blog.component';
 import { PostComponent } from "./pages/blog/post/post.component";
 import { LineTruncationLibModule } from 'ngx-line-truncation';
+import { ShopComponent } from './pages/shop/shop.component';
 
 const config = new AuthServiceConfig([
   {
@@ -86,6 +87,7 @@ export function provideConfig() {
     PasswordComponent,
     BlogComponent,
     PostComponent,
+    ShopComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [

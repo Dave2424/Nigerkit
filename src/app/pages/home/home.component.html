@@ -1,5 +1,5 @@
 
-<app-header [cart_item]="cart_to_" (Update_cart)="getLatestCart($event)"></app-header>
+<!-- <app-header [cart_item]="cart_to_" (Update_cart)="getLatestCart($event)"></app-header> -->
 <app-banners></app-banners>
 <!-- .block-products -->
 <div class="block block-products block-products--layout--large-first">
@@ -25,12 +25,12 @@
                             <div class="product-card__badge product-card__badge--new" *ngIf=" i%2 == 0">New</div>
                         </div>
                         <div class="product-card__image">
-                            <a href="#" [routerLink]="['/product', item.id]">
+                            <a href="#" [routerLink]="['/product', item.slug]">
                                 <img [src]="Image_data(item.files[0], 'avatar', 'null') " alt=""></a>
                         </div>
                         <div class="product-card__info">
                             <div class="product-card__name">
-                                <a href="#" [routerLink]="['/product', item.id]">{{item.name}}</a>
+                                <a href="#" [routerLink]="['/product', item.slug]">{{item.name}}</a>
                             </div>
                             <div class="product-card__rating">
                                 <div class="product-card__rating-legend">11 Reviews</div>
@@ -102,12 +102,12 @@
                                     <div class="product-card__badge product-card__badge--new">New</div>
                                 </div>
                                 <div class="product-card__image">
-                                    <a href="#" [routerLink]="['/product', item.id]">
+                                    <a href="#" [routerLink]="['/product', item.slug]">
                                         <img [src]="Image_data(item.files[0], 'avatar', 'null') " alt=""></a>
                                 </div>
                                 <div class="product-card__info">
                                     <div class="product-card__name">
-                                        <a href="#" [routerLink]="['/product', item.id]">{{item.name}}</a>
+                                        <a href="#" [routerLink]="['/product', item.slug]">{{item.name}}</a>
                                     </div>
                                     <div class="product-card__rating">
                                         <div class="product-card__rating-stars">
@@ -328,7 +328,7 @@
 <!-- quickview-modal -->
 <!-- Modal Section -->
 <ngx-smart-modal #productModal identifier="productModal" customClass="modal-width"
-                 class="nsm-dialog-animation-fade">
+                class="nsm-dialog-animation-fade">
     <div class="quickview" *ngIf="productModal.hasData()">
         <div class="product product--layout--quickview" data-layout="quickview">
             <div class="product__content">
@@ -342,18 +342,21 @@
                     <h1 class="product__name">{{productModal.getData().name}}</h1>
                     <div class="product__rating">
                         <div class="product__rating-legend">
-                            <a href="">7 Reviews</a>
+                            <a *ngIf="count(productModal.getData().reviews) > 0">{{count(productModal.getData().reviews)}}</a>
                         </div>
                     </div>
                     <div class="product__description">
                         {{productModal.getData().description}}
+
                     </div>
                     <ul class="product__meta">
                         <li class="product__meta-availability">Availability:
-                            <!--<span [ngclass]="productModal.getData().quantity > 0 ? 'text-avail' : 'text-Unavail'">-->
-                                <!--{{avail(productModal.getData().quantity)}}</span></li>-->
-                        <li>Brand: <a href="#">{{productModal.getData().brand}}</a></li>
-                        <li>SKU: {{productModal.getData().Sku }}</li>
+                            <span [ngClass]="productModal.getData().quantity > 0 ? 'text-avail' : 'text-Unavail' ">
+                                {{avail(productModal.getData().quantity)}}
+                            </span>
+                        </li>
+                        <li>Brand: <a>{{productModal.getData().brand}}</a></li>
+                        <li>SKU: {{productModal.getData().sku.sku_no }}</li>
                         <li *ngIf="productModal.getData().content">Content: {{productModal.getData().content }}</li>
                     </ul>
                 </div>
