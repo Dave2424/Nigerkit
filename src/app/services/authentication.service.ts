@@ -26,6 +26,7 @@ export class AuthenticationService {
   }
 
     // Local
+
   public endpoint = 'http://127.0.0.1:8000//api';
   public baseurl = 'http://127.0.0.1:8000/';
   public endPointAuth = 'http://127.0.0.1:8000/api/auth';
@@ -33,6 +34,16 @@ export class AuthenticationService {
     // public endpoint = 'http://nigerkit.test//api';
     // public baseurl = 'http://nigerkit.test/';
     // public endPointAuth = 'http://nigerkit.test//api/auth';
+//server.nigerkit.test/api';
+//     public baseurl = 'http://server.nigerkit.test';
+//     public endPointAuth = 'http://server.nigerkit.test/api/auth';
+// >>>>>>> staging
+    // public endpoint = 'http://nigerkit.test//api';
+    // public baseurl = 'http://nigerkit.test/';
+    // public endPointAuth = 'http://nigerkit.test//api/auth';
+
+    // Eze Local
+//     public endpoint = 'http:
 
   // Online
   // public endpoint = 'http://admin.nigerkit.com/api';

@@ -10,38 +10,21 @@ import * as _ from 'lodash';
   styleUrls: ['./banners.component.css']
 })
 export class BannersComponent implements OnInit {
-
-  banners: any = [];
-  private bannerSubscription: Subscription;
+  public top_banners: any = [];
+  private ProductSubscription: Subscription;
 
   bannerSlideConfig = {"slidesToShow": 1, "slidesToScroll": 1, "autoplay": true, "autoplaySpeed": 5000};
   CarouselOptions = { items: 3, dots: true, nav: true };
   constructor(private baseservice: BaseService,private authenticationservice: AuthenticationService) {
-    this.bannerSubscription = this.baseservice.banner().subscribe(x => {this.banners = x['banner']; });
+
+    this.ProductSubscription = this.baseservice.getIndexData()
+      .subscribe((data: any) => {
+        console.log(data)
+        this.top_banners = data.data.top_banners;
+      });
   }
 
   ngOnInit() {
-  }
-
-
-  Image_data(item:any,  type:string, nullValue:string) {
-    if (type === 'text') {
-      if (this.count(item) === 0) {
-        return nullValue;
-      }
-      return item;
-    }
-
-    if (type === 'avatar') {
-
-      if (this.count(item) === 0) {
-        return '/assets/images/default/avatar.jpg';
-      }
-      return this.authenticationservice.baseurl+item;
-    }
-  }
-  count(items) {
-    return _.size(items);
   }
 
 }

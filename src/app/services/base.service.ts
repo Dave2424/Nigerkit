@@ -36,6 +36,10 @@ export class BaseService {
     return this.http.post<any>(`${this.endpoint}/update-password-data/${id}`, formData);
   }
 
+  public getIndexData(){
+    return this.http.get(`${this.endpoint}/get-index-data`);
+  }
+
   public all_product(){
     return this.http.get(`${this.endpoint}/get-product`);
   }
