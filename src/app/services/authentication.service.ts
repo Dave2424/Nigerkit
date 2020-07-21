@@ -26,9 +26,14 @@ export class AuthenticationService {
   }
 
     // Local
-    public endpoint = 'http://nigerkit.test//api';
-    public baseurl = 'http://nigerkit.test/';
-    public endPointAuth = 'http://nigerkit.test//api/auth';
+    // public endpoint = 'http://nigerkit.test//api';
+    // public baseurl = 'http://nigerkit.test/';
+    // public endPointAuth = 'http://nigerkit.test//api/auth';
+
+    // Eze Local
+    public endpoint = 'http://server.nigerkit.test/api';
+    public baseurl = 'http://server.nigerkit.test';
+    public endPointAuth = 'http://server.nigerkit.test/api/auth';
 
   // Online
   // public endpoint = 'http://admin.nigerkit.com/api';

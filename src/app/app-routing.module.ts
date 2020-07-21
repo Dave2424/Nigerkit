@@ -27,6 +27,7 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'blog', component: BlogComponent, resolve: {blogdetails: BlogResolve} },
   {path: 'blog/:slug', component: PostComponent, resolve: {details: BlogDetailsResolve}},
+  {path: 'category/:slug', component: ShopComponent},
 
 // otherwise redirect to home
   { path: '**', redirectTo: '' },

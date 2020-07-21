@@ -1,6 +1,95 @@
 
 <!-- <app-header [cart_item]="cart_to_" (Update_cart)="getLatestCart($event)"></app-header> -->
-<app-banners></app-banners>
+<div class="block block-products block-products--layout--large-first container">
+    <div class="row">
+        <div class="col-md-3" *ngIf="categories">
+            <div class="card-header text-center" style="font-size: 1.125rem;font-weight: 500;">
+                Shop By Category
+            </div>
+            
+            <a [routerLink]="['/category', category.slug]" *ngFor="let category of categories" class="btn btn-primary btn-lg btn-block text-left text-capitalize">{{ category.category }}</a>
+        </div>
+        <div class="col-md-9">
+            <div class="block-slideshow__body" *ngIf="top_banners">
+                <ngx-slick-carousel class="carousel"
+                    #SlickModal="slick-carousel"
+                    [config]="bannerSlideConfig">
+                    <div ngxSlickItem *ngFor="let banner of top_banners">
+                        <img [src]="banner.pictures" alt="" width="100%" style="max-height: 500px;">
+                        <div class="bottom-left">
+                            <!-- <h4>{{banner.details}}</h4> -->
+                        </div>
+                    </div>
+                </ngx-slick-carousel>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- .block-features -->
+<div class="block block-features block-features--layout--classic">
+    <div class="container">
+        <div class="block-features__list">
+            <div class="block-features__item">
+                <div class="block-features__icon">
+                    <!--<img src="./assets/images/logos/free_delivery.jpg" style="width: 140%;height: 54px; margin-left: -20%;" />-->
+                    <svg width="48px" height="48px">
+                        <use xlink:href="./assets/images/sprite.svg#fi-free-delivery-48"></use>
+                    </svg>
+                </div>
+                <div class="block-features__content">
+                    <div class="block-features__title">Free Shipping</div>
+                    <div class="block-features__subtitle">For orders from $50</div>
+                </div>
+            </div>
+            <div class="block-features__divider"></div>
+            <div class="block-features__item">
+                <div class="block-features__icon">
+                    <!--<img src="./assets/images/logos/247_customer_support.png" -->
+                         <!--style="width: 140%;height: 54px; margin-left: -10%;" />-->
+
+                    <svg width="48px" height="48px">
+                        <use xlink:href="./assets/images/sprite.svg#fi-24-hours-48"></use>
+                    </svg>
+                </div>
+                <div class="block-features__content">
+                    <div class="block-features__title">Support 24/7</div>
+                    <div class="block-features__subtitle">Call us anytime</div>
+                </div>
+            </div>
+            <div class="block-features__divider"></div>
+            <div class="block-features__item">
+                <div class="block-features__icon">
+                    <!--<img src="./assets/images/logos/secure-payment.png" style="width: 140%;height: 54px; margin-left: -10%;" />-->
+
+                    <svg width="48px" height="48px">
+                        <use xlink:href="./assets/images/sprite.svg#fi-payment-security-48"></use>
+                    </svg>
+                </div>
+                <div class="block-features__content">
+                    <div class="block-features__title">100% Safety</div>
+                    <div class="block-features__subtitle">Only secure payments</div>
+                </div>
+            </div>
+            <div class="block-features__divider"></div>
+            <div class="block-features__item">
+                <div class="block-features__icon">
+                    <!--<img src="./assets/images/logos/hot-deal.png" style="width: 130%;height: 60px; margin-left: -10%;" />-->
+
+                    <svg width="48px" height="48px">
+                        <use xlink:href="./assets/images/sprite.svg#fi-tag-48"></use>
+                    </svg>
+                </div>
+                <div class="block-features__content">
+                    <div class="block-features__title">Hot Offers</div>
+                    <div class="block-features__subtitle">Discounts up to 90%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- .block-features / end -->
+
 <!-- .block-products -->
 <div class="block block-products block-products--layout--large-first">
     <div class="container">
@@ -9,8 +98,8 @@
             <div class="block-header__divider"></div>
         </div>
         <div class="block-products__body">
-            <div class="block-products__list" *ngIf="product">
-                <div class="block-products__list-item" *ngFor="let item of product let i = index">
+            <div class="block-products__list" *ngIf="products">
+                <div class="block-products__list-item" *ngFor="let item of products let i = index">
                     <div class="product-card">
                         <button class="product-card__quickview"
                                 [ngClass]="loading === i ? 'product-card__quickview--preload': ''"
@@ -25,12 +114,14 @@
                             <div class="product-card__badge product-card__badge--new" *ngIf=" i%2 == 0">New</div>
                         </div>
                         <div class="product-card__image">
-                            <a href="#" [routerLink]="['/product', item.slug]">
-                                <img [src]="Image_data(item.files[0], 'avatar', 'null') " alt=""></a>
+                            <a [routerLink]="['/product', item.slug]">
+                                <img [src]="item.product_image" width="100%" height="100%" alt="">
+                                <!-- <img [src]="Image_data(item.product_image, 'avatar', 'null') " alt=""> -->
+                            </a>
                         </div>
                         <div class="product-card__info">
                             <div class="product-card__name">
-                                <a href="#" [routerLink]="['/product', item.slug]">{{item.name}}</a>
+                                <a [routerLink]="['/product', item.slug]">{{item.name}}</a>
                             </div>
                             <div class="product-card__rating">
                                 <div class="product-card__rating-legend">11 Reviews</div>
@@ -58,20 +149,21 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
     <!-- .block-products / end -->
 
     <!-- .block-banner -->
     <div class="block block-banner mt-3">
-        <div class="container" *ngIf="banner">
+        <div class="container" *ngIf="banner_two">
             <a href="" class="block-banner__body">
                 <div class="block-banner__image block-banner__image--desktop"
                      [ngStyle]="{'background-image': getBannerUrl()}"></div>
 
                 <div class="block-banner__image block-banner__image--mobile"
                      [ngStyle]="{'background-image': getBannerUrl()}"></div>
-                <div class="block-banner__title">{{banner.details}} <br class="block-banner__mobile-br"> Robotics Tools</div>
+                <div class="block-banner__title">{{banner_two.details}} <br class="block-banner__mobile-br"> Robotics Tools</div>
                 <div class="block-banner__button">
                     <span class="btn btn-sm btn-primary">Shop Now</span>
                 </div>
@@ -89,7 +181,7 @@
                         <h3 class="block-header__title">Top Rated Products</h3>
                         <div class="block-header__divider"></div>
                     </div>
-                    <div class="block-product-columns__column" *ngFor="let item of product.slice().reverse() | slice:0:3; let i = index">
+                    <div class="block-product-columns__column" *ngFor="let item of top_rated; let i = index">
                         <div class="block-product-columns__item">
                             <div class="product-card product-card--layout--horizontal">
                                 <button class="product-card__quickview" type="button">
@@ -103,7 +195,8 @@
                                 </div>
                                 <div class="product-card__image">
                                     <a href="#" [routerLink]="['/product', item.slug]">
-                                        <img [src]="Image_data(item.files[0], 'avatar', 'null') " alt=""></a>
+                                        <img [src]="item.product_image" width="100%" height="100%" alt="">
+                                    </a>
                                 </div>
                                 <div class="product-card__info">
                                     <div class="product-card__name">
@@ -133,7 +226,7 @@
                         <h3 class="block-header__title">Special Offers</h3>
                         <div class="block-header__divider"></div>
                     </div>
-                    <div class="block-product-columns__column" *ngFor="let items of product | slice:0:3; let i = index">
+                    <div class="block-product-columns__column" *ngFor="let item of special_offers let i = index">
                         <div class="block-product-columns__item">
                             <div class="product-card product-card--layout--horizontal">
                                 <button class="product-card__quickview" type="button">
@@ -146,12 +239,13 @@
                                     <div class="product-card__badge product-card__badge--sale">Sale</div>
                                 </div>
                                 <div class="product-card__image">
-                                    <a href="#" [routerLink]="['/product', items.id]">
-                                        <img [src]="Image_data(items.files[0], 'avatar', 'null')" alt=""/></a>
+                                    <a [routerLink]="['/product', item.slug]">
+                                        <img [src]="item.product_image" width="100%" height="100%" alt="">
+                                    </a>
                                 </div>
                                 <div class="product-card__info">
                                     <div class="product-card__name">
-                                        <a href="#">{{items.name}}</a>
+                                        <a [routerLink]="['/product', item.slug]">{{item.name}}</a>
                                     </div>
                                     <div class="product-card__rating">
                                         <div class="product-card__rating-legend">7 Reviews</div>
@@ -163,8 +257,8 @@
                                     </div>
                                     <div class="product-card__prices">
                                         <span class="product-card__new-price">
-                                            &#8358;{{items.price | number}}</span>
-                                        <span class="product-card__old-price">{{items.price *2 | number}}</span>
+                                            &#8358;{{item.price | number}}</span>
+                                        <span class="product-card__old-price">{{item.price *2 | number}}</span>
                                     </div>
                                     <div class="product-card__buttons">
                                         <button class="btn btn-primary product-card__addtocart" type="button">Add To Cart</button>
@@ -181,7 +275,7 @@
                         <h3 class="block-header__title">Bestsellers</h3>
                         <div class="block-header__divider"></div>
                     </div>
-                    <div class="block-product-columns__column" *ngFor="let items of product | slice:0:3; let i = index">
+                    <div class="block-product-columns__column" *ngFor="let item of best_sellers let i = index">
                         <div class="block-product-columns__item">
                             <div class="product-card product-card--layout--horizontal">
                                 <button class="product-card__quickview" type="button">
@@ -191,12 +285,13 @@
                                     <span class="fake-svg-icon"></span>
                                 </button>
                                 <div class="product-card__image">
-                                    <a href="#" [routerLink]="['/product', items.id]">
-                                        <img [src]="Image_data(items.files[0], 'avatar', 'null')" alt=""></a>
+                                    <a [routerLink]="['/product', item.slug]">
+                                        <img [src]="item.product_image" width="100%" height="100%" alt="">
+                                    </a>
                                 </div>
                                 <div class="product-card__info">
                                     <div class="product-card__name">
-                                        <a href="#" [routerLink]="['/product', items.id]">{{items.name}}</a>
+                                        <a [routerLink]="['/product', item.slug]">{{item.name}}</a>
                                     </div>
                                     <div class="product-card__rating">
                                         <div class="product-card__rating-legend">4 Reviews</div>
@@ -207,7 +302,7 @@
                                         Availability: <span class="text-success">In Stock</span>
                                     </div>
                                     <div class="product-card__prices">
-                                        &#8358;{{items.price | number}}
+                                        &#8358;{{item.price | number}}
                                     </div>
                                     <div class="product-card__buttons">
                                         <button class="btn btn-primary product-card__addtocart" type="button">Add To Cart</button>
@@ -224,12 +319,12 @@
     <!-- .block-product-columns / end -->
 
     <!-- .block-posts -->
-    <div class="block block-posts block-posts--layout--list-sm" data-layout="list-sm">
+    <div class="block block-posts block-posts--layout--list-sm"  *ngIf="posts" data-layout="list-sm">
         <div class="container">
             <div class="block-header">
                 <h3 class="block-header__title">Latest News</h3>
                 <div class="block-header__divider"></div>
-                <div class="block-header__arrows-list">
+                <!-- <div class="block-header__arrows-list">
                     <button class="block-header__arrow block-header__arrow--left" type="button">
                         <svg width="7px" height="11px">
                             <use xlink:href="./assets/images/sprite.svg#arrow-rounded-left-7x11"></use>
@@ -240,11 +335,32 @@
                             <use xlink:href="./assets/images/sprite.svg#arrow-rounded-right-7x11"></use>
                         </svg>
                     </button>
+                </div> -->
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-2" *ngFor="let post of posts">
+                    <div class="post-card">
+                        <div class="post-card__image">
+                            <a [routerLink]="['/blog', post.slug]">
+                                <img src="{{ post.image }}" alt="">
+                            </a>
+                        </div>
+                        <div class="post-card__info">
+                            <div class="post-card__name">
+                                <a [routerLink]="'/blog/'+ post.slug">{{ post.title }}</a>
+                            </div>
+                            <div class="post-card__date">{{post.time | date:'longDate'}}</div>
+                            <div class="post-card__content" [line-truncation]="3" [innerHTML]="post.body"></div>
+                            <div class="post-card__read-more">
+                                <a [routerLink]="'/blog/' + post.slug" class="btn btn-secondary btn-sm">Read More</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="block-posts__slider">
-                <div class="owl-carousel">
-                    <div class="post-card">
+            <!-- <div class="block-posts__slider">
+                <div class="owl-carousel"> -->
+                    <!-- <div class="post-card">
                         <div class="post-card__image">
                             <a href="">
                                 <img src="./assets/images/posts/post-1.jpg" alt="">
@@ -292,7 +408,7 @@
                                 <a href="" class="btn btn-secondary btn-sm">Read More</a>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- <div class="post-card  ">
                         <div class="post-card__image">
@@ -319,8 +435,8 @@
                         </div>
                     </div> -->
 
-                </div>
-            </div>
+                <!-- </div>
+            </div> -->
         </div>
     </div>
     <!-- .block-posts / end -->
