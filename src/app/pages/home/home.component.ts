@@ -35,15 +35,20 @@ export class HomeComponent implements OnInit {
 
 
 
-    bannerSlideConfig = {"slidesToShow": 1, "slidesToScroll": 1, "autoplay": true, "autoplaySpeed": 5000};
+    bannerSlideConfig = {
+        "slidesToShow": 1,
+        "slidesToScroll": 1,
+        "autoplay": true,
+        "autoplaySpeed": 5000
+    };
     galleryOptions: NgxGalleryOptions[];
     galleryImages: NgxGalleryImage[];
 
     constructor(private baseservice: BaseService,
-              private alert: AlertService,
+                private alert: AlertService,
                 public ngxSmartModalService: NgxSmartModalService,
-              private storeService: StoreService,
-              private authenticationservice: AuthenticationService) {
+                private storeService: StoreService,
+                private authenticationservice: AuthenticationService) {
       this.authenticationservice.currentUser.subscribe(x => this.currentUser = x);
       this.checkItems();
   }
@@ -74,13 +79,14 @@ export class HomeComponent implements OnInit {
   }
 
     ngOnInit() {
-        //   this.cart = this.authenticationservice.
         this.ProductSubscription = this.baseservice.all_product()
             .subscribe((data: any) => {
+                console.log(data);
             if (_.size(data) > 0) {
                 this.product.push(data);
                 // console.log(this.product);
                 this.product = this.product[0]['products'];
+                // console.log(this.product);
             }
             });
         this.bannerSubscription = this.baseservice.banner_sr().subscribe(x => this.banner = x['banner_sr']);

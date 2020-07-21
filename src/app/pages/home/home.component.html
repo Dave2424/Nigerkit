@@ -1,5 +1,3 @@
-
-<!-- <app-header [cart_item]="cart_to_" (Update_cart)="getLatestCart($event)"></app-header> -->
 <app-banners></app-banners>
 <!-- .block-products -->
 <div class="block block-products block-products--layout--large-first">
@@ -61,16 +59,15 @@
     </div>
 </div>
     <!-- .block-products / end -->
-
     <!-- .block-banner -->
     <div class="block block-banner mt-3">
         <div class="container" *ngIf="banner">
             <a href="" class="block-banner__body">
                 <div class="block-banner__image block-banner__image--desktop"
-                     [ngStyle]="{'background-image': getBannerUrl()}"></div>
+                        [ngStyle]="{'background-image': getBannerUrl()}"></div>
 
                 <div class="block-banner__image block-banner__image--mobile"
-                     [ngStyle]="{'background-image': getBannerUrl()}"></div>
+                        [ngStyle]="{'background-image': getBannerUrl()}"></div>
                 <div class="block-banner__title">{{banner.details}} <br class="block-banner__mobile-br"> Robotics Tools</div>
                 <div class="block-banner__button">
                     <span class="btn btn-sm btn-primary">Shop Now</span>
@@ -293,32 +290,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- <div class="post-card  ">
-                        <div class="post-card__image">
-                            <a href="">
-                                <img src="images/posts/post-3.jpg" alt="">
-                            </a>
-                        </div>
-                        <div class="post-card__info">
-                            <div class="post-card__category">
-                                <a href="">New Arrivals</a>
-                            </div>
-                            <div class="post-card__name">
-                                <a href="">Some Philosophers Specialize In One Or More Historical Periods</a>
-                            </div>
-                            <div class="post-card__date">August 12, 2019</div>
-                            <div class="post-card__content">
-                                In one general sense, philosophy is associated with wisdom,
-                                intellectual culture and a search for knowledge.
-                                In that sense, all cultures...
-                            </div>
-                            <div class="post-card__read-more">
-                                <a href="" class="btn btn-secondary btn-sm">Read More</a>
-                            </div>
-                        </div>
-                    </div> -->
-
                 </div>
             </div>
         </div>
