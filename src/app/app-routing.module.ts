@@ -1,3 +1,4 @@
+import { ShopResolve } from './resolvers/shop.resolver';
 import { ShopComponent } from './pages/shop/shop.component';
 import { BlogDetailsResolve } from './resolvers/blogdetails.resolver';
 import { PostComponent } from './pages/blog/post/post.component';
@@ -19,7 +20,7 @@ const routes: Routes = [
 
   // {path: '', loadChildren: './pages/blog/blog.component#CharRoutingModule'},
   {path: '', component: HomeComponent},
-  {path: 'shop', component: ShopComponent},
+  {path: 'shop', component: ShopComponent, resolve: {allProduct: ShopResolve}},
   {path: 'product/:slug', component: ProductsComponent, resolve : { relateDetails : ProductDetailsResolve} },
   {path: 'cart', component: CartComponent},
   {path: 'checkout', component: CheckoutComponent, canActivate: [CheckOutGuard]},

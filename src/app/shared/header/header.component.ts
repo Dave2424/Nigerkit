@@ -1,3 +1,4 @@
+import { CartService } from './../../services/cart.service';
 import {
   ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit,
   Output
@@ -16,7 +17,7 @@ import * as _ from 'lodash';
 @Component({
   selector: "app-header",
   templateUrl: "./header.component.html",
-  styleUrls: ["./header.component.css"],
+  styleUrls: ["./header.component.css"]
   // ChangeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
@@ -27,7 +28,7 @@ export class HeaderComponent implements OnInit {
   searching = false;
   error = "";
   returnUrl: string;
-  cart: any = [];
+  cart:any = [];
   category: any = [];
   searchTerm = '';
   suggestion: any = [];
@@ -47,7 +48,8 @@ export class HeaderComponent implements OnInit {
     private Ref:ChangeDetectorRef,
     private storeService: StoreService,
     private baseService: BaseService,
-    private authenticationservice: AuthenticationService
+    private authenticationservice: AuthenticationService,
+    private cartservice: CartService
   ) {
     this.authenticationservice.currentUser.subscribe(
       (x) => (this.currentUser = x)
@@ -56,7 +58,10 @@ export class HeaderComponent implements OnInit {
       .allCategory()
       .subscribe((x) => (this.category = x["category"]));
     this.baseService.banner().subscribe((x) => (this.banners = x));
-
+    // this.cartSubscription = this.cartservice.cartItems$.subscribe(data => {
+    //   console.log(data);
+    // });
+    this.checkItems();
   }
 
   checkItems() {
@@ -72,19 +77,19 @@ export class HeaderComponent implements OnInit {
               this.cart.push(items);
             });
           }
-          this.cart_item = this.cart;
+          // this.cart_item = this.cart;
         });
     } else {
       this.cart = this.getSavedCartInStorage();
-      this.cart_item = this.cart;
     }
   }
 
   ngOnInit() {
+    this.authenticationservice.cartItems$.subscribe(data => {
+      this.cart = [];
+      this.cart = this.getSavedCartInStorage();
+    });
 
-    // this.cart_item = this.authenticationservice.cartItem;
-    // console.log(this.cart_item);
-    this.checkItems();
     this.loginForm = this.formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required, Validators.minLength(6)]],
@@ -178,13 +183,10 @@ export class HeaderComponent implements OnInit {
     if (this.currentUser) {
       this.storeService.RemoveFromCart(item.id).subscribe((data) => {
         this.cart = data;
-        this.cart_item = this.cart;
-        this.update_cart();
       });
     } else {
       this.sliceLocalCart(item);
       this.cart_item = this.cart;
-      this.update_cart();
     }
   }
   updateLocalCart() {
@@ -198,14 +200,11 @@ export class HeaderComponent implements OnInit {
     cartItems.splice(search, 1);
     this.cart = cartItems;
     this.updateLocalCart();
-    // console.log('local');
-    // this.update_cart();
   }
   Subtotal() {
-    // console.log(this.cart);
     let total = 0;
-    this.cart.forEach((item) => {
-      total += item.product.price * item.quantity;
+    this.cart.forEach(element => {
+      total += element.product.price * element.quantity;
     });
     return total;
   }
@@ -232,7 +231,7 @@ export class HeaderComponent implements OnInit {
           this.suggestion = item;
           this.searching = false;
         }, (error: any) => {
-          console.log(error);
+          // console.log(error);
         });
     }
   }

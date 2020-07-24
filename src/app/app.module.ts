@@ -1,3 +1,5 @@
+import { ShopResolve } from './resolvers/shop.resolver';
+import { CartService } from './services/cart.service';
 import { BlogDetailsResolve } from './resolvers/blogdetails.resolver';
 import { BlogResolve } from './resolvers/blog.resolver';
 import {
@@ -126,6 +128,8 @@ export function provideConfig() {
     { provide: AuthServiceConfig, useFactory: provideConfig },
     SnotifyService,
     BaseService,
+    CartService,
+    ShopResolve,
     ProductDetailsResolve,
     BlogResolve,
     BlogDetailsResolve,

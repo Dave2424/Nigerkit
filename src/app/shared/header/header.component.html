@@ -94,7 +94,8 @@
                                 <li class="suggestions__item" *ngFor="let item of suggestion;">
                                     <a class="suggestions__item-link" href="#" [routerLink]="['/product', item.slug]">
                                     <div class="suggestions__item-image">
-                                        <img [src]="Image_data(item.files[0], 'avatar', 'null') " alt="{{item.slug}}">
+                                        <!-- <img [src]="Image_data(item.files[0], 'avatar', 'null') " alt="{{item.slug}}"> -->
+                                        <img [src]="item.product_image " alt="{{item.slug}}">
                                     </div>
                                     <div class="suggestions__item-info">
                                         <div class="suggestions__item-name">{{item.name}}
@@ -197,22 +198,22 @@
                                                 <svg width="20px" height="20px">
                                                     <use xlink:href="./assets/images/sprite.svg#cart-20"></use>
                                                 </svg>
-                                                <span class="indicator__value" *ngIf="count(cart_item) > 0">{{count(cart_item)}}</span>
+                                                <span class="indicator__value" *ngIf="count(cart) > 0">{{count(cart)}}</span>
                                             </span>
                                 </a>
-                                <div class="indicator__dropdown" *ngIf="count(cart_item) > 0">
+                                <div class="indicator__dropdown" *ngIf="count(cart) > 0">
                                     <!-- .dropcart -->
                                     <div class="dropcart dropcart--style--dropdown">
                                         <div class="dropcart__body">
                                             <div class="dropcart__products-list">
-                                                <div class="dropcart__product" *ngFor="let item of cart_item">
+                                                <div class="dropcart__product" *ngFor="let item of cart">
                                                     <div class="dropcart__product-image">
                                                         <a [routerLink]="['/product', item.product.id]">
-                                                            <img [src]="Image_data(item.product.files[0],'avatar', 'null')" alt=""></a>
+                                                            <img [src]="Image_data(item.product_image,'avatar', 'null')" alt=""></a>
                                                     </div>
                                                     <div class="dropcart__product-info">
                                                         <div class="dropcart__product-name">
-                                                            <a  [routerLink]="['/product', item.product.id]">{{item.product.name}}</a></div>
+                                                            <a  [routerLink]="['/product', item.product.slug]">{{item.product.name}}</a></div>
                                                         <ul class="dropcart__product-options">
                                                         <li>Brand: {{item.product.brand}}</li>
                                                         </ul>
@@ -372,6 +373,27 @@
                         <button class="mobile-links__item-toggle" type="button">
                         </button>
                     </div>
+                </li>
+                <li class="mobile-links__item">
+                  <div class="mobile-links__item-title">
+                    <a [routerLink]="['/shop']" class="mobile-links__item-link">Shop</a>
+                    <button class="mobile-links__item-toggle" type="button">
+                    </button>
+                  </div>
+                </li>
+                <li class="mobile-links__item">
+                  <div class="mobile-links__item-title">
+                    <a [routerLink]="['/blog']" class="mobile-links__item-link">Resources</a>
+                    <button class="mobile-links__item-toggle" type="button">
+                    </button>
+                  </div>
+                </li>
+                <li class="mobile-links__item">
+                  <div class="mobile-links__item-title">
+                    <a [routerLink]="['/blog']" class="mobile-links__item-link">Learn</a>
+                    <button class="mobile-links__item-toggle" type="button">
+                    </button>
+                  </div>
                 </li>
                 <li class="mobile-links__item" data-collapse-item>
                     <div class="mobile-links__item-title">

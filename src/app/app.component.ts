@@ -13,10 +13,10 @@ export class AppComponent {
     private router: Router) {
     // =================== Subscribe to route events ======================//
     this.router.events.subscribe((routerEvent: Event) => {
-      // if (routerEvent instanceof NavigationStart) {
-      //   // this.loading = true;
-      //   this.router.navigated = true;
-      // }
+      if (routerEvent instanceof NavigationStart) {
+        window.scrollTo(0, 0);
+        this.router.navigated = true;
+      }
 
       if (routerEvent instanceof NavigationEnd) {
         // this.loading = false;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {User} from "../models/user";
 
@@ -13,16 +13,14 @@ export class AuthenticationService {
   public currentUser: Observable<User>;
   private cartItemSubject: BehaviorSubject<[]>;
   public cartItem: Observable<[]>;
+  private _cartSource = new Subject<any>();
+  cartItems$ = this._cartSource.asObservable();
 
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('current_user')));
     this.currentUser = this.currentUserSubject.asObservable();
     // console.log(this.currentUser);
-
-    // Carting subject behaviour
-    this.cartItemSubject = new BehaviorSubject<[]>(JSON.parse(localStorage.getItem('cart_Items')));
-    this.cartItem = this.cartItemSubject.asObservable();
   }
 
     // Local
@@ -30,20 +28,6 @@ export class AuthenticationService {
   public endpoint = 'http://127.0.0.1:8000//api';
   public baseurl = 'http://127.0.0.1:8000/';
   public endPointAuth = 'http://127.0.0.1:8000/api/auth';
-  
-    // public endpoint = 'http://nigerkit.test//api';
-    // public baseurl = 'http://nigerkit.test/';
-    // public endPointAuth = 'http://nigerkit.test//api/auth';
-//server.nigerkit.test/api';
-//     public baseurl = 'http://server.nigerkit.test';
-//     public endPointAuth = 'http://server.nigerkit.test/api/auth';
-// >>>>>>> staging
-    // public endpoint = 'http://nigerkit.test//api';
-    // public baseurl = 'http://nigerkit.test/';
-    // public endPointAuth = 'http://nigerkit.test//api/auth';
-
-    // Eze Local
-//     public endpoint = 'http:
 
   // Online
   // public endpoint = 'http://admin.nigerkit.com/api';
@@ -82,13 +66,16 @@ export class AuthenticationService {
     return this.cartItemSubject.value;
   }
   setCartItems(items) {
-    this.currentUserSubject.next(items);
+    this._cartSource.next(items);
   }
   // set basic user data
   setUserData(data){
     localStorage.setItem('user_Data', JSON.stringify(data));
   }
 
+  setCart(items) {
+    localStorage.setItem('cart_Items', JSON.stringify(items));
+  }
   // Set access token
   setToken(token){
     localStorage.setItem('Access_token', token);

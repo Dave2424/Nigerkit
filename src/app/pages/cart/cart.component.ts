@@ -44,25 +44,13 @@ export class CartComponent implements OnInit {
           if (carts) {
             carts.forEach(items => {
               this.cart.push(items);
-              this.updateCartWithSku();
             });
           }
         });
     } else {
       this.cart = this.getSavedCartInStorage();
-      this.updateCartWithSku();
+      // console.log(this.cart);
     }
-  }
-  updateCartWithSku() {
-    this.baseService.get_skuNos().subscribe( data => {
-      data['sku'].forEach(item => {
-        this.cart.forEach(cart => {
-          if (item.id == cart.sku_id) {
-            cart.sku_no = item;
-          }
-        });
-      });
-    });
   }
 
   getSavedCartInStorage(){
@@ -110,12 +98,14 @@ export class CartComponent implements OnInit {
     return total;
   }
   removeFromCart(item: any) {
-
+    let search = _.findLastIndex(this.cart, ['product_id', item.product_id]);
+    this.cart.splice(search, 1);
     if (this.currentUser) {
       this.storeService.RemoveFromCart(item.id)
           .subscribe(data => {
+            var cartsend = localStorage.setItem('cart_Items', JSON.stringify(data));
+            this.authenticationservice.setCartItems(data);
             this.cart = data;
-            this.cart_to_ = this.cart;
           });
     } else {
       this.sliceLocalCart(item);
@@ -127,10 +117,9 @@ export class CartComponent implements OnInit {
     let cartItems = this.getSavedCartInStorage();
     let search = _.findLastIndex(cartItems, ['product_id', item.product_id]);
     cartItems.splice(search, 1);
-    this.cart = cartItems;
-    this.cart_to_ = this.cart;
-    this.updateCartWithSku();
-    this.updateLocalCart();
+    var cartsend = localStorage.setItem('cart_Items', JSON.stringify(cartItems));
+    this.authenticationservice.setCartItems(cartItems);
+    this.cart = this.getSavedCartInStorage();
   }
   subtotal() {
     let total = 0;
@@ -145,7 +134,6 @@ export class CartComponent implements OnInit {
   }
   getLatestCart(event) {
     this.cart = event;
-    this.updateCartWithSku();
   }
   addCartToLocal(cart) {
     localStorage.setItem('cart_Items', JSON.stringify(cart));
