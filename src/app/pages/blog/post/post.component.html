@@ -213,8 +213,8 @@
                           <label for="widget-newsletter-email" class="sr-only">Email address</label>
                           <input id="widget-newsletter-email" type="email" class="form-control"
                             placeholder="Email Address" formControlName="email"
-                            [ngClass]="{ 'is-invalid': submitted && ff.email.errors }">
-                          <div *ngIf="submitted && ff.email.errors" class="invalid-feedback">
+                            [ngClass]="{ 'is-invalid': submitteed && ff.email.errors }">
+                          <div *ngIf="submitteed && ff.email.errors" class="invalid-feedback">
                             <div *ngIf="ff.email.errors.required">Email Address is required</div>
                             <div *ngIf="ff.email.errors.email">Valid email is required</div>
                           </div>

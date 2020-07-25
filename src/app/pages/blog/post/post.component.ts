@@ -28,6 +28,7 @@ export class PostComponent implements OnInit {
   loadinng = false;
   submitteed = false;
   errror = "";
+  subEmailText = "";
 
   constructor(private route: ActivatedRoute,
     private alert: AlertService,
