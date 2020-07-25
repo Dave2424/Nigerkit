@@ -18,17 +18,11 @@
                 </div>
             </div>
             </div>
-            <div class="products-view__list products-list" data-layout="grid-5-full" data-with-features="false"
+            <div class="products-view__list products-list" data-layout="grid-4-full" data-with-features="false"
             data-mobile-grid-columns="2">
             <div class="products-list__body" *ngIf="products">
                 <div class="products-list__item" *ngFor="let product of products.data">
                 <div class="product-card ">
-                    <button class="product-card__quickview" type="button">
-                    <svg width="16px" height="16px">
-                        <use xlink:href="./assets/images/sprite.svg#quickview-16"></use>
-                    </svg>
-                    <span class="fake-svg-icon"></span>
-                    </button>
                     <div class="product-card__image">
                     <a [routerLink]="['/product', product.slug]"><img [src]="product.product_image" alt=""></a>
                     </div>

@@ -1,3 +1,4 @@
+import { AlertService } from './../../services/alert.service';
 import {Component, OnInit} from '@angular/core';
 import * as _ from 'lodash';
 import {Subscription} from "rxjs";
@@ -34,7 +35,8 @@ export class ProductsComponent implements OnInit {
   constructor(
       private storeService: StoreService,
       private route : ActivatedRoute,
-      private router : Router,
+      private router: Router,
+      private alert: AlertService,
       private storeservice: StoreService,
       private authenticationservice: AuthenticationService) {
     this.authenticationservice.currentUser.subscribe(x => this.currentUser = x);
@@ -57,7 +59,6 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.relateDetails = this.route.snapshot.data['relateDetails']['details'][0];
     this.product = this.route.snapshot.data['relateDetails']['product'];
     this.reviews = this.route.snapshot.data['relateDetails']['reviews'];
     // console.log(this.reviews);
@@ -159,6 +160,74 @@ export class ProductsComponent implements OnInit {
       }
     }
     return result;
+  }
+  addToCart(product_item: any) {
+
+    let toCart = {
+      product: product_item,
+      product_id: product_item.id,
+      sku_id: product_item.Sku,
+      user_id: this.currentUser ? this.currentUser.id : 0
+    };
+    // check if user is logged in
+    if (this.currentUser) {
+      this.authenticationservice.setCartItems(product_item);
+      this.authenticationservice.setCart(product_item);
+      this.alert.snotSimpleSuccess('product added!');
+      this.cart = this.getSavedCartInStorage();
+      this.checkItemInCart(product_item);
+      this.storeService.AddToCart(toCart)
+        .subscribe((resp: any) => {
+          // first check for notice
+          if (!this.checkForError(resp)) {
+            this.cart = resp.items;
+          }
+
+        });
+    } else {
+      this.saveToSession(toCart);
+      this.checkItemInCart(product_item);
+
+    }
+  }
+
+
+  saveToSession(data: any) {
+    if (this.count(this.getSavedCartInStorage()) === 0) {
+      data.quantity = 1;
+      data.amount = 0;
+      let $temp = [];
+      $temp.push(data);
+      var cartsend = localStorage.setItem('cart_Items', JSON.stringify($temp));
+      this.authenticationservice.setCartItems(cartsend);
+      this.alert.snotSimpleSuccess('Product added!');
+      this.cart = this.getSavedCartInStorage();
+    } else {
+      // check is item already exists
+      let cartItems = this.getSavedCartInStorage();
+      let search = _.findLast(cartItems, ['product_id', data.product_id]);
+
+      if (_.size(search) > 0) {
+        this.alert.infoMsg("Your product already has been added to cart", "Added already");
+      } else {
+        data.quantity = 1;
+        data.amount = 0;
+        cartItems.push(data);
+        var cartsend = localStorage.setItem('cart_Items', JSON.stringify(cartItems));
+        this.authenticationservice.setCartItems(cartItems);
+        this.alert.snotSimpleSuccess("Product added!");
+        this.cart = this.getSavedCartInStorage();
+      }
+
+    }
+
+  }
+
+  checkForError(data: any) {
+    if (data.error) {
+      this.alert.infoMsg(data.error, "Info");
+      return true;
+    }
   }
 
   // Navigation

@@ -1,3 +1,6 @@
+import { AlertService } from './../../services/alert.service';
+import { BaseService } from './../../services/base.service';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthenticationService } from './../../services/authentication.service';
 // import { ActivatedRoute } from '@angular/router';
 import { PostService } from './../../services/post.service';
@@ -13,10 +16,17 @@ import * as _ from 'lodash';
 export class BlogComponent implements OnInit {
 
   blogs: any;
+  subscriberForm: FormGroup;
+  loading = false;
+  submitted = false;
+  error = "";
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private formBuilder: FormBuilder,
     private postservice: PostService,
+    private baseService: BaseService,
+    private alert: AlertService,
     private authenticationservice: AuthenticationService
   ) {
 
@@ -24,21 +34,38 @@ export class BlogComponent implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
-
-    // this.router.events.subscribe((routerEvent: Event) => {
-    //   // if (routerEvent instanceof NavigationStart) {
-    //   //   // this.loading = true;
-    //   // }
-
-    //   if (routerEvent instanceof NavigationEnd) {
-    //     // this.loading = false;
-    //     this.router.navigated = false;
-    //   }
-    // });
   }
 
   ngOnInit() {
     this.blogs = this.route.snapshot.data.blogdetails.post;
+    this.subscriberForm = this.formBuilder.group({
+      email: ["", [Validators.required, Validators.email]],
+    });
+  }
+  get f() {
+    return this.subscriberForm.controls;
+  }
+  onSubmit() {
+
+    this.error = "";
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.subscriberForm.invalid) {
+      return;
+    }
+    this.loading = true;
+    this.baseService.addSubscriber(this.f.email.value)
+      .subscribe((data) => {
+        if (data.result) {
+          this.alert.snotSimpleSuccess('Your Subscription to our daily articles was successfully. \n You can unsubscribe from mails sent to you');
+          this.loading = false;
+        } else {
+          this.loading = false;
+        }
+      }, err => {
+        this.error = err;
+      });
   }
 
 

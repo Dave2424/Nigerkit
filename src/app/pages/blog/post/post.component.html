@@ -13,7 +13,8 @@
                     <div class="post-header__meta">
                         <!-- <div class="post-header__meta-item">By <a href="">Jessica Moore</a></div> -->
                         <div class="post-header__meta-item"><a >{{details['time'] | date:'longDate'}}</a></div>
-                        <div class="post-header__meta-item"><a>{{count(details['comment'])}} comments</a></div>
+                        <div class="post-header__meta-item" *ngIf="count(details['comment']) > 0">
+                          <a>{{count(details['comment'])}} comments</a></div>
                     </div>
                 </div>
                 <div class="post__featured">
@@ -99,9 +100,8 @@
                 <div class="block-sidebar__item">
                     <div class="widget-aboutus widget">
                         <h4 class="widget__title">About Blog</h4>
-                        <div class="widget-aboutus__text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt, erat in malesuada aliquam, est erat faucibus purus,
-                            eget viverra nulla sem vitae neque. Quisque id sodales libero.
+                        <div class="widget-aboutus__text">This blog section is for all technology and related terms
+                          articles.
                         </div>
                         <div class="widget-aboutus__socials">
                             <ul>
@@ -206,13 +206,22 @@
                     <div class="widget-newsletter widget">
                         <h4 class="widget-newsletter__title">Our Newsletter</h4>
                         <div class="widget-newsletter__text">
-                            Phasellus eleifend sapien felis, at sollicitudin arcu semper mattis. Mauris quis mi quis ipsum tristique lobortis. Nulla vitae est blandit rutrum.
+                            Get the best viral stories straight into your inbox!
                         </div>
-                        <form class="widget-newsletter__form" action="">
-                            <label for="widget-newsletter-email" class="sr-only">Email Address</label>
-                            <input id="widget-newsletter-email" type="text" class="form-control" placeholder="Email Address">
-                            <button type="submit" class="btn btn-primary mt-3">Subscribe</button>
+                        <form class="widget-newsletter__form" action="" [formGroup]="subscriberForm"
+                          (ngSubmit)="onSubmit()">
+                          <label for="widget-newsletter-email" class="sr-only">Email address</label>
+                          <input id="widget-newsletter-email" type="email" class="form-control"
+                            placeholder="Email Address" formControlName="email"
+                            [ngClass]="{ 'is-invalid': submitted && ff.email.errors }">
+                          <div *ngIf="submitted && ff.email.errors" class="invalid-feedback">
+                            <div *ngIf="ff.email.errors.required">Email Address is required</div>
+                            <div *ngIf="ff.email.errors.email">Valid email is required</div>
+                          </div>
+                          <button type="submit" class="btn btn-primary mt-3" [ladda]="loadinng">Subscribe</button>
+                          <p>Don't worry, we don't spam</p>
                         </form>
+
                     </div>
                 </div>
             </div>

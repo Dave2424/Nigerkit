@@ -15,7 +15,8 @@ import * as _ from 'lodash';
   styleUrls: ['./shop.component.css']
 })
 export class ShopComponent implements OnInit {
-  products: Product[] = [];
+  products: any;
+  example = [];
   currentUser: User;
   public cart: any = {};
   private cartSubscription: Subscription;
@@ -33,6 +34,9 @@ export class ShopComponent implements OnInit {
 
   ngOnInit() {
     this.products = this.route.snapshot.data.allProduct.products;
+    this.authenticationservice.cartItems$.subscribe(data => {
+      console.log('Yes you removed');
+    });
 
   }
   sortingProduct(){
@@ -40,13 +44,19 @@ export class ShopComponent implements OnInit {
     if (this.sortProduct == 'Default') {
 
     } else {
-      // _.sortBy(this.products, function (o) { return o.name; });
-      // this.products = _.sortBy(this.products, 'name', function (o) {
-      //   return o;
+      // this.products.sort((a, b) => (a.name < b.name ? -1 : 1));
+      // var sortedArray = this.products.sort((obj1, obj2) => {
+      //   if (obj1.name > obj2.name) {
+      //     return 1;
+      //   }
+
+      //   if (obj1.name < obj2.name) {
+      //     return -1;
+      //   }
+
+      //   return 0;
       // });
-      // this.products = _.sortBy(this.products,)
-      // this.products.sort((a, b) => a.name > b.name ? 1 : -1);
-      // array.sort((a, b) => a.title.rendered.localeCompare(b.title.rendered));
+      // console.log(sortedArray);
     }
   }
   checkItems() {

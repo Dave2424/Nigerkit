@@ -64,5 +64,8 @@ export class BaseService {
   public vatFee() {
     return this.http.get(`${this.endpoint}/vatfee`);
   }
+  public addSubscriber(email: string) {
+    return this.http.post<any>(`${this.endpoint}/add-subscriber`, {email});
+  }
 
 }

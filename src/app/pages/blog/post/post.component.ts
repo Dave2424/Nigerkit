@@ -1,3 +1,5 @@
+import { AlertService } from './../../../services/alert.service';
+import { BaseService } from './../../../services/base.service';
 import { PostService } from './../../../services/post.service';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { User } from './../../../models/user';
@@ -22,7 +24,14 @@ export class PostComponent implements OnInit {
   error = '';
   submitted = false;
 
-  constructor(private route: ActivatedRoute, private authenticationservice: AuthenticationService,
+  subscriberForm: FormGroup;
+  loadinng = false;
+  submitteed = false;
+  errror = "";
+
+  constructor(private route: ActivatedRoute,
+    private alert: AlertService,
+    private baseService: BaseService,private authenticationservice: AuthenticationService,
     private formBuilder: FormBuilder, private postservice: PostService) {
 
     this.authenticationservice.currentUser.subscribe(x => this.currentUser = x);
@@ -37,9 +46,15 @@ export class PostComponent implements OnInit {
         comment: ['', Validators.required]
       }
     );
+    this.subscriberForm = this.formBuilder.group({
+      email: ["", [Validators.required, Validators.email]],
+    });
   }
   get f() {
     return this.commentForm.controls;
+  }
+  get ff() {
+    return this.subscriberForm.controls;
   }
 
   addComment() {
@@ -77,6 +92,28 @@ export class PostComponent implements OnInit {
         }
       }, error => {
         this.error = error;
+      });
+  }
+  onSubmit() {
+
+    this.errror = "";
+    this.submitteed = true;
+
+    // stop here if form is invalid
+    if (this.subscriberForm.invalid) {
+      return;
+    }
+    this.loadinng = true;
+    this.baseService.addSubscriber(this.ff.email.value)
+      .subscribe((data) => {
+        if (data.result) {
+          this.alert.snotSimpleSuccess('Your Subscription to our daily articles was successfully. \n You can unsubscribe from mails sent to you');
+          this.loadinng = false;
+        } else {
+          this.loadinng = false;
+        }
+      }, err => {
+        this.error = err;
       });
   }
 

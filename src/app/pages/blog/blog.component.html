@@ -28,7 +28,7 @@
                             <a href="">Special Offers</a>
                           </div>
                           <div class="post-card__name">
-                            <a [routerLink]="['/blog', blog.id]">{{blog.title}}</a>
+                            <a [routerLink]="['/blog', blog.slug]">{{blog.title}}</a>
                           </div>
                           <div class="post-card__date">{{blog.time | date:'longDate'}}</div>
                           <div class="post-card__content" [line-truncation]="3" [innerHTML]="blog.body"></div>
@@ -94,19 +94,10 @@
               <div class="block-sidebar__item">
                 <div class="widget-aboutus widget">
                   <h4 class="widget__title">About Blog</h4>
-                  <div class="widget-aboutus__text">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt, erat in malesuada aliquam,
-                    est erat faucibus purus,
-                    eget viverra nulla sem vitae neque. Quisque id sodales libero.
+                  <div class="widget-aboutus__text"> This blog section is for all technology and related terms articles.
                   </div>
                   <div class="widget-aboutus__socials">
                     <ul>
-                      <li>
-                        <a class="widget-aboutus__link widget-aboutus__link--rss"
-                          href="https://themeforest.net/user/kos9" target="_blank">
-                          <i class="widget-social__icon fas fa-rss"></i>
-                        </a>
-                      </li>
                       <li>
                         <a class="widget-aboutus__link widget-aboutus__link--youtube"
                           href="https://themeforest.net/user/kos9" target="_blank">
@@ -158,14 +149,18 @@
               <div class="block-sidebar__item">
                 <div class="widget-newsletter widget">
                   <h4 class="widget-newsletter__title">Our Newsletter</h4>
-                  <div class="widget-newsletter__text">
-                    Phasellus eleifend sapien felis, at sollicitudin arcu semper mattis. Mauris quis mi quis ipsum
-                    tristique lobortis. Nulla vitae est blandit rutrum.
+                  <div class="widget-newsletter__text">Get the best viral stories straight into your inbox!
                   </div>
-                  <form class="widget-newsletter__form" action="">
-                    <label for="widget-newsletter-email" class="sr-only">Email Address</label>
-                    <input id="widget-newsletter-email" type="text" class="form-control" placeholder="Email Address">
-                    <button type="submit" class="btn btn-primary mt-3">Subscribe</button>
+                  <form class="widget-newsletter__form" action="" [formGroup]="subscriberForm" (ngSubmit)="onSubmit()">
+                    <label for="widget-newsletter-email" class="sr-only">Email address</label>
+                    <input id="widget-newsletter-email" type="email" class="form-control" placeholder="Email Address"
+                      formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <div *ngIf="f.email.errors.required">Email Address is required</div>
+                        <div *ngIf="f.email.errors.email">Valid email is required</div>
+                      </div>
+                      <button type="submit" class="btn btn-primary mt-3" [ladda]="loading">Subscribe</button>
+                      <p>Don't worry, we don't spam</p>
                   </form>
                 </div>
               </div>

@@ -72,10 +72,10 @@
                         <div class="form-group product__option">
                             <div class="product__actions">
                                 <div class="product__actions-item product__actions-item--addtocart">
-                                    <button class="btn btn-primary">Buy now</button>
+                                    <a class="btn btn-primary" [routerLink]="['/cart']">Buy now</a>
                                 </div>
                                 <div class="product__actions-item product__actions-item--addtocart">
-                                    <button class="btn btn-primary product-card__addtocart"
+                                    <button class="btn btn-primary product-card__addtocart" (click)="addToCart(product)"
                                             *ngIf="!checkItemInCart(product)"
                                             type="button">Add To Cart</button>
                                     <button class="btn btn-secondary product-card__addtocart"
@@ -103,7 +103,7 @@
         </div>
         <div class="product-tabs ">
                 <mat-tab-group animationDuration="0ms" style="align-items: center">
-                    <mat-tab label="Product descriptions" class="product-tabs__item product-tabs__list">
+                    <mat-tab label="Product descriptions" class="product-tabs__item product-tabs__list" style="color: black; font-size: 20px;">
 
                         <div class="product-tabs__content">
                             <div id="tab-description">

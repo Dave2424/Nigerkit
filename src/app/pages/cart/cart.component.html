@@ -21,8 +21,8 @@
                 <td class="cart-table__column cart-table__column--product">
                     <a href="#" [routerLink]="['/product', item.product_id]" class="cart-table__product-name">{{item.product.name}}</a>
                     <ul class="cart-table__options">
-                        <li>Brand: {{item.product.brand}}</li>
-                        <li *ngIf="item.sku_no">Sku: {{item.sku_no.sku_no}}</li>
+                        <li *ngIf="item.product.brand">Brand: {{item.product.brand}}</li>
+                        <li *ngIf="item.product.sku">Sku: {{item.product.sku.sku_no}}</li>
                     </ul>
                 </td>
                 <td class="cart-table__column cart-table__column--price" data-title="Price"> &#8358; {{item.product.price | number}}</td>

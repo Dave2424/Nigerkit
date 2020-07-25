@@ -191,6 +191,8 @@ export class HeaderComponent implements OnInit {
   }
   updateLocalCart() {
     localStorage.setItem("cart_Items", JSON.stringify(this.cart));
+    this.authenticationservice.setCartItems(this.cart);
+    console.log('subscription clicked');
   }
 
   sliceLocalCart(item) {
@@ -200,6 +202,7 @@ export class HeaderComponent implements OnInit {
     cartItems.splice(search, 1);
     this.cart = cartItems;
     this.updateLocalCart();
+    
   }
   Subtotal() {
     let total = 0;
