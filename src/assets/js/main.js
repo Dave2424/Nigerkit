@@ -728,7 +728,7 @@
         const blockSidebar = $('.block-sidebar');
         const mobileMedia = matchMedia('(max-width: 991px)');
 
-        if (blockSidebar.length) {
+        if (blockSidebar.length ) {
             const open = function() {
                 if (blockSidebar.is('.block-sidebar--offcanvas--mobile') && !mobileMedia.matches) {
                     return;

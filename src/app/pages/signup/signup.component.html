@@ -48,6 +48,8 @@
                                     class="form-control form-control-sm" placeholder="Phone number">
                                 <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
                                     <div *ngIf="f.phone.errors.required">Contact number is required</div>
+                                    <div *ngIf="f.phone.errors.maxlength">Invalid contact number
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">

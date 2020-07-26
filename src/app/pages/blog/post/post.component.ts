@@ -7,6 +7,7 @@ import { AuthenticationService } from './../../../services/authentication.servic
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-post',
@@ -31,6 +32,8 @@ export class PostComponent implements OnInit {
   subEmailText = "";
 
   constructor(private route: ActivatedRoute,
+    private title: Title,
+    private meta: Meta,
     private alert: AlertService,
     private baseService: BaseService,private authenticationservice: AuthenticationService,
     private formBuilder: FormBuilder, private postservice: PostService) {
@@ -50,6 +53,10 @@ export class PostComponent implements OnInit {
     this.subscriberForm = this.formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
     });
+
+    this.title.setTitle('Post of technology');
+    this.meta.addTag({name: 'description', content: 'content'});
+    
   }
   get f() {
     return this.commentForm.controls;
