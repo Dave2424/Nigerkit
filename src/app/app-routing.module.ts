@@ -1,3 +1,5 @@
+import { CategoryProductResolve } from './resolvers/category.resolver';
+import { CategoryComponent } from './pages/category/category.component';
 import { ShopResolve } from './resolvers/shop.resolver';
 import { ShopComponent } from './pages/shop/shop.component';
 import { BlogDetailsResolve } from './resolvers/blogdetails.resolver';
@@ -28,7 +30,7 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'blog', component: BlogComponent, resolve: {blogdetails: BlogResolve} },
   {path: 'blog/:slug', component: PostComponent, resolve: {details: BlogDetailsResolve}},
-  {path: 'category/:slug', component: ShopComponent},
+  {path: 'category/:slug', component: CategoryComponent, resolve: {categorydetails : CategoryProductResolve}},
 
 // otherwise redirect to home
   { path: '**', redirectTo: '' },

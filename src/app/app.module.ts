@@ -1,3 +1,4 @@
+import { CategoryProductResolve } from './resolvers/category.resolver';
 import { ShopResolve } from './resolvers/shop.resolver';
 import { CartService } from './services/cart.service';
 import { BlogDetailsResolve } from './resolvers/blogdetails.resolver';
@@ -53,6 +54,7 @@ import { BlogComponent } from './pages/blog/blog.component';
 import { PostComponent } from "./pages/blog/post/post.component";
 import { LineTruncationLibModule } from 'ngx-line-truncation';
 import { ShopComponent } from './pages/shop/shop.component';
+import { CategoryComponent } from './pages/category/category.component';
 
 const config = new AuthServiceConfig([
   {
@@ -90,6 +92,7 @@ export function provideConfig() {
     BlogComponent,
     PostComponent,
     ShopComponent,
+    CategoryComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -133,6 +136,7 @@ export function provideConfig() {
     ProductDetailsResolve,
     BlogResolve,
     BlogDetailsResolve,
+    CategoryProductResolve
   ],
   bootstrap: [AppComponent],
 })

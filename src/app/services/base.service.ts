@@ -58,14 +58,19 @@ export class BaseService {
   public product_details(slug) {
     return this.http.get(`${this.endpoint}/get-product-related-details/${slug}`);
   }
+  public getProductByCategory(slug) {
+    return this.http.get(`${this.endpoint}/get-category-product/${slug}`);
+  }
   public get_skuNos() {
     return this.http.get(`${this.endpoint}/get-sku_No`);
-  } 
+  }
   public vatFee() {
     return this.http.get(`${this.endpoint}/vatfee`);
   }
   public addSubscriber(email: string) {
     return this.http.post<any>(`${this.endpoint}/add-subscriber`, {email});
   }
-
+  public tests() {
+    return this.http.get(`${this.endpoint}/test`);
+  }
 }

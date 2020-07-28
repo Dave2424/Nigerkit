@@ -1,63 +1,36 @@
-import { Product } from './../../models/product';
-import { Subscription } from 'rxjs';
-import { StoreService } from './../../services/store.service';
-import { AlertService } from './../../services/alert.service';
 import { User } from './../../models/user';
-import { PostService } from './../../services/post.service';
+import { Subscription } from 'rxjs';
 import { AuthenticationService } from './../../services/authentication.service';
+import { StoreService } from './../../services/store.service';
+import { PostService } from './../../services/post.service';
+import { AlertService } from './../../services/alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'app-shop',
-  templateUrl: './shop.component.html',
-  styleUrls: ['./shop.component.css']
+  selector: 'app-category',
+  templateUrl: './category.component.html',
+  styleUrls: ['./category.component.css']
 })
-export class ShopComponent implements OnInit {
-  products: any;
-  example = [];
+export class CategoryComponent implements OnInit {
+
+  categoryProduct: any;
   currentUser: User;
   public cart: any = {};
   private cartSubscription: Subscription;
-  sortProduct = 'Default';
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private alert: AlertService,
     private postservice: PostService,
     private storeService: StoreService,
-    private authenticationservice: AuthenticationService) {
-      this.checkItems();
-  }
+    private authenticationservice: AuthenticationService) { }
 
   ngOnInit() {
-    this.products = this.route.snapshot.data.allProduct.products;
-    this.authenticationservice.cartItems$.subscribe(data => {
-    });
-
+    this.categoryProduct = this.route.snapshot.data.categorydetails.category.product;
   }
-  sortingProduct(){
-    // console.log(this.sortProduct);
-    if (this.sortProduct == 'Default') {
 
-    } else {
-      // this.products.sort((a, b) => (a.name < b.name ? -1 : 1));
-      // var sortedArray = this.products.sort((obj1, obj2) => {
-      //   if (obj1.name > obj2.name) {
-      //     return 1;
-      //   }
-
-      //   if (obj1.name < obj2.name) {
-      //     return -1;
-      //   }
-
-      //   return 0;
-      // });
-      // console.log(sortedArray);
-    }
-  }
   checkItems() {
     if (this.currentUser) {
       // user cart items
@@ -74,30 +47,30 @@ export class ShopComponent implements OnInit {
   Previous(record) {
     this.postservice.Navigate(record.prev_page_url)
       .subscribe((data: any) => {
-        this.products = data.products;
+        this.categoryProduct = data.products;
       });
   }
   next(record) {
     this.postservice.Navigate(record.next_page_url)
       .subscribe((data: any) => {
-        this.products = data.products;
+        this.categoryProduct = data.products;
       });
   }
   firstPage(record) {
     this.postservice.Navigate(record.first_page_url)
       .subscribe((data: any) => {
-        this.products = data.products;
+        this.categoryProduct = data.products;
       });
   }
   lastPage(record) {
     this.postservice.Navigate(record.last_page_url)
       .subscribe((data: any) => {
-        this.products = data.products;
+        this.categoryProduct = data.products;
       });
   }
-    // End of Navigation
+  // End of Navigation
 
-  count(item:any) {
+  count(item: any) {
     return _.size(item);
   }
   checkValue(item: any, type: string, nullValue: string) {
@@ -203,5 +176,6 @@ export class ShopComponent implements OnInit {
     }
 
   }
+
 
 }
