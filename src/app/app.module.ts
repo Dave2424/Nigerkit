@@ -55,6 +55,9 @@ import { PostComponent } from "./pages/blog/post/post.component";
 import { LineTruncationLibModule } from 'ngx-line-truncation';
 import { ShopComponent } from './pages/shop/shop.component';
 import { CategoryComponent } from './pages/category/category.component';
+import { TermconditionComponent } from './pages/termcondition/termcondition.component';
+import { PrivacyComponent } from './pages/privacy/privacy.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 const config = new AuthServiceConfig([
   {
@@ -93,6 +96,9 @@ export function provideConfig() {
     PostComponent,
     ShopComponent,
     CategoryComponent,
+    TermconditionComponent,
+    PrivacyComponent,
+    PageNotFoundComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [

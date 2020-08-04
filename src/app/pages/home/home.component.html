@@ -95,13 +95,13 @@
       <div class="block-products__list" *ngIf="products">
         <div class="block-products__list-item" *ngFor="let item of products let i = index">
           <div class="product-card">
-            <button class="product-card__quickview" [ngClass]="loading === i ? 'product-card__quickview--preload': ''"
+            <!-- <button class="product-card__quickview" [ngClass]="loading === i ? 'product-card__quickview--preload': ''"
               type="button" (click)="quickView(item, i)">
               <svg width="16px" height="16px">
                 <use xlink:href="./assets/images/sprite.svg#quickview-16"></use>
               </svg>
               <span class="fake-svg-icon"></span>
-            </button>
+            </button> -->
             <div class="product-card__badges-list">
               <div class="product-card__badge product-card__badge--hot" *ngIf=" i%2 == 1">Hot</div>
               <div class="product-card__badge product-card__badge--new" *ngIf=" i%2 == 0">New</div>
@@ -124,7 +124,7 @@
                   &#8358;{{item.price | number}}
                 </div>
                 <div class="product-card__buttons">
-                  <button class="btn btn-primary product-card__addtocart" (click)="addToCart(item, i)"
+                  <button class="btn btn-primary product-card__addtocart" (click)="addToCart(item)"
                     *ngIf="!checkItemInCart(item)" type="button">Add To Cart</button>
                   <button class="btn btn-secondary product-card__addtocart" type="button" disabled
                     *ngIf="checkItemInCart(item)">In Cart</button>

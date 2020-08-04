@@ -1,3 +1,4 @@
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { CategoryProductResolve } from './resolvers/category.resolver';
 import { CategoryComponent } from './pages/category/category.component';
 import { ShopResolve } from './resolvers/shop.resolver';
@@ -33,7 +34,8 @@ const routes: Routes = [
   {path: 'category/:slug', component: CategoryComponent, resolve: {categorydetails : CategoryProductResolve}},
 
 // otherwise redirect to home
-  { path: '**', redirectTo: '' },
+  { path: '404', component: PageNotFoundComponent },
+  { path: '**', redirectTo: '/404' },
   { path: '', redirectTo: '', pathMatch: 'full' },
 ];
 
