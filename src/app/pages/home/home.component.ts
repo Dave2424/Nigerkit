@@ -87,7 +87,7 @@ export class HomeComponent implements OnInit {
         this.special_offers = data.data.special_offers;
         this.top_banners = data.data.top_banners;
         this.banner_two = data.data.banner_two;
-        this.banner_ = data.data.banner_two.pictures;
+        // this.banner_ = data.data.banner_two.pictures;
         this.categories = data.data.categories;
       });
   }

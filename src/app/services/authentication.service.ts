@@ -25,14 +25,14 @@ export class AuthenticationService {
 
     // Local
 
-  public endpoint = 'http://127.0.0.1:8000//api';
-  public baseurl = 'http://127.0.0.1:8000/';
-  public endPointAuth = 'http://127.0.0.1:8000/api/auth';
+  // public endpoint = 'http://127.0.0.1:8000//api';
+  // public baseurl = 'http://127.0.0.1:8000/';
+  // public endPointAuth = 'http://127.0.0.1:8000/api/auth';
 
   // Online
-  // public endpoint = 'http://admin.nigerkit.com/api';
-  // public baseurl = 'http://admin.nigerkit.com';
-  // public endPointAuth = 'http://admin.nigerkit.com/api/auth';
+  public endpoint = 'https://admin.nigerkit.com/api';
+  public baseurl = 'https://admin.nigerkit.com';
+  public endPointAuth = 'https://admin.nigerkit.com/api/auth';
 
   private iss = {
     login: `${this.endPointAuth}/login`,
