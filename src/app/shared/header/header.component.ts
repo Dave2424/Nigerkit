@@ -1,23 +1,35 @@
-import { CartService } from './../../services/cart.service';
+import { CartService } from "./../../services/cart.service";
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit,
-  Output
-} from '@angular/core';
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from "@angular/core";
 import * as $ from "jquery";
-import {BaseService} from "../../services/base.service";
-import {AuthenticationService} from "../../services/authentication.service";
-import {User} from "../../models/user";
+import { BaseService } from "../../services/base.service";
+import { AuthenticationService } from "../../services/authentication.service";
+import { User } from "../../models/user";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Event, Router, ActivatedRoute, NavigationEnd, RouterOutlet, NavigationStart } from '@angular/router';
-import {first} from "rxjs/internal/operators";
-import {StoreService} from "../../services/store.service";
-import {Subscription} from "rxjs/index";
-import * as _ from 'lodash';
+import {
+  Event,
+  Router,
+  ActivatedRoute,
+  NavigationEnd,
+  RouterOutlet,
+  NavigationStart,
+} from "@angular/router";
+import { first } from "rxjs/internal/operators";
+import { StoreService } from "../../services/store.service";
+import { Subscription } from "rxjs/index";
+import * as _ from "lodash";
 
 @Component({
   selector: "app-header",
   templateUrl: "./header.component.html",
-  styleUrls: ["./header.component.css"]
+  styleUrls: ["./header.component.css"],
   // ChangeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
@@ -28,10 +40,11 @@ export class HeaderComponent implements OnInit {
   searching = false;
   error = "";
   returnUrl: string;
-  cart:any = [];
+  cart: any = [];
   category: any = [];
-  searchTerm = '';
+  searchTerm = "";
   suggestion: any = [];
+  phone: any = "";
   private banners: any = [];
   private cartSubscription: Subscription;
   private categorySubscription: Subscription;
@@ -45,7 +58,7 @@ export class HeaderComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private Ref:ChangeDetectorRef,
+    private Ref: ChangeDetectorRef,
     private storeService: StoreService,
     private baseService: BaseService,
     private authenticationservice: AuthenticationService,
@@ -58,10 +71,14 @@ export class HeaderComponent implements OnInit {
       .allCategory()
       .subscribe((x) => (this.category = x["category"]));
     this.baseService.banner().subscribe((x) => (this.banners = x));
+    this.baseService
+      .getPhoneNumber()
+      .subscribe((x) => (this.phone = x["data"]));
     // this.cartSubscription = this.cartservice.cartItems$.subscribe(data => {
     //   console.log(data);
     // });
     this.checkItems();
+    // console.log(this.cart);
   }
 
   checkItems() {
@@ -71,12 +88,15 @@ export class HeaderComponent implements OnInit {
         .GetCartItems()
         .subscribe((items) => {
           this.cart = items;
-          let carts = this.getSavedCartInStorage();
-          if (carts) {
-            carts.forEach( items => {
-              this.cart.push(items);
-            });
-          }
+          // console.log(this.cart);
+          // console.log(this.cart);
+          // let carts =  this.getSavedCartInStorage();
+          // console.log(carts);
+          // if (carts) {
+          //   carts.forEach((items) => {
+          //     this.cart.push(items);
+          //   });
+          // }
           // this.cart_item = this.cart;
         });
     } else {
@@ -85,7 +105,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authenticationservice.cartItems$.subscribe(data => {
+    this.authenticationservice.cartItems$.subscribe((data) => {
       this.cart = [];
       this.cart = this.getSavedCartInStorage();
     });
@@ -192,7 +212,7 @@ export class HeaderComponent implements OnInit {
   updateLocalCart() {
     localStorage.setItem("cart_Items", JSON.stringify(this.cart));
     this.authenticationservice.setCartItems(this.cart);
-    console.log('subscription clicked');
+    console.log("subscription clicked");
   }
 
   sliceLocalCart(item) {
@@ -202,11 +222,10 @@ export class HeaderComponent implements OnInit {
     cartItems.splice(search, 1);
     this.cart = cartItems;
     this.updateLocalCart();
-    
   }
   Subtotal() {
     let total = 0;
-    this.cart.forEach(element => {
+    this.cart.forEach((element) => {
       total += element.product.price * element.quantity;
     });
     return total;
@@ -219,23 +238,25 @@ export class HeaderComponent implements OnInit {
   }
 
   search() {
-    if(this.searchTerm) {
+    if (this.searchTerm) {
       this.searching = true;
-      $('.search').each(function (index, element) {
+      $(".search").each(function (index, element) {
         const search = $(element);
-        search.addClass('search--suggestions-open');
-        search.toggleClass('search--has-suggestions', true);
+        search.addClass("search--suggestions-open");
+        search.toggleClass("search--has-suggestions", true);
       });
       var fd = new FormData();
-      fd.append('searchTerm', this.searchTerm);
+      fd.append("searchTerm", this.searchTerm);
 
-      this.baseService.search_product(fd)
-        .subscribe(item => {
+      this.baseService.search_product(fd).subscribe(
+        (item) => {
           this.suggestion = item;
           this.searching = false;
-        }, (error: any) => {
+        },
+        (error: any) => {
           // console.log(error);
-        });
+        }
+      );
     }
   }
 }

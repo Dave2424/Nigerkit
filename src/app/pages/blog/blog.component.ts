@@ -46,7 +46,6 @@ export class BlogComponent implements OnInit {
     this.subscriberForm = this.formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
     });
-    console.log(this.blogs);
   }
   get f() {
     return this.subscriberForm.controls;

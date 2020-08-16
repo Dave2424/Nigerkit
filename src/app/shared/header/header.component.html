@@ -94,8 +94,8 @@
                                 <li class="suggestions__item" *ngFor="let item of suggestion;">
                                     <a class="suggestions__item-link" href="#" [routerLink]="['/product', item.slug]">
                                     <div class="suggestions__item-image">
-                                        <!-- <img [src]="Image_data(item.files[0], 'avatar', 'null') " alt="{{item.slug}}"> -->
-                                        <img [src]="item.product_image " alt="{{item.slug}}">
+                                        <img [src]="Image_data(item.files[0], 'avatar', 'null') " alt="{{item.slug}}">
+                                        <!-- <img [src]="item.product_image " alt="{{item.slug}}"> -->
                                     </div>
                                     <div class="suggestions__item-info">
                                         <div class="suggestions__item-name">{{item.name}}
@@ -115,7 +115,7 @@
             </div>
             <div class="site-header__phone">
                 <div class="site-header__phone-title">Customer Service</div>
-                <div class="site-header__phone-number">(+243)80-3947-1950</div>
+                <div class="site-header__phone-number">{{phone}}</div>
             </div>
         </div>
         <div class="site-header__nav-panel">
@@ -208,8 +208,14 @@
                                             <div class="dropcart__products-list">
                                                 <div class="dropcart__product" *ngFor="let item of cart">
                                                     <div class="dropcart__product-image">
-                                                        <a [routerLink]="['/product', item.product.id]">
-                                                            <img [src]="Image_data(item.product_image,'avatar', 'null')" alt=""></a>
+                                                        
+                                                        <a [routerLink]="['/product', item.product.id]" *ngIf="!currentUser">
+                                                            <img [src]="Image_data(item.product_image,'avatar', 'null')"
+                                                              alt=""></a>
+                                                            <a [routerLink]="['/product', item.product.id]" *ngIf="currentUser">
+                                                              <img
+                                                                [src]="Image_data(item.product.product_image,'avatar', 'null')"
+                                                                alt=""></a>
                                                     </div>
                                                     <div class="dropcart__product-info">
                                                         <div class="dropcart__product-name">

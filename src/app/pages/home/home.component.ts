@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit {
   public top_banners: any = [];
   public banner_two: any = {};
   public categories: any = [];
+  public banner_ : string = '';
 
   public cart: any = {};
   currentUser: User;
@@ -86,6 +87,7 @@ export class HomeComponent implements OnInit {
         this.special_offers = data.data.special_offers;
         this.top_banners = data.data.top_banners;
         this.banner_two = data.data.banner_two;
+        this.banner_ = data.data.banner_two.pictures;
         this.categories = data.data.categories;
       });
   }
@@ -136,6 +138,7 @@ export class HomeComponent implements OnInit {
       if (this.count(item) === 0) {
         return "/assets/images/default/avatar.jpg";
       }
+      // console.log(item);
       return this.authenticationservice.baseurl + item;
     }
   }
@@ -182,12 +185,13 @@ export class HomeComponent implements OnInit {
       this.authenticationservice.setCartItems(product_item);
       this.authenticationservice.setCart(product_item);
       this.alert.snotSimpleSuccess("product added!");
-      this.cart = this.getSavedCartInStorage();
+      // this.cart = this.getSavedCartInStorage();
       this.checkItemInCart(product_item);
       this.storeService.AddToCart(toCart).subscribe((resp: any) => {
         // first check for notice
         if (!this.checkForError(resp)) {
           this.cart = resp.items;
+          // console.log(this.cart);
         }
       });
     } else {

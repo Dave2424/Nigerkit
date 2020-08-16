@@ -19,6 +19,7 @@ export class PostComponent implements OnInit {
   details = [];
   // details: any = {};
   relateBlog: any;
+  latestBlog: any;
   currentUser: User;
   comment: string;
   data: any = {};
@@ -49,6 +50,8 @@ export class PostComponent implements OnInit {
   ngOnInit() {
     this.details = this.route.snapshot.data.details.post_details;
     this.relateBlog = this.route.snapshot.data.details.relate;
+    this.latestBlog = this.route.snapshot.data.details.latest;
+    // console.log(this.latestBlog);
     this.commentForm = this.formBuilder.group({
       comment: ["", Validators.required],
     });

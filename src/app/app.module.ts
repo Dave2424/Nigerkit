@@ -58,6 +58,8 @@ import { CategoryComponent } from './pages/category/category.component';
 import { TermconditionComponent } from './pages/termcondition/termcondition.component';
 import { PrivacyComponent } from './pages/privacy/privacy.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { ResourcesComponent } from './pages/resources/resources.component';
+import { ResourceComponent } from './pages/resource/resource.component';
 
 const config = new AuthServiceConfig([
   {
@@ -99,6 +101,8 @@ export function provideConfig() {
     TermconditionComponent,
     PrivacyComponent,
     PageNotFoundComponent,
+    ResourcesComponent,
+    ResourceComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [

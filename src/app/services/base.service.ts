@@ -73,4 +73,8 @@ export class BaseService {
   public tests() {
     return this.http.get(`${this.endpoint}/test`);
   }
+  public getPhoneNumber() {
+    return this.http.get(`${this.endpoint}/get-phone`);
+
+  }
 }

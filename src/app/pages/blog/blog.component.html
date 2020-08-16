@@ -20,8 +20,9 @@
                       <div class="post-card post-card--layout--grid post-card--size--nl">
                         <div class="post-card__image">
                           <a>
-                            <img src="{{blog.image}}" alt="">
-                          </a>
+                            <!-- <img src="{{blog.image}}" alt=""> -->
+                            <img [src]="checkValue(blog.image,'avatar', null)" alt=""></a>
+                          <!-- </a> -->
                         </div>
                         <div class="post-card__info" style="display: flex;">
                           <div class="post-card__category">
@@ -121,8 +122,9 @@
                     <div class="widget-posts__item" *ngFor="let blog of blogs.data.slice().reverse() | slice:0:3">
                       <div class="widget-posts__image">
                         <a>
-                          <img src="{{blog.image}}" alt="">
-                        </a>
+                          <!-- <img src="{{blog.image}}" alt=""> -->
+                          <img [src]="checkValue(blog.image,'avatar', null)" alt=""></a>
+                        <!-- </a> -->
                       </div>
                       <div class="widget-posts__info">
                         <div class="widget-posts__name">
