@@ -2,34 +2,18 @@
 <div class="block block-products block-products--layout--large-first container">
   <div class="row">
     <div class="col-lg-3 d-lg-block d-none" *ngIf="categories">
-      <div
-        class="card-header text-center"
-        style="font-size: 1.125rem; font-weight: 500;"
-      >
+      <div class="card-header text-center" style="font-size: 1.125rem; font-weight: 500;">
         Shop By Category
       </div>
 
-      <a
-        [routerLink]="['/category', category.slug]"
-        *ngFor="let category of categories"
-        class="btn btn-primary btn-lg btn-block text-left text-capitalize"
-        >{{ category.category }}</a
-      >
+      <a [routerLink]="['/category', category.slug]" *ngFor="let category of categories"
+        class="btn btn-primary btn-lg btn-block text-left text-capitalize">{{ category.category }}</a>
     </div>
     <div class="col-md-12 col-sm-12 col-lg-9">
       <div class="block-slideshow__body mt-lg-1" *ngIf="top_banners">
-        <ngx-slick-carousel
-          class="carousel"
-          #SlickModal="slick-carousel"
-          [config]="bannerSlideConfig"
-        >
+        <ngx-slick-carousel class="carousel" #SlickModal="slick-carousel" [config]="bannerSlideConfig">
           <div ngxSlickItem *ngFor="let banner of top_banners">
-            <img
-              [src]="Image_data(banner.pictures, 'avatar', null)"
-              alt=""
-              width="100%"
-              style="max-height: 500px;"
-            />
+            <img [src]="Image_data(banner.pictures, 'avatar', null)" alt="" width="100%" style="max-height: 500px;" />
             <div class="bottom-left">
               <!-- <h4>{{banner.details}}</h4> -->
             </div>
@@ -47,9 +31,7 @@
       <div class="block-features__item">
         <div class="block-features__icon">
           <svg width="48px" height="48px">
-            <use
-              xlink:href="./assets/images/sprite.svg#fi-free-delivery-48"
-            ></use>
+            <use xlink:href="./assets/images/sprite.svg#fi-free-delivery-48"></use>
           </svg>
         </div>
         <div class="block-features__content">
@@ -75,9 +57,7 @@
           <!--<img src="./assets/images/logos/secure-payment.png" style="width: 140%;height: 54px; margin-left: -10%;" />-->
 
           <svg width="48px" height="48px">
-            <use
-              xlink:href="./assets/images/sprite.svg#fi-payment-security-48"
-            ></use>
+            <use xlink:href="./assets/images/sprite.svg#fi-payment-security-48"></use>
           </svg>
         </div>
         <div class="block-features__content">
@@ -110,11 +90,8 @@
       <div class="block-header__divider"></div>
     </div>
     <div class="block-products__body">
-      <div class="block-products__list" *ngIf="products">
-        <div
-          class="block-products__list-item"
-          *ngFor="let item of products; let i = index"
-        >
+      <div class="block-products__list" *ngIf="products.length; else elseTemplate">
+        <div class="block-products__list-item" *ngFor="let item of products; let i = index">
           <div class="product-card">
             <!-- <button class="product-card__quickview" [ngClass]="loading === i ? 'product-card__quickview--preload': ''"
               type="button" (click)="quickView(item, i)">
@@ -124,25 +101,16 @@
               <span class="fake-svg-icon"></span>
             </button> -->
             <div class="product-card__badges-list">
-              <div
-                class="product-card__badge product-card__badge--hot"
-                *ngIf="i % 2 == 1"
-              >
+              <div class="product-card__badge product-card__badge--hot" *ngIf="i % 2 == 1">
                 Hot
               </div>
-              <div
-                class="product-card__badge product-card__badge--new"
-                *ngIf="i % 2 == 0"
-              >
+              <div class="product-card__badge product-card__badge--new" *ngIf="i % 2 == 0">
                 New
               </div>
             </div>
             <div class="product-card__image">
               <a [routerLink]="['/product', item.slug]">
-                <img
-                  [src]="Image_data(item.product_image, 'avatar', 'null')"
-                  alt=""
-                />
+                <img [src]="Image_data(item.product_image, 'avatar', 'null')" alt="" />
               </a>
             </div>
             <div class="product-card__info">
@@ -157,20 +125,12 @@
                   &#8358;{{ item.price | number }}
                 </div>
                 <div class="product-card__buttons">
-                  <button
-                    class="btn btn-primary product-card__addtocart"
-                    (click)="addToCart(item)"
-                    *ngIf="!checkItemInCart(item)"
-                    type="button"
-                  >
+                  <button class="btn btn-primary product-card__addtocart" (click)="addToCart(item)"
+                    *ngIf="!checkItemInCart(item)" type="button">
                     Add To Cart
                   </button>
-                  <button
-                    class="btn btn-secondary product-card__addtocart"
-                    type="button"
-                    disabled
-                    *ngIf="checkItemInCart(item)"
-                  >
+                  <button class="btn btn-secondary product-card__addtocart" type="button" disabled
+                    *ngIf="checkItemInCart(item)">
                     In Cart
                   </button>
                 </div>
@@ -179,6 +139,9 @@
           </div>
         </div>
       </div>
+       <ng-template #elseTemplate>
+         <app-skeletonloader></app-skeletonloader>
+       </ng-template>
     </div>
   </div>
 </div>
@@ -213,17 +176,12 @@
           <h3 class="block-header__title">Top Rated Products</h3>
           <div class="block-header__divider"></div>
         </div>
-        <div
-          class="block-product-columns__column"
-          *ngFor="let item of top_rated; let i = index"
-        >
+        <div class="block-product-columns__column" *ngFor="let item of top_rated; let i = index">
           <div class="block-product-columns__item">
             <div class="product-card product-card--layout--horizontal">
               <button class="product-card__quickview" type="button">
                 <svg width="16px" height="16px">
-                  <use
-                    xlink:href="./assets/images/sprite.svg#quickview-16"
-                  ></use>
+                  <use xlink:href="./assets/images/sprite.svg#quickview-16"></use>
                 </svg>
                 <span class="fake-svg-icon"></span>
               </button>
@@ -236,10 +194,7 @@
                 <a href="#" [routerLink]="['/product', item.slug]">
                   <!-- <img [src]="item.product_image" width="100%" height="100%" alt=""> -->
 
-                  <img
-                    [src]="Image_data(item.product_image, 'avatar', 'null')"
-                    alt=""
-                  />
+                  <img [src]="Image_data(item.product_image, 'avatar', 'null')" alt="" />
                 </a>
               </div>
               <div class="product-card__info">
@@ -254,17 +209,11 @@
                 </div>
               </div>
               <div class="product-card__actions">
-                <div
-                  class="product-card__availability"
-                  style="font-size: 13px; display: block;"
-                >
+                <div class="product-card__availability" style="font-size: 13px; display: block;">
                   Availability:
-                  <span
-                    [ngClass]="
+                  <span [ngClass]="
                       item.quantity > 0 ? 'text-avail' : 'text-Unavail'
-                    "
-                    >{{ avail(item.quantity) }}</span
-                  >
+                    ">{{ avail(item.quantity) }}</span>
                 </div>
                 <div class="product-card__prices">
                   &#8358;{{ item.price | number }}
@@ -279,17 +228,12 @@
           <h3 class="block-header__title">Special Offers</h3>
           <div class="block-header__divider"></div>
         </div>
-        <div
-          class="block-product-columns__column"
-          *ngFor="let item of special_offers; let i = index"
-        >
+        <div class="block-product-columns__column" *ngFor="let item of special_offers; let i = index">
           <div class="block-product-columns__item">
             <div class="product-card product-card--layout--horizontal">
               <button class="product-card__quickview" type="button">
                 <svg width="16px" height="16px">
-                  <use
-                    xlink:href="./assets/images/sprite.svg#quickview-16"
-                  ></use>
+                  <use xlink:href="./assets/images/sprite.svg#quickview-16"></use>
                 </svg>
                 <span class="fake-svg-icon"></span>
               </button>
@@ -301,10 +245,7 @@
               <div class="product-card__image">
                 <a [routerLink]="['/product', item.slug]">
                   <!-- <img [src]="item.product_image" width="100%" height="100%" alt=""> -->
-                  <img
-                    [src]="Image_data(item.product_image, 'avatar', 'null')"
-                    alt=""
-                  />
+                  <img [src]="Image_data(item.product_image, 'avatar', 'null')" alt="" />
                 </a>
               </div>
               <div class="product-card__info">
@@ -321,23 +262,16 @@
                 </div>
                 <div class="product-card__prices">
                   <span class="product-card__new-price">
-                    &#8358;{{ item.price | number }}</span
-                  >
+                    &#8358;{{ item.price | number }}</span>
                   <span class="product-card__old-price">{{
                     item.price * 2 | number
                   }}</span>
                 </div>
                 <div class="product-card__buttons">
-                  <button
-                    class="btn btn-primary product-card__addtocart"
-                    type="button"
-                  >
+                  <button class="btn btn-primary product-card__addtocart" type="button">
                     Add To Cart
                   </button>
-                  <button
-                    class="btn btn-secondary product-card__addtocart product-card__addtocart--list"
-                    type="button"
-                  >
+                  <button class="btn btn-secondary product-card__addtocart product-card__addtocart--list" type="button">
                     Add To Cart
                   </button>
                 </div>
@@ -351,27 +285,19 @@
           <h3 class="block-header__title">Bestsellers</h3>
           <div class="block-header__divider"></div>
         </div>
-        <div
-          class="block-product-columns__column"
-          *ngFor="let item of best_sellers; let i = index"
-        >
+        <div class="block-product-columns__column" *ngFor="let item of best_sellers; let i = index">
           <div class="block-product-columns__item">
             <div class="product-card product-card--layout--horizontal">
               <button class="product-card__quickview" type="button">
                 <svg width="16px" height="16px">
-                  <use
-                    xlink:href="./assets/images/sprite.svg#quickview-16"
-                  ></use>
+                  <use xlink:href="./assets/images/sprite.svg#quickview-16"></use>
                 </svg>
                 <span class="fake-svg-icon"></span>
               </button>
               <div class="product-card__image">
                 <a [routerLink]="['/product', item.slug]">
                   <!-- <img [src]="item.product_image" width="100%" height="100%" alt=""> -->
-                  <img
-                    [src]="Image_data(item.product_image, 'avatar', 'null')"
-                    alt=""
-                  />
+                  <img [src]="Image_data(item.product_image, 'avatar', 'null')" alt="" />
                 </a>
               </div>
               <div class="product-card__info">
@@ -390,16 +316,10 @@
                   &#8358;{{ item.price | number }}
                 </div>
                 <div class="product-card__buttons">
-                  <button
-                    class="btn btn-primary product-card__addtocart"
-                    type="button"
-                  >
+                  <button class="btn btn-primary product-card__addtocart" type="button">
                     Add To Cart
                   </button>
-                  <button
-                    class="btn btn-secondary product-card__addtocart product-card__addtocart--list"
-                    type="button"
-                  >
+                  <button class="btn btn-secondary product-card__addtocart product-card__addtocart--list" type="button">
                     Add To Cart
                   </button>
                 </div>
@@ -414,11 +334,7 @@
 <!-- .block-product-columns / end -->
 
 <!-- .block-posts -->
-<div
-  class="block block-posts block-posts--layout--list-sm"
-  *ngIf="posts"
-  data-layout="list-sm"
->
+<div class="block block-posts block-posts--layout--list-sm" *ngIf="posts" data-layout="list-sm">
   <div class="container">
     <div class="block-header">
       <h3 class="block-header__title">Latest News</h3>
@@ -442,8 +358,7 @@
           <div class="post-card__image">
             <a [routerLink]="['/blog', post.slug]">
               <!-- <img src="{{ post.image }}" alt=""> -->
-              <img [src]="Image_data(post.image, 'avatar', null)" alt=""
-            /></a>
+              <img [src]="Image_data(post.image, 'avatar', null)" alt="" /></a>
 
             <!-- </a> -->
           </div>
@@ -454,17 +369,9 @@
             <div class="post-card__date">
               {{ post.time | date: "longDate" }}
             </div>
-            <div
-              class="post-card__content"
-              [line-truncation]="3"
-              [innerHTML]="post.body"
-            ></div>
+            <div class="post-card__content" [line-truncation]="3" [innerHTML]="post.body"></div>
             <div class="post-card__read-more">
-              <a
-                [routerLink]="'/blog/' + post.slug"
-                class="btn btn-secondary btn-sm"
-                >Read More</a
-              >
+              <a [routerLink]="'/blog/' + post.slug" class="btn btn-secondary btn-sm">Read More</a>
             </div>
           </div>
         </div>
@@ -555,22 +462,13 @@
 
 <!-- quickview-modal -->
 <!-- Modal Section -->
-<ngx-smart-modal
-  #productModal
-  identifier="productModal"
-  customClass="modal-width"
-  class="nsm-dialog-animation-fade"
->
+<ngx-smart-modal #productModal identifier="productModal" customClass="modal-width" class="nsm-dialog-animation-fade">
   <div class="quickview" *ngIf="productModal.hasData()">
     <div class="product product--layout--quickview" data-layout="quickview">
       <div class="product__content">
         <!-- .product__gallery -->
         <div class="product__gallery">
-          <ngx-gallery
-            *ngIf="galleryImages"
-            [options]="galleryOptions"
-            [images]="galleryImages"
-          ></ngx-gallery>
+          <ngx-gallery *ngIf="galleryImages" [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
         </div>
         <!-- .product__gallery / end -->
         <!-- .product__info -->
@@ -589,13 +487,11 @@
           <ul class="product__meta">
             <li class="product__meta-availability">
               Availability:
-              <span
-                [ngClass]="
+              <span [ngClass]="
                   productModal.getData().quantity > 0
                     ? 'text-avail'
                     : 'text-Unavail'
-                "
-              >
+                ">
                 {{ avail(productModal.getData().quantity) }}
               </span>
             </li>
@@ -621,20 +517,12 @@
           <form class="product__options">
             <div class="form-group product__option">
               <div class="product__actions">
-                <button
-                  class="btn btn-primary product-card__addtocart"
-                  (click)="addToCart(productModal.getData())"
-                  *ngIf="!checkItemInCart(productModal.getData())"
-                  type="button"
-                >
+                <button class="btn btn-primary product-card__addtocart" (click)="addToCart(productModal.getData())"
+                  *ngIf="!checkItemInCart(productModal.getData())" type="button">
                   Add To Cart
                 </button>
-                <button
-                  class="btn btn-secondary product-card__addtocart"
-                  type="button"
-                  disabled
-                  *ngIf="checkItemInCart(productModal.getData())"
-                >
+                <button class="btn btn-secondary product-card__addtocart" type="button" disabled
+                  *ngIf="checkItemInCart(productModal.getData())">
                   In Cart
                 </button>
               </div>

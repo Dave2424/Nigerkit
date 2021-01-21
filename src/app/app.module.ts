@@ -60,6 +60,8 @@ import { PrivacyComponent } from './pages/privacy/privacy.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { ResourcesComponent } from './pages/resources/resources.component';
 import { ResourceComponent } from './pages/resource/resource.component';
+import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
+import { SkeletonloaderComponent } from './Components/skeletonloader/skeletonloader.component';
 
 const config = new AuthServiceConfig([
   {
@@ -103,6 +105,7 @@ export function provideConfig() {
     PageNotFoundComponent,
     ResourcesComponent,
     ResourceComponent,
+    SkeletonloaderComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -121,6 +124,7 @@ export function provideConfig() {
     Angular4PaystackModule,
     SocialLoginModule,
     LineTruncationLibModule,
+    NgxSkeletonLoaderModule.forRoot(),
     NgxSmartModalModule.forRoot(),
     LaddaModule.forRoot({
       style: "expand-right",
@@ -146,7 +150,7 @@ export function provideConfig() {
     ProductDetailsResolve,
     BlogResolve,
     BlogDetailsResolve,
-    CategoryProductResolve
+    CategoryProductResolve,
   ],
   bootstrap: [AppComponent],
 })
