@@ -8,7 +8,7 @@
             <div class="container">
                 <div class="mobile-header__body">
                     <button class="mobile-header__menu-button">
-                        <i class="fas fa-bars" style="font-size:22px;color:white;maring-left:10%"></i>
+                        <i class="fas fa-bars" style="font-size:22px;color:white;margin-left:10%"></i>
                     </button>
                     <a class="mobile-header__logo" [routerLink]="['/']" >
                         <img src="assets/images/logos/logoFlag3.png" alt="logo" style="filter: brightness(0) invert(1);width:50%"/>
@@ -210,7 +210,7 @@
                                                     <div class="dropcart__product-image">
                                                         
                                                         <a [routerLink]="['/product', item.product.id]" *ngIf="!currentUser">
-                                                            <img [src]="Image_data(item.product_image,'avatar', 'null')"
+                                                            <img [src]="Image_data(item.product.product_image,'avatar', 'null')"
                                                               alt=""></a>
                                                             <a [routerLink]="['/product', item.product.id]" *ngIf="currentUser">
                                                               <img

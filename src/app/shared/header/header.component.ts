@@ -85,19 +85,9 @@ export class HeaderComponent implements OnInit {
     if (this.currentUser) {
       // user cart items
       this.cartSubscription = this.storeService
-        .GetCartItems()
+        .GetCartItems(this.currentUser.id)
         .subscribe((items) => {
-          this.cart = items;
-          // console.log(this.cart);
-          // console.log(this.cart);
-          // let carts =  this.getSavedCartInStorage();
-          // console.log(carts);
-          // if (carts) {
-          //   carts.forEach((items) => {
-          //     this.cart.push(items);
-          //   });
-          // }
-          // this.cart_item = this.cart;
+          this.cart.push(items);
         });
     } else {
       this.cart = this.getSavedCartInStorage();
@@ -106,8 +96,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.authenticationservice.cartItems$.subscribe((data) => {
-      this.cart = [];
-      this.cart = this.getSavedCartInStorage();
+      if (!this.currentUser) {
+        this.cart = [];
+        this.cart = this.getSavedCartInStorage();
+      }
     });
 
     this.loginForm = this.formBuilder.group({

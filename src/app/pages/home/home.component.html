@@ -93,13 +93,6 @@
       <div class="block-products__list" *ngIf="products.length; else elseTemplate">
         <div class="block-products__list-item" *ngFor="let item of products; let i = index">
           <div class="product-card">
-            <!-- <button class="product-card__quickview" [ngClass]="loading === i ? 'product-card__quickview--preload': ''"
-              type="button" (click)="quickView(item, i)">
-              <svg width="16px" height="16px">
-                <use xlink:href="./assets/images/sprite.svg#quickview-16"></use>
-              </svg>
-              <span class="fake-svg-icon"></span>
-            </button> -->
             <div class="product-card__badges-list">
               <div class="product-card__badge product-card__badge--hot" *ngIf="i % 2 == 1">
                 Hot

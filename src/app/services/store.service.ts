@@ -56,8 +56,8 @@ export class StoreService {
 	////////////////////////////////////////////////////////////////////////////
 
 
-	public GetCartItems(){
-		return this.http.get(`${this.endpoint}/store/store-get-cart`);
+	public GetCartItems(user_id: number){
+		return this.http.get(`${this.endpoint}/store/store-get-cart/${user_id}`);
 	}
 
 	public GetTransactions(user_id:number){

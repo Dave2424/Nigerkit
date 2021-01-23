@@ -58,7 +58,7 @@ export class ShopComponent implements OnInit {
     if (this.currentUser) {
       // user cart items
       this.cartSubscription = this.storeService
-        .GetCartItems()
+        .GetCartItems(this.currentUser.id)
         .subscribe((items) => {
           this.cart = items;
         });

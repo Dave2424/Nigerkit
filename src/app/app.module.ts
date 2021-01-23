@@ -34,7 +34,7 @@ import { NgxGalleryModule } from "ngx-gallery";
 import { CustomHammerConfig } from "./helpers/CustomHammer";
 import { ProductDetailsResolve } from "./resolvers/product.resolver";
 import { MatTabsModule } from "@angular/material/tabs";
-import { MatPaginatorModule } from "@angular/material";
+import { MatPaginatorModule, MatProgressBarModule, MatProgressSpinnerModule } from "@angular/material";
 import { Angular4PaystackModule } from "angular4-paystack";
 import { CartComponent } from "./pages/cart/cart.component";
 import { CheckoutComponent } from "./pages/checkout/checkout.component";
@@ -124,6 +124,8 @@ export function provideConfig() {
     Angular4PaystackModule,
     SocialLoginModule,
     LineTruncationLibModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
     NgxSkeletonLoaderModule.forRoot(),
     NgxSmartModalModule.forRoot(),
     LaddaModule.forRoot({
