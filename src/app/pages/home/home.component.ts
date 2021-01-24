@@ -153,10 +153,13 @@ export class HomeComponent implements OnInit {
       this.cartSubscription = this.storeService
         .GetCartItems(this.currentUser.id)
         .subscribe((items) => {
-          this.cart.push(items);
+          if (this.count(items) > 0) this.cart = items;
+          // console.log(this.cart);
         });
     } else {
-      this.cart = this.getSavedCartInStorage();
+      if (this.count(this.getSavedCartInStorage()) > 0)
+        // this.cart.push(this.getSavedCartInStorage());
+        this.cart = this.getSavedCartInStorage();
     }
   }
   // checking which product is in cart

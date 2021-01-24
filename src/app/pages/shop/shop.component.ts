@@ -18,7 +18,7 @@ export class ShopComponent implements OnInit {
   products: any;
   example = [];
   currentUser: User;
-  public cart: any = {};
+  public cart: any = [];
   private cartSubscription: Subscription;
   sortProduct = "Default";
 
@@ -30,11 +30,17 @@ export class ShopComponent implements OnInit {
     private storeService: StoreService,
     private authenticationservice: AuthenticationService
   ) {
+    this.authenticationservice.currentUser.subscribe(
+      (x) => (this.currentUser = x)
+    );
     this.checkItems();
+    // console.log('this is the Shop');
   }
 
   ngOnInit() {
     this.products = this.route.snapshot.data.allProduct.products;
+    // this.checkItems();
+    // this.cartSubscription = this.storeService.GetCartItems()
     this.authenticationservice.cartItems$.subscribe((data) => {});
   }
   sortingProduct() {
@@ -54,16 +60,48 @@ export class ShopComponent implements OnInit {
       // console.log(sortedArray);
     }
   }
+  // checkItems() {
+  //   console.log("this is the testing");
+  //   if (this.currentUser) {
+  //     // user cart items
+  //     this.cartSubscription = this.storeService
+  //       .GetCartItems(this.currentUser.id)
+  //       .subscribe((items) => {
+  //         this.cart.push(items);
+  //         console.log("This is the cart");
+  //         console.log(this.cart);
+  //       });
+  //   } else {
+  //     this.cart = this.getSavedCartInStorage();
+  //   }
+  // }
+
+  // checkItems1() {
+  //   if (this.currentUser) {
+  //     //user cart items
+  //     this.cartSubscription = this.storeService
+  //       .GetCartItems(this.currentUser.id)
+  //       .subscribe((items) => {
+  //         this.cart.push(items);
+  //       });
+  //   } else {
+  //     this.cart = this.getSavedCartInStorage();
+  //   }
+  // }
+
   checkItems() {
     if (this.currentUser) {
       // user cart items
       this.cartSubscription = this.storeService
         .GetCartItems(this.currentUser.id)
         .subscribe((items) => {
-          this.cart = items;
+          if (this.count(items) > 0) this.cart = items;
+          // console.log(this.cart);
         });
     } else {
-      this.cart = this.getSavedCartInStorage();
+      if (this.count(this.getSavedCartInStorage()) > 0)
+        // this.cart.push(this.getSavedCartInStorage());
+        this.cart = this.getSavedCartInStorage();
     }
   }
 
@@ -115,20 +153,14 @@ export class ShopComponent implements OnInit {
   checkItemInCart(product) {
     let result: boolean;
     if (this.cart) {
-      if (this.currentUser) {
-        for (let i = 0; i < this.count(this.cart); i++) {
-          let search = _.findLast(this.cart, ["id", product.id]);
-          // console.log(search);
-          if (search) result = true;
-          else result = false;
-        }
-      }
+      // if (this.currentUser) {
       for (let i = 0; i < this.count(this.cart); i++) {
         let search = _.findLast(this.cart, ["product_id", product.id]);
         // console.log(search);
         if (search) result = true;
         else result = false;
       }
+      // }
       return result;
     }
   }
@@ -152,7 +184,7 @@ export class ShopComponent implements OnInit {
       this.authenticationservice.setCartItems(product_item);
       this.authenticationservice.setCart(product_item);
       this.alert.snotSimpleSuccess("product added!");
-    // this.cart = this.getSavedCartInStorage();
+      // this.cart = this.getSavedCartInStorage();
       this.checkItemInCart(product_item);
       this.storeService.AddToCart(toCart).subscribe((resp: any) => {
         // first check for notice
@@ -179,7 +211,7 @@ export class ShopComponent implements OnInit {
     } else {
       // check is item already exists
       let cartItems = this.getSavedCartInStorage();
-      console.log(cartItems);
+      // console.log(cartItems);
       let search = _.findLast(cartItems, ["product_id", data.product_id]);
 
       if (_.size(search) > 0) {

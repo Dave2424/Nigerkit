@@ -87,10 +87,13 @@ export class HeaderComponent implements OnInit {
       this.cartSubscription = this.storeService
         .GetCartItems(this.currentUser.id)
         .subscribe((items) => {
-          this.cart.push(items);
+          if (this.count(items) > 0) this.cart = items;
+          // console.log(this.cart);
         });
     } else {
-      this.cart = this.getSavedCartInStorage();
+      if (this.count(this.getSavedCartInStorage()) > 0)
+        // this.cart.push(this.getSavedCartInStorage());
+        this.cart = this.getSavedCartInStorage();
     }
   }
 
@@ -192,8 +195,11 @@ export class HeaderComponent implements OnInit {
 
   // ===================== Remove ITem From Cart ==================//
   removeFromCart(item: any) {
+    console.log(item);
     if (this.currentUser) {
-      this.storeService.RemoveFromCart(item.id).subscribe((data) => {
+      let search = _.findLastIndex(this.cart, ["product_id", item.product_id]);
+      this.cart.splice(search, 1);
+      this.storeService.RemoveFromCart(item.product_id).subscribe((data) => {
         this.cart = data;
       });
     } else {
@@ -204,7 +210,7 @@ export class HeaderComponent implements OnInit {
   updateLocalCart() {
     localStorage.setItem("cart_Items", JSON.stringify(this.cart));
     this.authenticationservice.setCartItems(this.cart);
-    console.log("subscription clicked");
+    // console.log("subscription clicked");
   }
 
   sliceLocalCart(item) {

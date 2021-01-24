@@ -15,7 +15,6 @@
           <div ngxSlickItem *ngFor="let banner of top_banners">
             <img [src]="Image_data(banner.pictures, 'avatar', null)" alt="" width="100%" style="max-height: 500px;" />
             <div class="bottom-left">
-              <!-- <h4>{{banner.details}}</h4> -->
             </div>
           </div>
         </ngx-slick-carousel>
@@ -202,12 +201,12 @@
                 </div>
               </div>
               <div class="product-card__actions">
-                <div class="product-card__availability" style="font-size: 13px; display: block;">
+                <!-- <div class="product-card__availability" style="font-size: 13px; display: block;">
                   Availability:
                   <span [ngClass]="
                       item.quantity > 0 ? 'text-avail' : 'text-Unavail'
                     ">{{ avail(item.quantity) }}</span>
-                </div>
+                </div> -->
                 <div class="product-card__prices">
                   &#8358;{{ item.price | number }}
                 </div>

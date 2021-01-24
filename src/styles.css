@@ -33,3 +33,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     opacity: 0.8;
     z-index: 100;
   }
+  .mat-tab-group.mat-primary .mat-ink-bar,
+  .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #47991f;
+  }
+  .mat-tab-label,
+  .mat-tab-link{
+    color:black;
+  }

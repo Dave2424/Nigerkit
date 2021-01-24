@@ -43,7 +43,7 @@
                     <h1 class="product__name">{{product['name']}}</h1>
                     <div class="product__rating">
                         <div class="product__rating-legend">
-                            <a href="#" *ngIf="count(reviews) > 0">{{count(reviews)}} Reviews</a>
+                            <label *ngIf=" count(reviews.data)> 0">{{count(reviews.data)}} Reviews</label>
                         </div>
                     </div>
                     <div class="product__description">
@@ -55,7 +55,7 @@
                             <span  [ngClass]="product['quantity'] > 0 ? 'text-avail': 'text-Unavail'">{{avail(product['quantity'])}}</span>
                         </li>
                         <li>Brand: <a href="">{{product['brand']}}</a></li>
-                        <li>SKU: {{product['sku'].sku_no}}</li>
+                        <li>SKU: {{product['Sku']}}</li>
                     </ul>
                 </div>
                 <!-- .product__info / end -->
@@ -87,7 +87,7 @@
                     <!-- .product__options / end -->
                 </div>
                 <!-- .product__end -->
-                <div class="product__footer">
+                <!-- <div class="product__footer">
                     <div class="product__tags tags">
                     </div>
                     <div class="product__share-links share-links">
@@ -98,7 +98,7 @@
                     <li class="share-links__item share-links__item--type--counter"><a href="">4K</a></li>
                     </ul>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="product-tabs ">

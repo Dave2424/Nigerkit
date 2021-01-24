@@ -19,11 +19,16 @@ import { error } from "util";
 })
 export class SignupComponent implements OnInit {
   registrationForm: FormGroup;
+  loginForm: FormGroup;
   loading = false;
+  lloading = false;
   submitted = false;
+  l_submitted = false;
   error = "";
+  l_error = "";
   returnUrl = "";
-  user = { fname: '', lname: '', email: '', phone: '' };
+  user = { fname: "", lname: "", email: "", phone: "" };
+  email =""; password = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,10 +52,27 @@ export class SignupComponent implements OnInit {
       },
       { validator: MustMatch("password", "confirmPassword") }
     );
+    //Login Form
+    this.loginForm = this.formBuilder.group({
+      email: ["", [Validators.required, Validators.email]],
+      pwd: ["", [Validators.required, Validators.minLength(6)]],
+    });
   }
 
   get f() {
     return this.registrationForm.controls;
+  }
+  get l() {
+    return this.loginForm.controls;
+  }
+  onLogin(){
+    this.l_error = "";
+    this.l_submitted = true;
+    if (this.loginForm.invalid) {
+      return;
+    }
+    this.lloading = true;
+
   }
 
   onSubmit() {
@@ -86,7 +108,7 @@ export class SignupComponent implements OnInit {
           fname: data.firstName,
           lname: data.lastName,
           email: data.email,
-          phone: ''
+          phone: "",
         };
       },
       (error) => {

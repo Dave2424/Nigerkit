@@ -3,7 +3,7 @@
 <!-- mobile site__header -->
 <header class="site__header d-lg-none">
     <!-- data-sticky-mode - one of [pullToShow, alwaysOnTop] -->
-    <div class="mobile-header mobile-header--sticky" data-sticky-mode="pullToShow">
+    <div class="mobile-header mobile-header--sticky" data-sticky-mode="alwaysOnTop">
         <div class="mobile-header__panel">
             <div class="container">
                 <div class="mobile-header__body">
@@ -120,7 +120,7 @@
         </div>
         <div class="site-header__nav-panel">
             <!-- data-sticky-mode - one of [pullToShow, alwaysOnTop] -->
-            <div class="nav-panel nav-panel--sticky" data-sticky-mode="pullToShow">
+            <div class="nav-panel nav-panel--sticky" data-sticky-mode="alwaysOnTop">
                 <div class="nav-panel__container container">
                     <div class="nav-panel__row">
                         <!-- <div class="nav-panel__departments"> -->
@@ -219,7 +219,7 @@
                                                     </div>
                                                     <div class="dropcart__product-info">
                                                         <div class="dropcart__product-name">
-                                                            <a  [routerLink]="['/product', item.product.slug]">{{item.product.name}}</a></div>
+                                                            <a  [routerLink]="['/product', item.slug]">{{item.product.name}}</a></div>
                                                         <ul class="dropcart__product-options">
                                                         <li>Brand: {{item.product.brand}}</li>
                                                         </ul>
@@ -414,7 +414,7 @@
                         <ul class="mobile-links mobile-links--level--1">
                         <li class="mobile-links__item" data-collapse-item *ngIf="!currentUser">
                             <div class="mobile-links__item-title">
-                            <a class="mobile-links__item-link">Login</a>
+                            <a [routerLink]="['/signup']" class="mobile-links__item-link">Login</a>
                             </div>
                         </li>
                         <li class="mobile-links__item" data-collapse-item *ngIf="currentUser">
