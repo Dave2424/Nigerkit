@@ -32,7 +32,7 @@
                             <a [routerLink]="['/blog', blog.slug]">{{blog.title}}</a>
                           </div>
                           <div class="post-card__date">{{blog.time | date:'longDate'}}</div>
-                          <div class="post-card__content" [line-truncation]="3" [innerHTML]="blog.body"></div>
+                          <div class="post-card__content" [line-truncation]="3" [innerHTML]="blog.description"></div>
                         </div>
                       </div>
                     </div>

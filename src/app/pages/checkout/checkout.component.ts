@@ -57,6 +57,9 @@ export class CheckoutComponent implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = () => {
       return false;
     };
+    this.baseService.getStates().subscribe((item) => {
+      console.log(item);
+    });
   }
 
   ngOnInit() {
