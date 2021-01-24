@@ -1,4 +1,4 @@
-import { Title, Meta } from '@angular/platform-browser';
+import { Title, Meta } from "@angular/platform-browser";
 import { User } from "./../../models/user";
 import { Subscription } from "rxjs";
 import { AuthenticationService } from "./../../services/authentication.service";
@@ -17,7 +17,7 @@ import * as _ from "lodash";
 export class CategoryComponent implements OnInit {
   categoryProduct: any;
   currentUser: User;
-  public cart: any = {};
+  public cart: any = [];
   private cartSubscription: Subscription;
   constructor(
     private route: ActivatedRoute,
@@ -33,17 +33,19 @@ export class CategoryComponent implements OnInit {
   ngOnInit() {
     this.categoryProduct = this.route.snapshot.data.categorydetails.category.product;
   }
-
   checkItems() {
     if (this.currentUser) {
       // user cart items
       this.cartSubscription = this.storeService
-        .GetCartItems()
+        .GetCartItems(this.currentUser.id)
         .subscribe((items) => {
-          this.cart = items;
+          if (this.count(items) > 0) this.cart = items;
+          // console.log(this.cart);
         });
     } else {
-      this.cart = this.getSavedCartInStorage();
+      if (this.count(this.getSavedCartInStorage()) > 0)
+        // this.cart.push(this.getSavedCartInStorage());
+        this.cart = this.getSavedCartInStorage();
     }
   }
 

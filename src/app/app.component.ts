@@ -1,28 +1,44 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Event, Router, NavigationEnd, RouterOutlet, NavigationStart } from '@angular/router';
+import { Component, OnDestroy } from "@angular/core";
+import {
+  Event,
+  Router,
+  NavigationEnd,
+  RouterOutlet,
+  NavigationStart,
+  NavigationCancel,
+  NavigationError,
+  ActivatedRoute,
+} from "@angular/router";
+import { Location } from "@angular/common";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
-  title = 'Nigerkit';
+  title = "Nigerkit";
+  loading = false;
 
   constructor(
-    private router: Router) {
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     // =================== Subscribe to route events ======================//
     this.router.events.subscribe((routerEvent: Event) => {
-      if (routerEvent instanceof NavigationStart) {
-        window.scrollTo(0, 0);
-        this.router.navigated = true;
-      }
-
-      if (routerEvent instanceof NavigationEnd) {
-        // this.loading = false;
-        this.router.navigated = false;
+      switch (routerEvent instanceof Navigator) {
+        case routerEvent instanceof NavigationStart: {
+          this.loading = true;
+        }
+        case routerEvent instanceof NavigationEnd:
+        case routerEvent instanceof NavigationCancel:
+        case routerEvent instanceof NavigationError: {
+          this.loading = false;
+        }
+        default: {
+          break;
+        }
       }
     });
   }
 }
-

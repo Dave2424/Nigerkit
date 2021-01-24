@@ -43,6 +43,7 @@ export class BlogComponent implements OnInit {
 
   ngOnInit() {
     this.blogs = this.route.snapshot.data.blogdetails.post;
+    // console.log(this.blogs);
     this.subscriberForm = this.formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
     });

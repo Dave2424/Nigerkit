@@ -33,9 +33,9 @@ export class HomeComponent implements OnInit {
   public top_banners: any = [];
   public banner_two: any = {};
   public categories: any = [];
-  public banner_ : string = '';
+  public banner_: string = "";
 
-  public cart: any = {};
+  public cart: any = [];
   currentUser: User;
   public cart_to_: any;
   public img_file: any;
@@ -68,10 +68,10 @@ export class HomeComponent implements OnInit {
     private storeService: StoreService,
     private authenticationservice: AuthenticationService
   ) {
-    this.authenticationservice.currentUser.subscribe(
-      (x) => (this.currentUser = x)
-    );
-    this.checkItems();
+    this.authenticationservice.currentUser.subscribe((x) => {
+      this.currentUser = x;
+      this.checkItems();
+    });
   }
 
   ngOnInit() {
@@ -151,12 +151,15 @@ export class HomeComponent implements OnInit {
     if (this.currentUser) {
       // user cart items
       this.cartSubscription = this.storeService
-        .GetCartItems()
+        .GetCartItems(this.currentUser.id)
         .subscribe((items) => {
-          this.cart = items;
+          if (this.count(items) > 0) this.cart = items;
+          // console.log(this.cart);
         });
     } else {
-      this.cart = this.getSavedCartInStorage();
+      if (this.count(this.getSavedCartInStorage()) > 0)
+        // this.cart.push(this.getSavedCartInStorage());
+        this.cart = this.getSavedCartInStorage();
     }
   }
   // checking which product is in cart

@@ -308,6 +308,9 @@ h6 {
   [dir=rtl] .document__header {
     text-align: right;
   }
+  .googlebtn{
+    width:60%;
+  }
 }
 
 /*

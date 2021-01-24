@@ -85,29 +85,24 @@ export class HeaderComponent implements OnInit {
     if (this.currentUser) {
       // user cart items
       this.cartSubscription = this.storeService
-        .GetCartItems()
+        .GetCartItems(this.currentUser.id)
         .subscribe((items) => {
-          this.cart = items;
+          if (this.count(items) > 0) this.cart = items;
           // console.log(this.cart);
-          // console.log(this.cart);
-          // let carts =  this.getSavedCartInStorage();
-          // console.log(carts);
-          // if (carts) {
-          //   carts.forEach((items) => {
-          //     this.cart.push(items);
-          //   });
-          // }
-          // this.cart_item = this.cart;
         });
     } else {
-      this.cart = this.getSavedCartInStorage();
+      if (this.count(this.getSavedCartInStorage()) > 0)
+        // this.cart.push(this.getSavedCartInStorage());
+        this.cart = this.getSavedCartInStorage();
     }
   }
 
   ngOnInit() {
     this.authenticationservice.cartItems$.subscribe((data) => {
-      this.cart = [];
-      this.cart = this.getSavedCartInStorage();
+      if (!this.currentUser) {
+        this.cart = [];
+        this.cart = this.getSavedCartInStorage();
+      }
     });
 
     this.loginForm = this.formBuilder.group({
@@ -200,8 +195,11 @@ export class HeaderComponent implements OnInit {
 
   // ===================== Remove ITem From Cart ==================//
   removeFromCart(item: any) {
+    console.log(item);
     if (this.currentUser) {
-      this.storeService.RemoveFromCart(item.id).subscribe((data) => {
+      let search = _.findLastIndex(this.cart, ["product_id", item.product_id]);
+      this.cart.splice(search, 1);
+      this.storeService.RemoveFromCart(item.product_id).subscribe((data) => {
         this.cart = data;
       });
     } else {
@@ -212,7 +210,7 @@ export class HeaderComponent implements OnInit {
   updateLocalCart() {
     localStorage.setItem("cart_Items", JSON.stringify(this.cart));
     this.authenticationservice.setCartItems(this.cart);
-    console.log("subscription clicked");
+    // console.log("subscription clicked");
   }
 
   sliceLocalCart(item) {

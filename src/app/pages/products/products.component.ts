@@ -58,14 +58,17 @@ export class ProductsComponent implements OnInit {
   }
   checkItems() {
     if (this.currentUser) {
-      //user cart items
+      // user cart items
       this.cartSubscription = this.storeService
-        .GetCartItems()
+        .GetCartItems(this.currentUser.id)
         .subscribe((items) => {
-          this.cart = items;
+          if (this.count(items) > 0) this.cart = items;
+          // console.log(this.cart);
         });
     } else {
-      this.cart = this.getSavedCartInStorage();
+      if (this.count(this.getSavedCartInStorage()) > 0)
+        // this.cart.push(this.getSavedCartInStorage());
+        this.cart = this.getSavedCartInStorage();
     }
   }
 
@@ -73,7 +76,10 @@ export class ProductsComponent implements OnInit {
     this.product = this.route.snapshot.data["relateDetails"]["product"];
     this.reviews = this.route.snapshot.data["relateDetails"]["reviews"];
     this.title.setTitle(this.product["name"]);
-    this.meta.addTag({ name: "description", content: this.product["description"] });
+    this.meta.addTag({
+      name: "description",
+      content: this.product["description"],
+    });
 
     // Gallery Images
     this.setGallery();
