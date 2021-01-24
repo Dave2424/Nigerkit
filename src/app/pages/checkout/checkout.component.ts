@@ -35,6 +35,7 @@ export class CheckoutComponent implements OnInit {
   orderTime = '';
   total = 0;
   processing = false;
+  states: any = [];
   public disabled: boolean = false;
   public processingOrder: boolean = false;
   public addressNotFound:string = '<span class=\"text-danger apple-font\">Address not found:<span> you can choose the nearest address to your location';
@@ -58,7 +59,7 @@ export class CheckoutComponent implements OnInit {
       return false;
     };
     this.baseService.getStates().subscribe((item) => {
-      console.log(item);
+      this.states = item['states'];
     });
   }
 

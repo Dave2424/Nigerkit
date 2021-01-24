@@ -7,7 +7,7 @@ import { AuthenticationService } from "./../../../services/authentication.servic
 import { ActivatedRoute } from "@angular/router";
 import { Component, OnInit } from "@angular/core";
 import * as _ from "lodash";
-import { Title, Meta } from "@angular/platform-browser";
+import { Title, Meta, } from "@angular/platform-browser";
 
 @Component({
   selector: "app-post",
@@ -60,7 +60,7 @@ export class PostComponent implements OnInit {
     });
 
     this.title.setTitle(this.details['title']);
-    this.meta.addTag({ name: "description", content: this.details['body'] });
+    this.meta.addTag({ name: "description", content: this.details['description'] });
   }
   get f() {
     return this.commentForm.controls;

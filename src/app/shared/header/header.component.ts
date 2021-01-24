@@ -195,11 +195,10 @@ export class HeaderComponent implements OnInit {
 
   // ===================== Remove ITem From Cart ==================//
   removeFromCart(item: any) {
-    console.log(item);
     if (this.currentUser) {
       let search = _.findLastIndex(this.cart, ["product_id", item.product_id]);
       this.cart.splice(search, 1);
-      this.storeService.RemoveFromCart(item.product_id).subscribe((data) => {
+      this.storeService.RemoveFromCart(item.product_id, this.currentUser.id).subscribe((data) => {
         this.cart = data;
       });
     } else {
@@ -207,6 +206,7 @@ export class HeaderComponent implements OnInit {
       this.cart_item = this.cart;
     }
   }
+  
   updateLocalCart() {
     localStorage.setItem("cart_Items", JSON.stringify(this.cart));
     this.authenticationservice.setCartItems(this.cart);

@@ -100,8 +100,9 @@ export class CartComponent implements OnInit {
     let search = _.findLastIndex(this.cart, ["product_id", item.product_id]);
     this.cart.splice(search, 1);
     if (this.currentUser) {
-      this.storeService.RemoveFromCart(item.id).subscribe((data) => {
-        var cartsend = localStorage.setItem("cart_Items", JSON.stringify(data));
+      this.storeService.RemoveFromCart(item.product_id, this.currentUser.id).subscribe((data) => {
+        console.log(data);
+        // var cartsend = localStorage.setItem("cart_Items", JSON.stringify(data));
         this.authenticationservice.setCartItems(data);
         this.cart = data;
       });

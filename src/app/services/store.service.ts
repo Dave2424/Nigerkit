@@ -75,8 +75,8 @@ export class StoreService {
 		return this.http.post(`${this.endpoint}/store-calculate-product`, data);
 	}
 
-	public RemoveFromCart(item_id:number){
-		return this.http.get(`${this.endpoint}/store/store-remove-from-cart/${item_id}`);
+	public RemoveFromCart(item_id:number, user_id: number){
+		return this.http.get(`${this.endpoint}/store/store-remove-from-cart/${item_id}/${user_id}`);
 	}
 
 	public PlaceOrder(formData:any){
