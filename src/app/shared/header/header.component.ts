@@ -45,6 +45,7 @@ export class HeaderComponent implements OnInit {
   searchTerm = "";
   suggestion: any = [];
   phone: any = "";
+  settings: any = [];
   private banners: any = [];
   private cartSubscription: Subscription;
   private categorySubscription: Subscription;
@@ -71,12 +72,11 @@ export class HeaderComponent implements OnInit {
       .allCategory()
       .subscribe((x) => (this.category = x["category"]));
     this.baseService.banner().subscribe((x) => (this.banners = x));
-    this.baseService
-      .getPhoneNumber()
-      .subscribe((x) => (this.phone = x["data"]));
+
+    this.baseService.getFooterDetails().subscribe((item) => {
+      this.settings = item["settings"];
+    });
     // this.cartSubscription = this.cartservice.cartItems$.subscribe(data => {
-    //   console.log(data);
-    // });
     this.checkItems();
     // console.log(this.cart);
   }
@@ -134,6 +134,10 @@ export class HeaderComponent implements OnInit {
     return this.loginForm.controls;
   }
 
+  getSettingsValue(value) {
+    let search = _.findLast(this.settings, ["name", value]);
+    return search ? search.value : "";
+  }
   onSubmit() {
     this.error = "";
     this.submitted = true;
@@ -170,7 +174,7 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authenticationservice.logout();
-    this.router.navigate([this.returnUrl]);
+    this.router.navigate(["/"]);
   }
 
   getSavedCartInStorage() {
@@ -198,15 +202,17 @@ export class HeaderComponent implements OnInit {
     if (this.currentUser) {
       let search = _.findLastIndex(this.cart, ["product_id", item.product_id]);
       this.cart.splice(search, 1);
-      this.storeService.RemoveFromCart(item.product_id, this.currentUser.id).subscribe((data) => {
-        this.cart = data;
-      });
+      this.storeService
+        .RemoveFromCart(item.product_id, this.currentUser.id)
+        .subscribe((data) => {
+          this.cart = data;
+        });
     } else {
       this.sliceLocalCart(item);
       this.cart_item = this.cart;
     }
   }
-  
+
   updateLocalCart() {
     localStorage.setItem("cart_Items", JSON.stringify(this.cart));
     this.authenticationservice.setCartItems(this.cart);

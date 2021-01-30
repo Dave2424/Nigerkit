@@ -25,7 +25,7 @@ export class AuthenticationService {
 
     // Local
 
-  public endpoint = 'http://127.0.0.1:8000//api';
+  public endpoint = 'http://127.0.0.1:8000/api';
   public baseurl = 'http://127.0.0.1:8000/';
   public endPointAuth = 'http://127.0.0.1:8000/api/auth';
 

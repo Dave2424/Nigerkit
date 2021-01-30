@@ -2802,6 +2802,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
   max-width: 100%;
   display: block;
   position: absolute;
+  width:-webkit-fill-available;
 }
 
 .product-card__quickview {

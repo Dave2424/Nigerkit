@@ -4,78 +4,93 @@
   <div class="container">
     <div class="row">
       <div class="col-12 col-lg-6 col-xl-7">
-        <div class="card mb-lg-0">
-          <div class="card-body">
-            <h3 class="card-title">Shipping Details</h3>
-            <div class="form-group">
-              <label for="checkout-name">First name</label>
-              <input type="text" [disabled]="disabled" class="form-control" id="checkout-fname"
-                [(ngModel)]="userData.fname" placeholder="First name">
-            </div>
-            <div class="form-group">
-              <label for="checkout-name">Last name</label>
-              <input type="text" [disabled]="disabled" class="form-control" id="checkout-lname"
-                [(ngModel)]="userData.lname" placeholder="Last name">
-            </div>
-            <div class="form-group">
-              <label for="checkout-email">Email address</label>
-              <input type="email" [disabled]="disabled" class="form-control" id="checkout-email"
-                [(ngModel)]="userData.email" placeholder="Email address">
-            </div>
-            <div class="form-row">
-              <div class="form-group col-12 col-lg-5">
-                <label for="checkout-phone">Phone</label>
-                <input type="text" [disabled]="disabled" class="form-control" id="checkout-phone"
-                  [(ngModel)]="userData.phone" placeholder="Phone" (keyup)="checkPhone()">
+        <form [formGroup]="checkoutForm" (ngSubmit)="calculateDeliveryFee()">
+          <div class="card mb-lg-0">
+            <div class="card-body">
+              <h3 class="card-title">Shipping Details</h3>
+              <div class="form-group">
+                <label for="checkout-name">First name</label>
+                <input type="text" class="form-control" id="checkout-fname" [(ngModel)]="userData.fname"
+                  placeholder="First name" formControlName="fname"
+                  [ngClass]="{ 'is-invalid':submitted && f.fname.errors }" />
+                <div *ngIf="submitted && f.fname.errors" class="invalid-feedback">
+                  <div *ngIf="f.fname.errors.required">First name is required</div>
+                </div>
               </div>
-              <div class="form-group col-12 col-lg-7">
-                <label for="checkout-state">State/Region</label>
-                <select type="text" class="form-control" id="checkout-state" placeholder="State">
-                  <option value="{{state.id}}" *ngFor="let state of states">{{state.name}}</option>
-                </select>
+              <div class="form-group">
+                <label for="checkout-name">Last name</label>
+                <input type="text" class="form-control" id="checkout-lname" [(ngModel)]="userData.lname"
+                  placeholder="Last name" formControlName="lname"
+                  [ngClass]="{ 'is-invalid':submitted && f.lname.errors }" />
+                <div *ngIf="submitted && f.lname.errors" class="invalid-feedback">
+                  <div *ngIf="f.lname.errors.required">Last name is required</div>
+                </div>
               </div>
-            </div>
-            <!-- <div class="form-group">
-              <label for="checkout-address">Address</label>
-              <input type="text" class="form-control" id="checkout-phone" placeholder="Address"> -->
-            <!-- <br />
-              <span *ngIf="addressError" class="text-danger mt-3" [innerHtml]="addressError"></span>
+              <div class="form-group">
+                <label for="checkout-email">Email address</label>
+                <input type="email" class="form-control" id="checkout-email" [(ngModel)]="userData.email"
+                  placeholder="Email address" formControlName="email"
+                  [ngClass]="{ 'is-invalid':submitted && f.email.errors }" />
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                  <div *ngIf="f.email.errors.required">Email is required</div>
+                  <div *ngIf="f.email.errors.email">Valid email is required</div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-12 col-lg-5">
+                  <label for="checkout-phone">Phone</label>
+                  <input type="text" class="form-control" id="checkout-phone" [(ngModel)]="userData.phone"
+                    placeholder="Phone" (keyup)="checkPhone()" formControlName="phone"
+                    [ngClass]="{ 'is-invalid':submitted && f.phone.errors }" />
+                  <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                    <div *ngIf="f.phone.errors.required">Phone number is required</div>
+                  </div>
+                </div>
+                <div class="form-group col-12 col-lg-7">
+                  <label for="checkout-state">State/Region</label>
+                  <select type="text" class="form-control" id="checkout-state" placeholder="State"
+                    formControlName="state" [ngClass]="{ 'is-invalid':submitted && f.state.errors }"
+                    [(ngModel)]="userData.state">
+                    <option value="{{state.id}}" *ngFor="let state of states">{{state.name}}</option>
+                  </select>
+                  <div *ngIf="submitted && f.state.errors" class="invalid-feedback">
+                    <div *ngIf="f.state.errors.required">Select a state</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-12 col-lg-5">
+                  <label for="checkout-city">City</label>
+                  <input type="text" class="form-control" id="checkout-city" placeholder="City" formControlName="city"
+                    [ngClass]="{ 'is-invalid':submitted && f.city.errors }" [(ngModel)]="userData.city" />
+                  <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
+                    <div *ngIf="f.city.errors.required">City is required</div>
+                  </div>
+                </div>
+                <div class="form-group col-12 col-lg-7">
+                  <label for="checkout-address">Address</label>
+                  <input type="text" class="form-control" id="checkout-address" placeholder="Address"
+                    [(ngModel)]="userData.address" formControlName="address"
+                    [ngClass]="{ 'is-invalid':submitted && f.address.errors }" />
+                  <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                    <div *ngIf="f.address.errors.required">Phone number is required</div>
+                  </div>
+                </div>
 
-              <div *ngIf="verifyError" class="notice_bar danger mt-3 shadow text-center">
-                <p class="text-danger">{{ verifyError }}</p>
-              </div> -->
-            <!-- </div> -->
-            <div class="form-row">
-              <div class="form-group col-12 col-lg-5">
-                <label for="checkout-city">City</label>
-                <input type="text" class="form-control" id="checkout-city" placeholder="City">
               </div>
-              <div class="form-group col-12 col-lg-7">
-                <label for="checkout-address">Address</label>
-                <input type="text" class="form-control" id="checkout-phone" placeholder="Address">
+              <div class="row" *ngIf="!proceed">
+                <div class="col-lg-4"></div>
+                <div class="col-lg-4">
+                  <button type="submit" class="btn btn-round btn-primary waves-effect btn-block" [ladda]="loading">
+                    Continue
+                  </button>
+                </div>
+                <div class="col-lg-4"></div>
               </div>
-
             </div>
           </div>
-
-          <!-- <div class="form-group mt-4">
-              <div class="form-check">
-                <span class="form-check-input input-check">
-                  <span class="input-check__body">
-                    <input class="input-check__input" type="checkbox" id="checkout-create-account">
-                    <span class="input-check__box"></span>
-                    <svg class="input-check__icon" width="9px" height="7px">
-                      <use xlink:href="./assets/images/sprite.svg#check-9x7"></use>
-                    </svg>
-                  </span>
-                </span>
-                <label class="form-check-label" for="checkout-create-account">Create an account?</label>
-              </div>
-            </div> -->
-        </div>
-        <div class="card-divider"></div>
+        </form>
       </div>
-      <!-- </div> -->
       <div class="col-12 col-lg-6 col-xl-5 mt-4 mt-lg-0">
         <div class="card mb-0">
           <div class="card-body">

@@ -45,7 +45,7 @@
               <form action="" class="footer-newsletter__form" [formGroup]="subscriberForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                   <label class="sr-only" for="footer-newsletter-address">Email Address</label>
-                  <input id="header-signin-email" type="email" formControlName="email"
+                  <input id="footer-signin-email" type="email" formControlName="email"
                     [ngClass]="{ 'is-invalid': submitted && f.email.errors }" class="form-control form-control-sm"
                     placeholder="Email address...">
                   <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
