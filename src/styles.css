@@ -45,3 +45,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   .mat-tab-link{
     color:black;
   }
+  .ngx-gallery-image.ngx-gallery-active{
+    z-index: 9 !important;
+  }
+  .ngx-gallery-image-size-contain .ngx-gallery-image {
+    background-size: cover !important;
+  }

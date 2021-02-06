@@ -10,5 +10,7 @@ export class User {
     avatar: string;
     address: string;
     phone: string;
+    state:string;
+    city:string;
 
 }

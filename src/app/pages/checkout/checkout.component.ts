@@ -42,10 +42,7 @@ export class CheckoutComponent implements OnInit {
   processing = false;
   states: any = [];
   public disabled: boolean = false;
-
-  // transactionKey: any = "pk_test_0c5a4d71930b74660e0cb5dead2dffdb8f8ce129";
-  // transactionKey: any = "sk_test_dcdbc604e9492f9bb4524bd00de173f363dadc94";
-  transactionKey: any = "pk_test_0c5a4d71930b74660e0cb5dead2dffdb8f8ce129";
+  transactionKey = "";
   public grandTotal: number = 0;
   proceed = false;
 
@@ -82,11 +79,12 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit() {
     this.cart = JSON.parse(localStorage.getItem("cart_Items"));
-    this.userData.fname = this.currentUser.fname ? this.currentUser.fname : "";
-    this.userData.lname = this.currentUser.lname ? this.currentUser.lname : "";
-    this.userData.email = this.currentUser.email ? this.currentUser.email : "";
-    this.userData.phone = this.currentUser.phone ? this.currentUser.phone : 0;
-    if (this.userData.phone.length != 11) {
+    // this.userData.fname = this.currentUser.fname ? this.currentUser.fname : "";
+    // this.userData.lname = this.currentUser.lname ? this.currentUser.lname : "";
+    // this.userData.email = this.currentUser.email ? this.currentUser.email : "";
+    // this.userData.phone = this.currentUser.phone ? this.currentUser.phone : 0;
+
+    if (this.currentUser.phone.length != 11) {
       this.hasphone = false;
     }
     // console.log(this.currentUser);
@@ -118,7 +116,10 @@ export class CheckoutComponent implements OnInit {
     // this.grandTotal = total;
 
     setTimeout(() => {
-      this.cdr.detectChanges();
+      // if (!this.cdr["destroyed"]) {
+      //   this.cdr.detectChanges();
+      // }
+      this.cdr.markForCheck();
     }, 500);
     return total;
   }
@@ -163,15 +164,21 @@ export class CheckoutComponent implements OnInit {
     this.loading = true;
     let formData = new FormData();
     formData.append("cart_item", JSON.stringify(this.cart));
-    formData.append("email", this.userData.email);
-    formData.append("name", this.userData.fname + " " + this.userData.lname);
-    formData.append("phone", this.userData.phone);
-    formData.append("delivery_address", this.userData.address);
+    formData.append("email", this.currentUser.email);
+    formData.append(
+      "name",
+      this.currentUser.fname + " " + this.currentUser.lname
+    );
+    formData.append("phone", this.currentUser.phone);
+    formData.append("state", this.currentUser.state);
+    formData.append("city", this.currentUser.city);
+    formData.append("delivery_address", this.currentUser.address);
     formData.append("user_id", this.currentUser ? this.currentUser.id : 0);
 
     this.storeService.CalculateDelivery(formData).subscribe((resp: any) => {
       this.loading = false;
       this.proceed = true;
+      // console.log(resp);
       // the response should be delivery fee/charge
       this.identifier = resp.amount_details.identifier;
       this.deliveryFee = resp.amount_details.deliveryFee;
@@ -179,6 +186,7 @@ export class CheckoutComponent implements OnInit {
       this.grandTotal = resp.amount_details.grandTotal;
       this.total = resp.amount_details.total;
       this.orderTime = resp.amount_details.order_time;
+      this.transactionKey = resp.amount_details.key;
       setTimeout(() => {
         this.cdr.detectChanges();
       }, 500);

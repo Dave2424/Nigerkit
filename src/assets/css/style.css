@@ -5629,6 +5629,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
   visibility: hidden;
   -webkit-transition: visibility 0s 0.3s;
   transition: visibility 0s 0.3s;
+  -webkit-overflow-scrolling: auto;
 }
 
 .dropcart--style--offcanvas .dropcart__backdrop {

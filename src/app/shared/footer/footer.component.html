@@ -7,12 +7,13 @@
           <div class="col-12 col-md-6 col-lg-4">
             <div class="site-footer__widget footer-contacts">
               <h5 class="footer-contacts__title">Contact Us</h5>
-              <div class="footer-contacts__text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer in feugiat lorem. Pellentque ac
-                placerat tellus.
+              <div class="footer-contacts__text" *ngIf="getSettingsValue('CONTACT_MESSAGE')">
+                {{getSettingsValue("CONTACT_MESSAGE")}}
               </div>
               <ul class="footer-contacts__contacts">
-                <li><i class="footer-contacts__icon fas fa-globe-americas"></i> 715 Fake Street, New York 10021 NG</li>
+                <li *ngIf="getSettingsValue('CONTACT_ADDRESS')"><i
+                    class="footer-contacts__icon fas fa-globe-americas"></i>{{getSettingsValue("CONTACT_ADDRESS")}}
+                </li>
                 <li><i class="footer-contacts__icon far fa-envelope"
                     *ngIf="getSettingsValue('SITE_EMAIL')"></i>{{getSettingsValue("SITE_EMAIL")}}</li>
                 <li><i class="footer-contacts__icon fas fa-mobile-alt"

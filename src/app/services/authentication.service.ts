@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
-import {User} from "../models/user";
-
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { BehaviorSubject, EMPTY, Observable, Subject } from "rxjs";
+import { map } from "rxjs/operators";
+import { User } from "../models/user";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
@@ -15,51 +14,56 @@ export class AuthenticationService {
   public cartItem: Observable<[]>;
   private _cartSource = new Subject<any>();
   cartItems$ = this._cartSource.asObservable();
-
+  public EMPTY = new Object();
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('current_user')));
+    this.currentUserSubject = new BehaviorSubject<User>(
+      JSON.parse(localStorage.getItem("current_user"))
+    );
     this.currentUser = this.currentUserSubject.asObservable();
     // console.log(this.currentUser);
   }
 
-    // Local
+  // Local
 
-  // public endpoint = 'http://127.0.0.1:8000/api';
-  // public baseurl = 'http://127.0.0.1:8000/';
-  // public endPointAuth = 'http://127.0.0.1:8000/api/auth';
+  public endpoint = "http://127.0.0.1:8000/api";
+  public baseurl = "http://127.0.0.1:8000/";
+  public endPointAuth = "http://127.0.0.1:8000/api/auth";
 
   // Online
-  public endpoint = 'https://server.nigerkit.com/api';
-  public baseurl = 'https://server.nigerkit.com/';
-  public endPointAuth = 'https://server.nigerkit.com/api/auth';
+  // public endpoint = 'https://server.nigerkit.com/api';
+  // public baseurl = 'https://server.nigerkit.com/';
+  // public endPointAuth = 'https://server.nigerkit.com/api/auth';
 
   private iss = {
     login: `${this.endPointAuth}/login`,
-    register : `${this.endPointAuth}/register`
+    register: `${this.endPointAuth}/register`,
   };
 
-    // Login user
-    login(email: string, password: string) {
-        return this.http.post<any>(`${this.endPointAuth}/login`, { email, password });
-    }
+  // Login user
+  login(email: string, password: string) {
+    return this.http.post<any>(`${this.endPointAuth}/login`, {
+      email,
+      password,
+    });
+  }
 
-    // Register a new user
-    public createUser(formData: any){
-        return this.http.post<any>(`${this.endPointAuth}/register`, formData);
-    }
+  // Register a new user
+  public createUser(formData: any) {
+    return this.http.post<any>(`${this.endPointAuth}/register`, formData);
+  }
 
-    public get currentUserValue(): User {
-        return this.currentUserSubject.value;
-    }
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
+  }
 
-    getToken(){
-        return localStorage.getItem('Access_token');
-    }
+  getToken() {
+    return localStorage.getItem("Access_token");
+  }
 
   // setUser
-  setUser(user){
-    localStorage.setItem('current_user', JSON.stringify(user));
+  setUser(user) {
+    localStorage.setItem("current_user", JSON.stringify(user));
     this.currentUserSubject.next(user);
   }
   public get currentCartItem() {
@@ -69,48 +73,44 @@ export class AuthenticationService {
     this._cartSource.next(items);
   }
   // set basic user data
-  setUserData(data){
-    localStorage.setItem('user_Data', JSON.stringify(data));
+  setUserData(data) {
+    localStorage.setItem("user_Data", JSON.stringify(data));
   }
 
   setCart(items) {
-    localStorage.setItem('cart_Items', JSON.stringify(items));
+    localStorage.setItem("cart_Items", JSON.stringify(items));
   }
   // Set access token
-  setToken(token){
-    localStorage.setItem('Access_token', token);
+  setToken(token) {
+    localStorage.setItem("Access_token", token);
   }
 
-
-  removeUser(){
-    return localStorage.removeItem('current_user');
+  removeUser() {
+    return localStorage.removeItem("current_user");
   }
 
   //get user data from storage
-  getUserData(){
-    return localStorage.getItem('user_Data');
+  getUserData() {
+    return localStorage.getItem("user_Data");
   }
 
   //remove user data from storage
-  removeUserData(){
-    return localStorage.removeItem('user_Data');
+  removeUserData() {
+    return localStorage.removeItem("user_Data");
   }
-  removeToken()
-  {
-    return localStorage.removeItem('Access_token');
+  removeToken() {
+    return localStorage.removeItem("Access_token");
   }
 
   //handle token
-  handleToken(token){
+  handleToken(token) {
     this.setToken(token);
   }
 
-  isValidToken(){
-
+  isValidToken() {
     const token = this.getToken();
 
     if (token) {
-
       const payload = this.payload(token);
 
       if (payload) {
@@ -118,18 +118,17 @@ export class AuthenticationService {
       }
     }
 
-
     return false;
   }
-  payload(token){
-    const payload =  token.split(".")[1];
+  payload(token) {
+    const payload = token.split(".")[1];
 
     return this.decode(payload);
   }
-  decode(payload){
+  decode(payload) {
     return JSON.parse(atob(payload));
   }
-  loggedIn(){
+  loggedIn() {
     return this.isValidToken();
   }
 
@@ -140,7 +139,6 @@ export class AuthenticationService {
     // remove access_token
     this.removeToken();
     this.currentUserSubject.next(null);
-    this.cartItemSubject.next(null);
+    // this.cartItemSubject.next([]);
   }
-
 }

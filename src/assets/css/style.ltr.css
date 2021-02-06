@@ -10448,7 +10448,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
 }
 
 .spec__header {
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
 }
 
 .spec__section + .spec__section {
@@ -10484,7 +10484,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-origin {
 }
 
 .spec__disclaimer {
-  margin-top: 40px;
+  /* margin-top: 40px; */
   font-size: 14px;
   line-height: 22px;
   color: #999;
