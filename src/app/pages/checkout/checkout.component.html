@@ -130,7 +130,7 @@
               </tfoot>
             </table>
             <div class="payment-methods" *ngIf="proceed">
-              <button angular4-paystack [key]="transactionKey" [email]="userData.email" [amount]="grandTotal+'00'"
+              <button angular4-paystack [key]="transactionKey" [email]="currentUser.email" [amount]="grandTotal+'00'"
                 [ref]="transactionRef.value" [class]="'btn btn-primary'" (close)="transactionCancelled()"
                 (callback)="transactionSuccessful($event)" [ladda]="processing"
                 class="btn btn-round btn-primary waves-effect btn-block">
