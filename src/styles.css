@@ -26,12 +26,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   stroke: #47991f;
 }
   .overlay {
-    position: absolute;
-    height:100%;
-    width:100%;
-    background: black;
-    opacity: 0.8;
-    z-index: 100;
+     position: fixed;
+     z-index: 999;
+     height: 100%;
+     width: 100%;
+     overflow: hidden;
+     background: rgb(0 0 0 / 55%);
+     top: 0;
+     left: 0;
+     bottom: 0;
+     right: 0;
   }
   .mat-tab-group.mat-primary .mat-ink-bar,
   .mat-tab-nav-bar.mat-primary .mat-ink-bar {
@@ -40,4 +44,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   .mat-tab-label,
   .mat-tab-link{
     color:black;
+  }
+  .ngx-gallery-image.ngx-gallery-active{
+    z-index: 9 !important;
+  }
+  .ngx-gallery-image-size-contain .ngx-gallery-image {
+    background-size: cover !important;
   }

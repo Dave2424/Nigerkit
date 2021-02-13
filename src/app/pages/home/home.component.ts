@@ -193,6 +193,8 @@ export class HomeComponent implements OnInit {
       this.storeService.AddToCart(toCart).subscribe((resp: any) => {
         // first check for notice
         if (!this.checkForError(resp)) {
+          // this.cart.push(resp.items);
+          this.authenticationservice.setCartItems(product_item);
           this.cart = resp.items;
           // console.log(this.cart);
         }

@@ -19,6 +19,7 @@ import { CheckOutGuard } from "./guards/checkout.guard";
 import { SignupComponent } from "./pages/signup/signup.component";
 
 const routes: Routes = [
+  // {path: '', loadChildren: './pages/home/home.component#HomeComponent'},
   // {path: '', loadChildren: './pages/blog/blog.component#CharRoutingModule'},
   { path: "", component: HomeComponent },
   {
@@ -46,6 +47,7 @@ const routes: Routes = [
   },
   {
     path: "blog/:slug",
+
     component: PostComponent,
     resolve: { details: BlogDetailsResolve },
   },
@@ -61,9 +63,21 @@ const routes: Routes = [
   { path: "", redirectTo: "", pathMatch: "full" },
 ];
 
+// @NgModule({
+//   imports: [
+//     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+//   ],
+//   exports: [RouterModule],
+// })
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(routes, {
+      onSameUrlNavigation: "reload",
+      initialNavigation: "enabled",
+      paramsInheritanceStrategy: "always",
+      scrollPositionRestoration: "enabled",
+      // preloadingStrategy: PreloadAllModules,
+    }),
   ],
   exports: [RouterModule],
 })

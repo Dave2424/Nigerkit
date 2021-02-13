@@ -21,6 +21,7 @@ export class OrderdetailsComponent implements OnInit {
   ngOnInit() {
     this.storeservice.OrderDetails(this.identifier)
       .subscribe((data: any) => {
+        console.log(data);
         this.details = data.details;
         this.orderedItem = this.details.user_invoice.items;
         this.show = false;

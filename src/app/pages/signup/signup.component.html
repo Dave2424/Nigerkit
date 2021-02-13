@@ -20,14 +20,14 @@
                 <input type="password" class="form-control" placeholder="Password" formControlName="pwd"
                   [ngClass]="{ 'is-invalid': l_submitted && l.pwd.errors }">
                 <div *ngIf="l_submitted && l.pwd.errors" class="invalid-feedback">
-                  <div *ngIf="l.pwd.errors?.required">Password is required</div>
-                  <div *ngIf="l.pwd.errors?.minlength">Password must be at least 6 characters</div>
+                  <div *ngIf="l.pwd.errors.required">Password is required</div>
+                  <div *ngIf="l.pwd.errors.minlength">Password must be at least 6 characters</div>
                 </div>
                 <small class="form-text text-muted">
                   <a href="">Forgotten Password</a>
                 </small>
               </div>
-              <div *ngIf="l_error" class="alert alert-danger">{{error}}</div>
+              <div *ngIf="l_error" class="alert alert-danger">{{l_error}}</div>
               <button type="submit" class="btn btn-primary mt-4" [ladda]="lloading">Login</button>
             </form>
           </div>

@@ -1,3 +1,6 @@
+import { User } from "./../../models/user";
+import { StoreService } from "./../../services/store.service";
+import { Subscription } from "rxjs";
 import { AlertService } from "../../services/alert.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -11,6 +14,7 @@ import {
   GoogleLoginProvider,
 } from "angularx-social-login";
 import { error } from "util";
+import * as _ from "lodash";
 
 @Component({
   selector: "app-signup",
@@ -28,13 +32,18 @@ export class SignupComponent implements OnInit {
   l_error = "";
   returnUrl = "";
   user = { fname: "", lname: "", email: "", phone: "" };
-  email =""; password = '';
+  email = "";
+  password = "";
+  cartSubscription: Subscription;
+  cart: any = [];
+  currentUser: User;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private alert: AlertService,
     private authService: AuthService,
+    private storeService: StoreService,
     private authenticationService: AuthenticationService,
     private router: Router
   ) {}
@@ -52,6 +61,7 @@ export class SignupComponent implements OnInit {
       },
       { validator: MustMatch("password", "confirmPassword") }
     );
+
     //Login Form
     this.loginForm = this.formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
@@ -65,14 +75,78 @@ export class SignupComponent implements OnInit {
   get l() {
     return this.loginForm.controls;
   }
-  onLogin(){
+
+  handleResponse(data) {
+    if (data.user && data.Access_token) {
+      this.authenticationService.handleToken(data.Access_token);
+      if (!this.authenticationService.loggedIn()) {
+        this.error = "Invalid Token supplied";
+        return;
+      }
+      this.authenticationService.setUser(data.user);
+
+      this.authenticationService.currentUser.subscribe((x) => {
+        this.currentUser = x;
+        this.checkItems();
+      });
+      // set user access Data for later reference
+      // this.authenticationservice.setUserData(data.accessData);
+      // this.cart = this.getSavedCartInStorage();
+      // this.cart.user_id = this.currentUser.id;
+      this.router.navigate([this.returnUrl]);
+    }
+  }
+  checkItems() {
+    if (this.currentUser) {
+      // user cart items
+      this.cartSubscription = this.storeService
+        .GetCartItems(this.currentUser.id)
+        .subscribe((items) => {
+          if (this.count(items) > 0) this.cart = items;
+          // console.log(this.cart);
+          this.authenticationService.setCartItems(this.cart);
+        });
+    } else {
+      if (this.count(this.getSavedCartInStorage()) > 0)
+        // this.cart.push(this.getSavedCartInStorage());
+        this.cart = this.getSavedCartInStorage();
+    }
+  }
+  getSavedCartInStorage() {
+    return JSON.parse(localStorage.getItem("cart_Items"));
+  }
+  count(item: any) {
+    return _.size(item);
+  }
+  onLogin() {
     this.l_error = "";
     this.l_submitted = true;
     if (this.loginForm.invalid) {
       return;
     }
     this.lloading = true;
-
+    this.authenticationService
+      .login(this.l.email.value, this.l.pwd.value)
+      .pipe(first())
+      .subscribe(
+        (data) => {
+          // console.log(data);
+          if (data.user.email_verified_at) {
+            this.handleResponse(data);
+            this.lloading = false;
+          } else {
+            this.l_error =
+              "Your email is not verified. Please verify your email";
+            this.lloading = false;
+          }
+        },
+        (error) => {
+          // console.log(error);
+          this.l_error = error;
+          // console.log(error);
+          this.lloading = false;
+        }
+      );
   }
 
   onSubmit() {
@@ -112,7 +186,7 @@ export class SignupComponent implements OnInit {
         };
       },
       (error) => {
-        console.log(error);
+        // console.log(error);
       }
     );
   }
