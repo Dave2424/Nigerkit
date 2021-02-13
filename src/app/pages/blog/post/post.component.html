@@ -1,0 +1,292 @@
+<!-- <app-header></app-header> -->
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12 col-lg-8">
+      <div class="block post post--layout--classic">
+        <div class="post__header post-header post-header--layout--classic">
+          <div class="post-header__categories">
+            <a href="">Latest news</a>
+          </div>
+          <h1 class="post-header__title">{{ details["title"] }}</h1>
+          <div class="post-header__meta">
+            <!-- <div class="post-header__meta-item">By <a href="">Jessica Moore</a></div> -->
+            <div class="post-header__meta-item">
+              <a>{{ details["time"] | date: "longDate" }}</a>
+            </div>
+            <div
+              class="post-header__meta-item"
+              *ngIf="count(details['comment']) > 0"
+            >
+              <a>{{ count(details["comment"]) }} comments</a>
+            </div>
+          </div>
+        </div>
+        <div class="post__featured">
+          <a href="">
+            <!-- <img src="{{details['image']}}" alt=""> -->
+            <img [src]="Image_data(details['image'], 'avatar', null)" alt=""
+          /></a>
+
+          <!-- </a> -->
+        </div>
+        <div class="post__content typography">
+          <p [innerHTML]="details['body']"></p>
+        </div>
+        <div class="post__footer" style="margin-top: 40px;">
+          <div class="post__tags-share-links" style="margin-bottom: 0;">
+            <div class="post__tags tags"></div>
+            <div class="post__share-links share-links">
+              <ul class="share-links__list">
+                <li class="share-links__item share-links__item--type--like">
+                  <a href="">Like</a>
+                </li>
+                <li class="share-links__item share-links__item--type--tweet">
+                  <a href="">Tweet</a>
+                </li>
+                <li class="share-links__item share-links__item--type--pin">
+                  <a href="">Pin It</a>
+                </li>
+                <li class="share-links__item share-links__item--type--counter">
+                  <a href="">4K</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <section class="post__section">
+          <h4 class="post__section-title">
+            Comments ({{ count(details["comment"]) }})
+          </h4>
+          <ol class="comments-list comments-list--level--0">
+            <li class="comments-list__item" *ngIf="details['comment']">
+              <div
+                class="comment mb-2"
+                *ngFor="let comment of details['comment']"
+              >
+                <div class="comment__avatar">
+                  <a href=""
+                    ><img [src]="Image_data('', 'avatar', 'null')"
+                  /></a>
+                </div>
+                <div class="comment__content">
+                  <div class="comment__header">
+                    <div class="comment__author">
+                      <a>{{ comment.user.fname }} {{ comment.user.lname }}</a>
+                    </div>
+                  </div>
+                  <div
+                    class="comment__text"
+                    [innerHTML]="comment.comment"
+                  ></div>
+                  <div class="comment__date">
+                    {{ comment.created_at | date: "medium" }}
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </section>
+        <section class="post__section">
+          <h4 class="post__section-title">Write A Comment</h4>
+          <div class="form-group ml-3" *ngIf="!currentUser">
+            <p style="letter-spacing: 1px;">You must be logged In.</p>
+          </div>
+          <form
+            [formGroup]="commentForm"
+            (ngSubmit)="addComment()"
+            *ngIf="currentUser"
+          >
+            <div class="form-group">
+              <label for="first-name">Comment</label>
+              <textarea
+                type="text"
+                class="form-control"
+                formControlName="comment"
+                [ngClass]="{ 'is-invalid': submitted && f.comment.errors }"
+                rows="6"
+              ></textarea>
+              <div
+                *ngIf="submitted && f.comment.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.comment.errors.required">
+                  comment cannot be empty
+                </div>
+              </div>
+            </div>
+            <div class="form-group mt-4">
+              <button type="submit" class="btn btn-primary btn-lg">
+                Comment
+              </button>
+            </div>
+            <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+          </form>
+        </section>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4">
+      <div class="block block-sidebar block-sidebar--position--end">
+        <div class="block-sidebar__item">
+          <div class="widget-search">
+            <form class="widget-search__body">
+              <input
+                class="widget-search__input"
+                placeholder="Blog search..."
+                type="text"
+                autocomplete="off"
+                spellcheck="false"
+              />
+              <button class="widget-search__button" type="submit">
+                <svg width="20px" height="20px">
+                  <use xlink:href="images/sprite.svg#search-20"></use>
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="block-sidebar__item">
+          <div class="widget-aboutus widget">
+            <h4 class="widget__title">About Blog</h4>
+            <div class="widget-aboutus__text">
+              This blog section is for all technology and related terms
+              articles.
+            </div>
+            <div class="widget-aboutus__socials">
+              <ul>
+                <li>
+                  <a
+                    class="widget-aboutus__link widget-aboutus__link--youtube"
+                    href="#"
+                    target="_blank"
+                  >
+                    <i class="widget-aboutus__icon fab fa-youtube"></i>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="widget-aboutus__link widget-aboutus__link--facebook"
+                    href="#"
+                    target="_blank"
+                  >
+                    <i class="widget-aboutus__icon fab fa-facebook-f"></i>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="widget-aboutus__link widget-aboutus__link--twitter"
+                    href="#"
+                    target="_blank"
+                  >
+                    <i class="widget-aboutus__icon fab fa-twitter"></i>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="widget-aboutus__link widget-aboutus__link--instagram"
+                    href="#"
+                    target="_blank"
+                  >
+                    <i class="widget-aboutus__icon fab fa-instagram"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="block-sidebar__item" *ngIf="latestBlog">
+          <div class="widget-posts widget">
+            <h4 class="widget__title">Latest Posts</h4>
+            <div class="widget-posts__list">
+              <div class="widget-posts__item" *ngFor="let item of latestBlog">
+                <div class="widget-posts__image">
+                  <a [routerLink]="['/blog', item.id]"
+                    ><img [src]="Image_data(item.image, 'avatar', 'null')"
+                  /></a>
+                </div>
+                <div class="widget-posts__info">
+                  <div class="widget-posts__name">
+                    <a [routerLink]="['/blog', item.id]">{{ item.title }}</a>
+                  </div>
+                  <div class="widget-posts__date">
+                    {{ item.time | date: "longDate" }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block-sidebar__item">
+          <div class="widget-posts widget">
+            <h4 class="widget__title">Related Posts</h4>
+            <div class="widget-posts__list">
+              <div class="widget-posts__item" *ngFor="let item of relateBlog">
+                <div class="widget-posts__image">
+                  <!-- <a [routerLink]="['/blog', item.id]">
+                                        <img src="{{item.image}}" alt="">
+                                    </a> -->
+                  <a [routerLink]="['/blog', item.id]"
+                    ><img [src]="Image_data(item.image, 'avatar', 'null')"
+                  /></a>
+                </div>
+                <div class="widget-posts__info">
+                  <div class="widget-posts__name">
+                    <a [routerLink]="['/blog', item.id]">{{ item.title }}</a>
+                  </div>
+                  <div class="widget-posts__date">
+                    {{ item.time | date: "longDate" }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block-sidebar__item">
+          <div class="widget-newsletter widget">
+            <h4 class="widget-newsletter__title">Our Newsletter</h4>
+            <div class="widget-newsletter__text">
+              Get the best viral stories straight into your inbox!
+            </div>
+            <form
+              class="widget-newsletter__form"
+              action=""
+              [formGroup]="subscriberForm"
+              (ngSubmit)="onSubmit()"
+            >
+              <label for="widget-newsletter-email" class="sr-only"
+                >Email address</label
+              >
+              <input
+                id="widget-newsletter-email"
+                type="email"
+                class="form-control"
+                placeholder="Email Address"
+                formControlName="email"
+                [ngClass]="{ 'is-invalid': submitteed && ff.email.errors }"
+              />
+              <div
+                *ngIf="submitteed && ff.email.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="ff.email.errors.required">
+                  Email Address is required
+                </div>
+                <div *ngIf="ff.email.errors.email">Valid email is required</div>
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary mt-3"
+                [ladda]="loadinng"
+              >
+                Subscribe
+              </button>
+              <p>Don't worry, we don't spam</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

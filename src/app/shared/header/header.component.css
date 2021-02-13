@@ -1,0 +1,10 @@
+.nav_hover:hover {
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: none;
+      -webkit-transition-duration: .1s;
+      transition-duration: .1s;
+      border-radius: 2px;
+      height: 43px;
+      margin-top: 6px;
+      margin-bottom: 5px;
+}

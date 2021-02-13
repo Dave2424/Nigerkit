@@ -1,0 +1,185 @@
+<!-- <app-header></app-header> -->
+<!--Page header-->
+<div class="page-header">
+    <div class="page-header__container container">
+        <div class="page-header__breadcrumb">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#" [routerLink]="['']">Home</a>
+                        <svg class="breadcrumb-arrow" width="6px" height="9px">
+                            <use xlink:href="./assets/images/sprite.svg#arrow-rounded-right-6x9"></use>
+                        </svg>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="#" [routerLink]="['/shop']">Products</a>
+                        <svg class="breadcrumb-arrow" width="6px" height="9px">
+                            <use xlink:href="./assets/images/sprite.svg#arrow-rounded-right-6x9"></use>
+                        </svg>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{product['name']}}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="block">
+    <div class="container">
+        <div class="product product--layout--standard" data-layout="standard">
+            <div class="product__content">
+                <!-- .product__gallery -->
+                <div class="product__gallery">
+                    <div class="product-gallery">
+                        <div class="product-gallery__featured" style="padding:7px">
+                            <ngx-gallery *ngIf="galleryImages"
+                                        [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+                        </div>
+                    </div>
+                </div>
+                <!-- .product__gallery / end -->
+                <!-- .product__info -->
+                <div class="product__info">
+                    <h1 class="product__name">{{product['name']}}</h1>
+                    <div class="product__rating">
+                        <div class="product__rating-legend">
+                            <label *ngIf=" count(reviews.data)> 0">{{count(reviews.data)}} Reviews</label>
+                        </div>
+                    </div>
+                    <div class="product__description">
+                        {{product['description']}}
+                    </div>
+
+                    <ul class="product__meta">
+                        <li class="product__meta-availability">Availability:
+                            <span  [ngClass]="product['quantity'] > 0 ? 'text-avail': 'text-Unavail'">{{avail(product['quantity'])}}</span>
+                        </li>
+                        <li>Brand: <a href="">{{product['brand']}}</a></li>
+                        <li>SKU: {{product['Sku']}}</li>
+                    </ul>
+                </div>
+                <!-- .product__info / end -->
+                <!-- .product__sidebar -->
+                <div class="product__sidebar">
+                    <div class="product__availability">
+                        Availability: <span class="text-success">In Stock</span>
+                    </div>
+                    <div class="product__prices">
+                        &#8358;{{product['price'] | number}}
+                    </div>
+                    <!-- .product__options -->
+                    <form class="product__options">
+                        <div class="form-group product__option">
+                            <div class="product__actions">
+                                <div class="product__actions-item product__actions-item--addtocart">
+                                    <a class="btn btn-primary" [routerLink]="['/cart']">Buy now</a>
+                                </div>
+                                <div class="product__actions-item product__actions-item--addtocart">
+                                    <button class="btn btn-primary product-card__addtocart" (click)="addToCart(product)"
+                                            *ngIf="!checkItemInCart(product)"
+                                            type="button">Add To Cart</button>
+                                    <button class="btn btn-secondary product-card__addtocart"
+                                            type="button" disabled *ngIf="checkItemInCart(product)">In Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- .product__options / end -->
+                </div>
+                <!-- .product__end -->
+                <!-- <div class="product__footer">
+                    <div class="product__tags tags">
+                    </div>
+                    <div class="product__share-links share-links">
+                    <ul class="share-links__list">
+                    <li class="share-links__item share-links__item--type--like"><a href="">Like</a></li>
+                    <li class="share-links__item share-links__item--type--tweet"><a href="">Tweet</a></li>
+                    <li class="share-links__item share-links__item--type--pin"><a href="">Pin It</a></li>
+                    <li class="share-links__item share-links__item--type--counter"><a href="">4K</a></li>
+                    </ul>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <div class="product-tabs ">
+                <mat-tab-group animationDuration="0ms" style="align-items: center">
+                    <mat-tab label="Product descriptions" class="product-tabs__item product-tabs__list" style="color: black; font-size: 20px;">
+
+                        <div class="product-tabs__content">
+                            <div id="tab-description">
+                                <div class="typography">
+                                    <h3>Product Full Description</h3>
+                                    <p [innerHtml]="product['description']">
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Reviews" class="product-tabs__item product-tabs__list">
+                        <div class="product-tabs__content">
+                            <div id="tab-review">
+                                <div class="spec">
+                                    <h3 class="spec__header">Reviews</h3>   
+                                    <div class="spec__disclaimer">
+                                        Information on product characteristics, the delivery set, the country of manufacture and the appearance
+                                        of the goods is for reference only and is based on the latest information available at the time of publication.
+                                    </div>
+                                    <div class="reviews-list" *ngIf="reviews">
+                                        <ol class="reviews-list__content" *ngFor="let views of reviews.data">
+                                            <li class="reviews-list__item">
+                                                <div class="review">
+                                                    <div class="review__avatar"><img [src]="Image_data(views.user.avatar, 'avatar', null)" alt=""></div>
+                                                    <div class="review__content">
+                                                        <div class="review__author">{{views.user.fname}} {{views.user.lname}}</div>
+                                                        <div class="review__text">{{views.message}}</div>
+                                                        <div class="review__date">{{views.created_at | date}}</div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ol>
+                                            <div class="reviews-list__pagination py-2" *ngIf="count(reviews.data) != 0">
+                                            <!-- <div class="col-sm-7"> -->
+                                                <ul class="pagination justify-content-center">
+                                                <li class="page-item" (click)="firstPage(reviews)">
+                                                    <a class="page-link page-link--with-arrow"><i
+                                                            class="fa fa-angle-double-left"></i></a>
+                                                </li>
+                                                <li class="page-item" *ngIf="reviews.prev_page_url">
+                                                    <a class="page-link page-link--with-arrow" aria-label="Previous"
+                                                    (click)="Previous(reviews)">
+                                                    <svg class="page-link__arrow page-link__arrow--left"
+                                                        aria-hidden="true" width="8px" height="13px">
+                                                        <use xlink:href="assets/images/sprite.svg#arrow-rounded-left-8x13">
+                                                        </use>
+                                                    </svg>
+                                                    </a>
+                                                </li>
+                                                <li class="page-item active"><a
+                                                    class="page-link">{{ reviews.current_page }} <span
+                                                        class="sr-only">(current)</span></a></li>
+                                                <li class="page-item" *ngIf="reviews.next_page_url">
+                                                    <a class="page-link page-link--with-arrow" aria-label="Next"
+                                                    (click)="next(reviews)">
+                                                    <svg class="page-link__arrow page-link__arrow--right"
+                                                        aria-hidden="true" width="8px" height="13px">
+                                                        <use xlink:href="assets/images/sprite.svg#arrow-rounded-right-8x13">
+                                                        </use>
+                                                    </svg>
+                                                    </a>
+                                                </li>
+                                                <li class="kt-pagination__link--first" *ngIf="reviews.last_page_url">
+                                                    <a class="page-link page-link--with-arrow"
+                                                        ng-click="lastPage(reviews)"><i
+                                                        class="fa fa-angle-double-right"></i></a>
+                                                </li>
+                                                </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<!-- .block-slideshow -->
+<div class="block-slideshow block-slideshow--layout--with-departments block">
+    <div class="container">
+        <div class="row"> 
+            <div class="col-md-12">
+                <div class="block-slideshow__body" *ngIf="top_banners">
+                    <ngx-slick-carousel class="carousel"
+                        #SlickModal="slick-carousel"
+                        [config]="bannerSlideConfig">
+                        <div ngxSlickItem *ngFor="let banner of top_banners">
+                            <img [src]="banner.pictures" alt="" width="100%" style="max-height: 400px;">
+                            <div class="bottom-left">
+                                <h4>{{banner.details}}</h4>
+                            </div>
+                        </div>
+                    </ngx-slick-carousel>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- .block-slideshow / end -->

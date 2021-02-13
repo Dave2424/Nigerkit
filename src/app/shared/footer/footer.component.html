@@ -1,0 +1,105 @@
+<!-- site__footer -->
+<footer class="site__footer">
+  <div class="site-footer">
+    <div class="container">
+      <div class="site-footer__widgets">
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="site-footer__widget footer-contacts">
+              <h5 class="footer-contacts__title">Contact Us</h5>
+              <div class="footer-contacts__text" *ngIf="getSettingsValue('CONTACT_MESSAGE')">
+                {{getSettingsValue("CONTACT_MESSAGE")}}
+              </div>
+              <ul class="footer-contacts__contacts">
+                <li *ngIf="getSettingsValue('CONTACT_ADDRESS')"><i
+                    class="footer-contacts__icon fas fa-globe-americas"></i>{{getSettingsValue("CONTACT_ADDRESS")}}
+                </li>
+                <li><i class="footer-contacts__icon far fa-envelope"
+                    *ngIf="getSettingsValue('SITE_EMAIL')"></i>{{getSettingsValue("SITE_EMAIL")}}</li>
+                <li><i class="footer-contacts__icon fas fa-mobile-alt"
+                    *ngIf="getSettingsValue('SITE_PHONE')"></i>{{getSettingsValue("SITE_PHONE")}}
+                </li>
+                <li><i class="footer-contacts__icon far fa-clock" *ngIf="getSettingsValue('OPENING_HOURS')"></i>
+                  {{getSettingsValue('OPENING_HOURS')}}
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-12 col-md-3 col-lg-4">
+            <div class="site-footer__widget footer-links">
+              <h5 class="footer-links__title">Information</h5>
+              <ul class="footer-links__list">
+                <li class="footer-links__item"><a href="" class="footer-links__link">About Us</a></li>
+                <li class="footer-links__item"><a href="" class="footer-links__link">Delivery Information</a></li>
+                <li class="footer-links__item"><a href="" class="footer-links__link">Privacy Policy</a></li>
+                <li class="footer-links__item"><a href="" class="footer-links__link">Contact Us</a></li>
+                <li class="footer-links__item"><a href="" class="footer-links__link">Returns</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-12 col-md-12 col-lg-4">
+            <div class="site-footer__widget footer-newsletter">
+              <h5 class="footer-newsletter__title">Newsletter</h5>
+              <div class="footer-newsletter__text">
+                Subscribe for more updates
+              </div>
+              <form action="" class="footer-newsletter__form" [formGroup]="subscriberForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                  <label class="sr-only" for="footer-newsletter-address">Email Address</label>
+                  <input id="footer-signin-email" type="email" formControlName="email"
+                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }" class="form-control form-control-sm"
+                    placeholder="Email address...">
+                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors.required">Email Address is required</div>
+                    <div *ngIf="f.email.errors.email">Valid email is required</div>
+                  </div>
+                </div>
+                <button class="footer-newsletter__form-button btn btn-primary" [ladda]="loading">Subscribe</button>
+              </form>
+              <div class="footer-newsletter__text footer-newsletter__text--social">
+                Follow us on social networks
+              </div>
+              <ul class="footer-newsletter__social-links">
+                <li class="footer-newsletter__social-link footer-newsletter__social-link--facebook"
+                  *ngIf="getSettingsValue('FACEBOOK_PAGE_URL')"><a href="{{getSettingsValue('FACEBOOK_PAGE_URL')}}"
+                    target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                <li class="footer-newsletter__social-link footer-newsletter__social-link--twitter"
+                  *ngIf="getSettingsValue('TWITTER_HANDEL_URL')"><a href="{{getSettingsValue('TWITTER_HANDEL_URL')}}"
+                    target="_blank"><i class="fab fa-twitter"></i></a></li>
+                <li class="footer-newsletter__social-link footer-newsletter__social-link--youtube"
+                  *ngIf="getSettingsValue('INSTAGRAM_HANDEL_URL')"><a
+                    href="{{getSettingsValue('INSTAGRAM_HANDEL_URL')}}" target="_blank"><i
+                      class="fab fa-youtube"></i></a></li>
+                <li class="footer-newsletter__social-link footer-newsletter__social-link--instagram"
+                  *ngIf="getSettingsValue('PINTEREST_PAGE_URL')"><a href="{{getSettingsValue('PINTEREST_PAGE_URL')}}"
+                    target="_blank"><i class="fab fa-pinterest"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <div class="site-footer__copyright">
+          Powered by Nigerkit
+        </div>
+        <div class="site-footer__payments">
+          <!-- <img src="./assets/images/payments.png" alt=""> -->
+        </div>
+      </div>
+    </div>
+    <div class="totop">
+      <div class="totop__body">
+        <div class="totop__start"></div>
+        <div class="totop__container container"></div>
+        <div class="totop__end">
+          <button type="button" class="totop__button">
+            <svg width="13px" height="8px">
+              <use xlink:href="./assets/images/sprite.svg#arrow-rounded-up-13x8"></use>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- site__footer / end -->

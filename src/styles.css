@@ -1,1 +1,53 @@
-/* You can add global styles to this file, and also import other style files */
+@import "assets/vendor/bootstrap/css/bootstrap.min.css";
+@import "assets/vendor/owl-carousel/assets/owl.carousel.min.css";
+@import "assets/vendor/photoswipe/photoswipe.css";
+@import "assets/vendor/photoswipe/default-skin/default-skin.css";
+@import "assets/vendor/select2/css/select2.min.css";
+/*@import "assets/css/style.css";*/
+@import "assets/css/style.ltr.css";
+/*@import "assets/css/animate.css";*/
+/*@import "assets/css/waves.css";*/
+@import "assets/vendor/fontawesome/css/all.min.css";
+@import "assets/fonts/stroyka/stroyka.css";
+
+/*plugin*/
+@import "~ladda/dist/ladda-themeless.min.css";
+@import "~ngx-toastr/toastr.css";
+@import "~ng-snotify/styles/material.css";
+@import "~ngx-smart-modal/ngx-smart-modal.css";
+@import '~@angular/material/prebuilt-themes/purple-green.css';
+
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: #47991f;
+}
+  .overlay {
+     position: fixed;
+     z-index: 999;
+     height: 100%;
+     width: 100%;
+     overflow: hidden;
+     background: rgb(0 0 0 / 55%);
+     top: 0;
+     left: 0;
+     bottom: 0;
+     right: 0;
+  }
+  .mat-tab-group.mat-primary .mat-ink-bar,
+  .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #47991f;
+  }
+  .mat-tab-label,
+  .mat-tab-link{
+    color:black;
+  }
+  .ngx-gallery-image.ngx-gallery-active{
+    z-index: 9 !important;
+  }
+  .ngx-gallery-image-size-contain .ngx-gallery-image {
+    background-size: cover !important;
+  }
