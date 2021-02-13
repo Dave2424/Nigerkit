@@ -246,6 +246,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   handleOrderResponse(data: any) {
+    if (data.error) return this.alert.errorMsg(data.message, "Notice");
     this.clearCart();
     this.total = 0;
     this.grandTotal = 0;
