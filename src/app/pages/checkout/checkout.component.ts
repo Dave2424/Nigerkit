@@ -126,7 +126,7 @@ export class CheckoutComponent implements OnInit {
 
   // checking the value of input phone
   checkPhone() {
-    if (this.userData.phone.length != 11) {
+    if (this.count(this.currentUser.phone) != 11) {
       this.hasphone = false;
     } else {
       this.hasphone = true;
@@ -203,9 +203,7 @@ export class CheckoutComponent implements OnInit {
   transactionSuccessful(event: any) {
     // console.log(event);
     this.processing = true;
-    let address = this.userData.address.name
-      ? this.userData.address.name
-      : this.userData.address;
+    let address = this.currentUser.address;
 
     // this.processingOrder = true;
 
@@ -219,12 +217,15 @@ export class CheckoutComponent implements OnInit {
 
     formData.append("items", JSON.stringify(this.cart));
     formData.append("transaction_ref", event.reference);
-    formData.append("email", this.userData.email);
-    formData.append("name", this.userData.fname + " " + this.userData.lname);
-    formData.append("phone", this.userData.phone);
-    formData.append("address", this.userData.address);
-    formData.append("city", this.userData.city);
-    formData.append("state_id", this.userData.state);
+    formData.append("email", this.currentUser.email);
+    formData.append(
+      "name",
+      this.currentUser.fname + " " + this.currentUser.lname
+    );
+    formData.append("phone", this.currentUser.phone);
+    formData.append("address", this.currentUser.address);
+    formData.append("city", this.currentUser.city);
+    formData.append("state_id", this.currentUser.state);
     formData.append("items_total", items_total);
     formData.append("grand_total", grand_total);
     formData.append("delivery_fee", deliveryFee);
