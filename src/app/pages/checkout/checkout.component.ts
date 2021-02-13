@@ -126,7 +126,7 @@ export class CheckoutComponent implements OnInit {
 
   // checking the value of input phone
   checkPhone() {
-    if (this.userData.phone.length != 11) {
+    if (this.currentUser.phone.length != 11) {
       this.hasphone = false;
     } else {
       this.hasphone = true;
