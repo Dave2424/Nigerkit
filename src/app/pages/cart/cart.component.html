@@ -1,66 +1,74 @@
 <!-- <app-header [cart_item]="cart_to_" (Update_cart)="getLatestCart($event)" ></app-header> -->
-
-<div class="cart block mt-lg-4 mt-md-3 mt-sm-2 mb-5" *ngIf="count(cart) > 0">
-    <div class="container">
-        <table class="cart__table cart-table">
-            <thead class="cart-table__head">
-            <tr class="cart-table__row">
-                <th class="cart-table__column cart-table__column--image">Image</th>
-                <th class="cart-table__column cart-table__column--product">Product</th>
-                <th class="cart-table__column cart-table__column--price">Price</th>
-                <th class="cart-table__column cart-table__column--quantity">Quantity</th>
-                <th class="cart-table__column cart-table__column--total">Total</th>
-                <th class="cart-table__column cart-table__column--remove"></th>
-            </tr>
-            </thead>
-            <tbody class="cart-table__body" style="margin-top:10px;">
-            <tr class="cart-table__row" *ngFor="let item of cart">
-                <td class="cart-table__column cart-table__column--image">
-                    <a href="#"><img [src]="Image_data(item.product.product_image,'avatar', null)" alt=""></a>
-                </td>
-                <td class="cart-table__column cart-table__column--product">
-                    <a href="#" [routerLink]="['/product', item.product_id]" class="cart-table__product-name">{{item.product.name}}</a>
-                    <ul class="cart-table__options">
-                        <li *ngIf="item.product.brand">Brand: {{item.product.brand}}</li>
-                        <li *ngIf="item.product.sku">Sku: {{item.product.sku.sku_no}}</li>
-                    </ul>
-                </td>
-                <td class="cart-table__column cart-table__column--price" data-title="Price"> &#8358; {{item.product.price | number}}</td>
-                <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
-                    <div class="input-number">
-                        <input class="form-control input-number__input" disabled type="number" min="1" value="{{item.quantity}}">
-                        <div class="input-number__add" (click)="increase(item)"></div>
-                        <div class="input-number__sub" (click)="decrease(item)"></div>
-                    </div>
-                </td>
-                <td class="cart-table__column cart-table__column--total" data-title="Total">&#8358; {{calculateTotal(item) | number}}</td>
-                <td class="cart-table__column cart-table__column--remove">
-                    <button type="button" class="btn btn-light btn-sm btn-svg-icon" (click)="removeFromCart(item)">
-                        <svg width="12px" height="12px">
-                            <use xlink:href="./assets/images/sprite.svg#cross-12"></use>
-                        </svg>
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-            <tfoot class="cart-table__head">
-                <tr class="cart-table__row">
-                    <th class="cart-table__column" style="font-weight: 500; text-align: end;" colspan="6">
-                        Subtotal &#8358; {{subtotal() | number}}</th>
-                </tr>
-            </tfoot>
-        </table>
-        <div style="text-align: right !Important; margin-top: 2rem;" class="text-sm-center">
-            <a [routerLink]="['']" class="btn btn-light">Continue Shopping</a>
-            <a class="btn btn-primary ml-1 text-white"
-               (click)="addCartToLocal(cart)">Proceed to checkout</a>
-        </div>
+<div class="style" *ngIf="show">
+  <div class="lds-facebook">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+<div class="cart block mt-lg-4 mt-md-3 mt-sm-2 mb-5" *ngIf="cart && !show">
+  <div class="container" *ngIf="count(cart) > 0">
+    <table class="cart__table cart-table">
+      <thead class="cart-table__head">
+        <tr class="cart-table__row">
+          <th class="cart-table__column cart-table__column--image">Image</th>
+          <th class="cart-table__column cart-table__column--product">Product</th>
+          <th class="cart-table__column cart-table__column--price">Price</th>
+          <th class="cart-table__column cart-table__column--quantity">Quantity</th>
+          <th class="cart-table__column cart-table__column--total">Total</th>
+          <th class="cart-table__column cart-table__column--remove"></th>
+        </tr>
+      </thead>
+      <tbody class="cart-table__body" style="margin-top:10px;">
+        <tr class="cart-table__row" *ngFor="let item of cart">
+          <td class="cart-table__column cart-table__column--image">
+            <a href="#"><img [src]="Image_data(item.product.product_image,'avatar', null)" alt=""></a>
+          </td>
+          <td class="cart-table__column cart-table__column--product">
+            <a href="#" [routerLink]="['/product', item.product_id]"
+              class="cart-table__product-name">{{item.product.name}}</a>
+            <ul class="cart-table__options">
+              <li *ngIf="item.product.brand">Brand: {{item.product.brand}}</li>
+              <li *ngIf="item.product.sku">Sku: {{item.product.sku.sku_no}}</li>
+            </ul>
+          </td>
+          <td class="cart-table__column cart-table__column--price" data-title="Price"> &#8358;
+            {{item.product.price | number}}</td>
+          <td class="cart-table__column cart-table__column--quantity" data-title="Quantity">
+            <div class="input-number">
+              <input class="form-control input-number__input" disabled type="number" min="1" value="{{item.quantity}}">
+              <div class="input-number__add" (click)="increase(item)"></div>
+              <div class="input-number__sub" (click)="decrease(item)"></div>
+            </div>
+          </td>
+          <td class="cart-table__column cart-table__column--total" data-title="Total">&#8358;
+            {{calculateTotal(item) | number}}</td>
+          <td class="cart-table__column cart-table__column--remove">
+            <button type="button" class="btn btn-light btn-sm btn-svg-icon" (click)="removeFromCart(item)">
+              <svg width="12px" height="12px">
+                <use xlink:href="./assets/images/sprite.svg#cross-12"></use>
+              </svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="cart-table__head">
+        <tr class="cart-table__row">
+          <th class="cart-table__column" style="font-weight: 500; text-align: end;" colspan="6">
+            Subtotal &#8358; {{subtotal() | number}}</th>
+        </tr>
+      </tfoot>
+    </table>
+    <div style="text-align: right !Important; margin-top: 2rem;" class="text-sm-center">
+      <a [routerLink]="['']" class="btn btn-light">Continue Shopping</a>
+      <a class="btn btn-primary ml-1 text-white" (click)="addCartToLocal(cart)">Proceed to checkout</a>
     </div>
+  </div>
 </div>
 
-<div class="block-empty__body" *ngIf="count( cart )  == 0">
-    <div class="block-empty__message">Your shopping cart is empty!</div>
-    <div class="block-empty__actions">
-        <a class="btn btn-primary btn-sm" [routerLink]="['/']">Continue</a>
-    </div>
+<div class="block-empty__body" *ngIf="count( cart ) == 0 && !show">
+  <div class="block-empty__message">Your shopping cart is empty!</div>
+  <div class="block-empty__actions">
+    <a class="btn btn-primary btn-sm" [routerLink]="['/']">Continue</a>
+  </div>
 </div>

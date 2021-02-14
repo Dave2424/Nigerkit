@@ -80,6 +80,9 @@ export class AuthenticationService {
   setCart(items) {
     localStorage.setItem("cart_Items", JSON.stringify(items));
   }
+  removeCartItem() {
+    localStorage.removeItem("cart_Items");
+  }
   // Set access token
   setToken(token) {
     localStorage.setItem("Access_token", token);

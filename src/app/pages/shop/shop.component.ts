@@ -41,7 +41,6 @@ export class ShopComponent implements OnInit {
     this.products = this.route.snapshot.data.allProduct.products;
     // this.checkItems();
     // this.cartSubscription = this.storeService.GetCartItems()
-    this.authenticationservice.cartItems$.subscribe((data) => {});
   }
   sortingProduct() {
     // console.log(this.sortProduct);
@@ -181,15 +180,17 @@ export class ShopComponent implements OnInit {
     };
     // check if user is logged in
     if (this.currentUser) {
-      this.authenticationservice.setCartItems(product_item);
-      this.authenticationservice.setCart(product_item);
-      this.alert.snotSimpleSuccess("product added!");
-      // this.cart = this.getSavedCartInStorage();
       this.checkItemInCart(product_item);
       this.storeService.AddToCart(toCart).subscribe((resp: any) => {
+        // console.log(resp);
         // first check for notice
         if (!this.checkForError(resp)) {
+          // let temp = []; temp = product_item;
+          // this.cart.push(temp);
+          if (resp.items) this.authenticationservice.setCartItems(resp.items);
           this.cart = resp.items;
+          this.alert.snotSimpleSuccess(resp.message);
+          // console.log(this.cart);
         }
       });
     } else {

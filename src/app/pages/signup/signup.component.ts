@@ -15,6 +15,8 @@ import {
 } from "angularx-social-login";
 import { error } from "util";
 import * as _ from "lodash";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: "app-signup",
@@ -30,13 +32,15 @@ export class SignupComponent implements OnInit {
   l_submitted = false;
   error = "";
   l_error = "";
-  returnUrl = "";
+  returnUrl = "/";
   user = { fname: "", lname: "", email: "", phone: "" };
   email = "";
   password = "";
   cartSubscription: Subscription;
   cart: any = [];
   currentUser: User;
+  state$: Observable<object>;
+  cartItemsBeforeLogin: any = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,6 +53,10 @@ export class SignupComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.returnUrl = window.history.state.isCart
+      ? window.history.state.isCart
+      : "";
+    console.log(this.returnUrl);
     this.registrationForm = this.formBuilder.group(
       {
         fname: ["", Validators.required],
@@ -93,7 +101,8 @@ export class SignupComponent implements OnInit {
       // this.authenticationservice.setUserData(data.accessData);
       // this.cart = this.getSavedCartInStorage();
       // this.cart.user_id = this.currentUser.id;
-      this.router.navigate([this.returnUrl]);
+      this.router.navigateByUrl(this.returnUrl);
+      // this.router.navigateByUrl("/");
     }
   }
   checkItems() {
@@ -102,7 +111,21 @@ export class SignupComponent implements OnInit {
       this.cartSubscription = this.storeService
         .GetCartItems(this.currentUser.id)
         .subscribe((items) => {
-          if (this.count(items) > 0) this.cart = items;
+          if (this.count(items) > 0) {
+            this.cart = items;
+          }
+          if (this.count(this.getSavedCartInStorage()) > 0) {
+            let _items = this.getSavedCartInStorage();
+            // console.log(_items);
+            _items.forEach((element) => {
+              element.user_id = this.currentUser.id;
+              this.storeService.AddToCart(element).subscribe((resp: any) => {
+                // console.log(resp);
+                if (resp.items) this.cart.push(resp.items);
+              });
+            });
+            this.authenticationService.removeCartItem();
+          }
           // console.log(this.cart);
           this.authenticationService.setCartItems(this.cart);
         });
@@ -163,6 +186,15 @@ export class SignupComponent implements OnInit {
         (data) => {
           this.loading = false;
           this.submitted = false;
+          if (this.count(this.getSavedCartInStorage()) > 0) {
+            let items = this.getSavedCartInStorage();
+            items.forEach((element) => {
+              this.storeService.AddToCart(element).subscribe((resp: any) => {
+                this.cart.push(resp.items);
+              });
+            });
+            this.authenticationService.removeCartItem();
+          }
           this.alert.snotSimpleSuccess(data.message);
           this.router.navigateByUrl("/");
         },

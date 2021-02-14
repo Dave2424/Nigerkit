@@ -99,10 +99,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.authenticationservice.cartItems$.subscribe((data) => {
-      if (!this.currentUser) {
-        this.cart = [];
-        this.cart = this.getSavedCartInStorage();
-      }
+      this.cart = [];
+      if (this.currentUser) this.cart = data;
+      else this.cart = this.getSavedCartInStorage();
     });
 
     this.loginForm = this.formBuilder.group({
@@ -263,5 +262,4 @@ export class HeaderComponent implements OnInit {
       );
     }
   }
-  
 }

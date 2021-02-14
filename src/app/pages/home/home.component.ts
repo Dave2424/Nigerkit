@@ -185,17 +185,16 @@ export class HomeComponent implements OnInit {
     };
     // check if user is logged in
     if (this.currentUser) {
-      this.authenticationservice.setCartItems(product_item);
-      this.authenticationservice.setCart(product_item);
-      this.alert.snotSimpleSuccess("product added!");
-      // this.cart = this.getSavedCartInStorage();
       this.checkItemInCart(product_item);
       this.storeService.AddToCart(toCart).subscribe((resp: any) => {
+        // console.log(resp);
         // first check for notice
         if (!this.checkForError(resp)) {
-          // this.cart.push(resp.items);
-          this.authenticationservice.setCartItems(product_item);
+          // let temp = []; temp = product_item;
+          // this.cart.push(temp);
+          if (resp.items) this.authenticationservice.setCartItems(resp.items);
           this.cart = resp.items;
+          this.alert.snotSimpleSuccess(resp.message);
           // console.log(this.cart);
         }
       });
@@ -217,7 +216,8 @@ export class HomeComponent implements OnInit {
       this.cart = this.getSavedCartInStorage();
     } else {
       // check is item already exists
-      let cartItems = this.getSavedCartInStorage();
+      let cartItems = [];
+      cartItems = this.getSavedCartInStorage();
       let search = _.findLast(cartItems, ["product_id", data.product_id]);
 
       if (_.size(search) > 0) {

@@ -18,6 +18,7 @@ export class CartComponent implements OnInit {
   public cart_to_: any;
   currentUser: User;
   private total: any;
+  show = true;
 
   private cartSubscription: Subscription;
   private skuNosubscription: Subscription;
@@ -43,12 +44,17 @@ export class CartComponent implements OnInit {
       this.cartSubscription = this.storeService
         .GetCartItems(this.currentUser.id)
         .subscribe((items) => {
-          if (this.count(items) > 0) this.cart = items;
+          if (this.count(items) > 0) {
+            this.cart = items;
+          }
+          this.show = false;
           // console.log(this.cart);
         });
     } else {
-      if (this.count(this.getSavedCartInStorage()) > 0)
+      if (this.count(this.getSavedCartInStorage()) > 0) {
         this.cart = this.getSavedCartInStorage();
+        this.show = false;
+      }
     }
   }
 
@@ -100,27 +106,27 @@ export class CartComponent implements OnInit {
     let search = _.findLastIndex(this.cart, ["product_id", item.product_id]);
     this.cart.splice(search, 1);
     if (this.currentUser) {
-      this.storeService.RemoveFromCart(item.product_id, this.currentUser.id).subscribe((data) => {
-        console.log(data);
-        // var cartsend = localStorage.setItem("cart_Items", JSON.stringify(data));
-        this.authenticationservice.setCartItems(data);
-        this.cart = data;
-      });
+      this.storeService
+        .RemoveFromCart(item.product_id, this.currentUser.id)
+        .subscribe((data) => {
+          console.log(data);
+          // var cartsend = localStorage.setItem("cart_Items", JSON.stringify(data));
+          this.authenticationservice.setCartItems(data);
+          this.cart = data;
+        });
     } else {
       this.sliceLocalCart(item);
     }
   }
 
-  sliceLocalCart(item) {
+  sliceLocalCart(item: any) {
     let cartItems = this.getSavedCartInStorage();
     let search = _.findLastIndex(cartItems, ["product_id", item.product_id]);
     cartItems.splice(search, 1);
-    var cartsend = localStorage.setItem(
-      "cart_Items",
-      JSON.stringify(cartItems)
-    );
+    localStorage.setItem("cart_Items", JSON.stringify(cartItems));
     this.authenticationservice.setCartItems(cartItems);
     this.cart = this.getSavedCartInStorage();
+    // }
   }
   subtotal() {
     let total = 0;
@@ -141,7 +147,8 @@ export class CartComponent implements OnInit {
     if (this.currentUser) {
       this.router.navigate(["/checkout"]);
     } else {
-      this.alert.infoMsg("You must Log in to proceed", "Notice");
+      // this.alert.infoMsg("You must Log in to proceed", "Notice");
+      this.router.navigate(["signup"], { state: { isCart: "checkout" } });
     }
   }
 }
