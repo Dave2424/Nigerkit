@@ -1,3 +1,4 @@
+import { CheckoutSuccessComponent } from './checkout-success/checkout-success.component';
 import { PageNotFoundComponent } from "./pages/page-not-found/page-not-found.component";
 import { CategoryProductResolve } from "./resolvers/category.resolver";
 import { CategoryComponent } from "./pages/category/category.component";
@@ -55,6 +56,10 @@ const routes: Routes = [
     path: "category/:slug",
     component: CategoryComponent,
     resolve: { categorydetails: CategoryProductResolve },
+  },
+  {
+    path: 'success-checkout',
+    component:CheckoutSuccessComponent
   },
 
   // otherwise redirect to home

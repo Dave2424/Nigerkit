@@ -62,6 +62,7 @@ import { ResourcesComponent } from './pages/resources/resources.component';
 import { ResourceComponent } from './pages/resource/resource.component';
 import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import { SkeletonloaderComponent } from './Components/skeletonloader/skeletonloader.component';
+import { CheckoutSuccessComponent } from './checkout-success/checkout-success.component';
 
 const config = new AuthServiceConfig([
   {
@@ -106,6 +107,7 @@ export function provideConfig() {
     ResourcesComponent,
     ResourceComponent,
     SkeletonloaderComponent,
+    CheckoutSuccessComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [

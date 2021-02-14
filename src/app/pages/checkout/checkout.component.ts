@@ -254,7 +254,9 @@ export class CheckoutComponent implements OnInit {
     this.processing = false;
     setTimeout(() => {
       this.alert.snotSimpleSuccess(data.message);
-      this.router.navigateByUrl("");
+      this.router.navigateByUrl("success-checkout", {
+        state: { invoice: data },
+      });
     }, 3000);
   }
 
