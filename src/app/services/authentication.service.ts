@@ -141,7 +141,6 @@ export class AuthenticationService {
     this.removeUserData();
     // remove access_token
     this.removeToken();
-    this.currentUserSubject.next(null);
-    // this.cartItemSubject.next([]);
+    this.setCartItems([]);
   }
 }
