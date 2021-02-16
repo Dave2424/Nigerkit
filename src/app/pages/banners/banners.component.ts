@@ -19,7 +19,7 @@ export class BannersComponent implements OnInit {
 
     this.ProductSubscription = this.baseservice.getIndexData()
       .subscribe((data: any) => {
-        console.log(data)
+        // console.log(data)
         this.top_banners = data.data.top_banners;
       });
   }

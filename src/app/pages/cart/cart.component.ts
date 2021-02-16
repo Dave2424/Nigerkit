@@ -109,7 +109,7 @@ export class CartComponent implements OnInit {
       this.storeService
         .RemoveFromCart(item.product_id, this.currentUser.id)
         .subscribe((data) => {
-          console.log(data);
+          // console.log(data);
           // var cartsend = localStorage.setItem("cart_Items", JSON.stringify(data));
           this.authenticationservice.setCartItems(data);
           this.cart = data;
